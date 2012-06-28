@@ -160,7 +160,11 @@ public class JavaScriptInterface {
     /** CRUD operations */
     private long createQuestion(Question question) {
         ContentValues values = questionToContentValues(question);
-        return database.insert("questions", null, values);
+        long questionId = database.insert("questions", null, values);
+        
+        //setAlarm(questionId);
+        return questionId;
+        
     }
     private long createOption(Option option) {
         ContentValues values = optionToContentValues(option);
@@ -286,7 +290,8 @@ public class JavaScriptInterface {
 	    Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
 		cursor.moveToFirst();
 		Alarm alarm = new Alarm(cursor);
-		alarm.alert(mContext);
+		//alarm.alert(mContext);
+		alarm.testAlert(mContext);
 		cursor.close();
 	}
 	

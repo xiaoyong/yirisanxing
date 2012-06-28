@@ -35,7 +35,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "option_id INTEGER REFERENCES options(_id), "
             + "reviewd INTEGER, "
             + "created INTEGER, "
-            + "is_reviewed INTEGER"
             + ");";
 
     public DatabaseHelper(Context context) {

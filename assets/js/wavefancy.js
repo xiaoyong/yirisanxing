@@ -100,7 +100,8 @@ function addNewItem(){ //add or update.
 		q.options.push(o);
 	});	
 
-	q.repeat_type = $("#add_repeat").val();
+	q.repeatType = 1;
+	q.interval = $("#add_repeat").val();
 	var t = $("#add_time").val().split(":");
 	q.hour = t[0];
 	q.minute = t[1];
@@ -113,7 +114,7 @@ function addNewItem(){ //add or update.
 }
 
 function getItemByID(){ //get question by ID.
-	var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
+	var result = '{"id":"1","question":"璇锋坊鍔犳彁閱掗棶棰�,"options":[{"option":"鏄� ","id":"1"},{"option":"鍚�","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 	
 	var q = eval('('+result+')');
 	//alert(q.question);
@@ -125,14 +126,14 @@ function getItemByID(){ //get question by ID.
 	$("#aList").empty();
 	for(var i in q.options){
 		//alert(q.options[i].id);
-		var e = '<div class="ndel" oID="'+q.options[i].id+'"><span class="bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>'
+		var e = '<div class="ndel" oID="'+q.options[i].id+'"><span class="bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">脗</span></span></div>'
 		$("#aList").append(e);
 	}
 	//alert("OK");
 };
 
 function setCurrentItem(){
-	var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
+	var result = '{"id":"1","question":"璇锋坊鍔犳彁閱掗棶棰�,"options":[{"option":"鏄� ","id":"1"},{"option":"鍚�","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 	
 	var q = eval('('+result+')');
 	
@@ -142,7 +143,7 @@ function setCurrentItem(){
 	$("#currItemList").empty();
 	for(var i in q.options){
 		//alert(q.options[i].id);
-		var e = '<div class="currList" oID="'+q.options[i].id+'"><span class="bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Ã</span></span></div>'
+		var e = '<div class="currList" oID="'+q.options[i].id+'"><span class="bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">脙</span></span></div>'
 		$("#currItemList").append(e);
 	}
 	
@@ -179,7 +180,7 @@ function saveDelay(){
 function getList(){
 	//Android.getAllQuestions();
 	
-	var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
+	var result = '[{"id":"1","question":"璇锋坊鍔犳彁閱掗棶棰�,"options":[{"option":"鏄� ","id":"1"},{"option":"鍚�","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"1","question":"璇锋坊鍔犳彁閱掗棶棰�,"options":[{"option":"鏄� ","id":"1"},{"option":"鍚�","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
 	
 	
 }

@@ -20,6 +20,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.youdao.nanti.candy.yirisanxing.action.REVIEW" />
             </intent-filter>
         </activity>
         
