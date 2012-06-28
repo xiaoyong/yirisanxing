@@ -5,7 +5,11 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="8" />
-	
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+   
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" android:debuggable="true">
@@ -18,6 +22,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <receiver android:name="AlarmReceiver">
+            <intent-filter>
+               <action android:name="com.youdao.nanti.candy.yirisanxing.action.ALERT" />
+               <action android:name="com.youdao.nanti.candy.yirisanxing.action.DELAY" />
+               <data android:scheme="alarm" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name="BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        
+        <service android:name="BeepService">
+            <intent-filter>
+                <action android:name="com.youdao.nanti.candy.yirisanxing.action.BEEP" />
+            </intent-filter>
+        </service>
+        
     </application>
 
 </manifest>
