@@ -21,8 +21,9 @@ function open(openID){
 		//wait previous animation to finish, then start the next one.
 		setTimeout("afterOpen()",aTime);
 	}else{
-		$("#"+openID).css({display:"block",height:"100%","margin-top":"100%"})
+		$("#"+openID).css({display:"block",height:"1500px","margin-top":"100%"})
 		 .animate({"margin-top":"0"},{duration:aTime});
+		//alert("OK");
 	}
 	
 	cOpen = $("#"+openID);
@@ -40,7 +41,7 @@ function close(openedE){
 }
 
 function afterOpen(){
-	nowOpen.css({display:"block",height:"100%","margin-top":"100%"})
+	nowOpen.css({display:"block",height:"1500px","margin-top":"100%"})
 		   .animate({"margin-top":"0"},{duration:aTime});
 }
 
