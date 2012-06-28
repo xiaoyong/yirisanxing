@@ -34,7 +34,7 @@ p{
 body {
 	overflow: hidden;
 /*	background: url("img/03.jpg");*/
-	font-size: 1.5em;
+	font-size: 1.0em;
 }
 
 .container{
@@ -80,7 +80,7 @@ body {
 .st-container > a {
 	position: fixed;
 	bottom:0px;
-	font-size: 1em;
+	font-size: 1.5em;
 	width:25%;
 	height:50px;
 	line-height:50px;
@@ -223,8 +223,8 @@ H1{
 
 .bLine{
 	border-bottom: 1px solid #12AAEE;
-	line-height: 50px;
-	height: 50px;
+	line-height: 40px;
+	height: 40px;
 }
 
 .button{
