@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
+import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 
 /** Database access interface for JavaScript */
 public class JavaScriptInterface {
@@ -280,4 +281,21 @@ public class JavaScriptInterface {
         
         return values;
     }
+    
+	public void setAlarm(long questionId) {
+	    Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
+		cursor.moveToFirst();
+		Alarm alarm = new Alarm(cursor);
+		alarm.alert(mContext);
+		cursor.close();
+	}
+	
+	public void delay(long questionId, long time) {
+	    Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
+		cursor.moveToFirst();
+		Alarm alarm = new Alarm(cursor);
+		alarm.delay(mContext, time);
+		cursor.close();
+	}
+
 }
