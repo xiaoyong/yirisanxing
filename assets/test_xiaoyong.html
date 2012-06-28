@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body onload="listAllQuestions()">
+
+
+<input type="button" value="Add New" onClick="createQuestion()" />
+<input type="button" value="Update" onClick="updateQuestion()" />
+<input type="button" value="Delete First" onClick="deleteFirst()" />
+
+<p id="questions"></p>
+
+<script type="text/javascript">
+    function createQuestion() {
+        var question = {"id": -1, "question": "My question", "options": [{"id": -1, "option": "Yes"}, {"id": -1, "option": "No"}], "repeatType": 2, "hour": 13, "minute": 15};
+        Android.processQuestion(JSON.stringify(question), "create");
+        listAllQuestions();
+    }
+    function updateQuestion() {
+    	//var question = {"id": 1, "question": "My question", "options": [{"id": -1, "option": "Unknown"}], "repeatType": 2, "hour": 20, "minute": 0};
+        var question = JSON.parse(Android.getAllQuestions())[0];
+        question.question = "Your question";
+        question.hour = 20;
+    	Android.processQuestion(JSON.stringify(question), "update");
+        listAllQuestions();
+    }
+    function deleteFirst() {
+    	var questions = JSON.parse(Android.getAllQuestions());
+    	Android.processQuestion(JSON.stringify(questions[0]), "delete");
+        listAllQuestions();
+    }
+    function listAllQuestions() {
+        document.getElementById("questions").innerHTML = Android.getAllQuestions();
+    }
+</script>
+</body>
+</html>
