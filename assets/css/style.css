@@ -1,0 +1,252 @@
+/*@import url('normalize.css');  */
+
+/*Load RaphaelIcons font*/
+/*
+@font-face {
+	font-family:'RaphaelIcons';
+    src: url('raphaelicons-webfont.eot');
+    src: local('☺'), 
+		url('fonts/raphaelicons-webfont.woff') format('woff'), 
+		url('fonts/raphaelicons-webfont.ttf') format('truetype'), 
+		url('fonts/raphaelicons-webfont.svgwebfontKOf9F4sx') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
+
+/*
+@font-face{
+	font-family: "RaphaelIcons";
+	src: url('css/fonts/raphaelicons-webfont.ttf');
+}
+
+p{
+	font-size:80px;
+	font-family: 'RaphaelIcons', Verdana;
+}
+*/
+
+body {
+	overflow: hidden;
+/*	background: url("img/03.jpg");*/
+
+}
+
+.container{
+/*	background: url("img/pattern.png") repeat;*/
+	height: 100%;
+	width:100%;
+}
+
+.st-container {
+	position: absolute;
+	width:100%;
+	height: 100%;
+	top:0px;
+	left:0px;
+	font-family: Sans,serif,sans-serif;
+	/*Set content bg*/
+/*	background: url("img/pattern.png") repeat;*/
+/*	background: url("img/white_texture.png") repeat; */
+}
+
+#topLine{
+	height: 2px;
+/*	line-height:10px;*/
+	background-color: #12AAEE;
+	position: fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+}
+
+/*Add this panel to fix the bug of the left blank after call keyboard for input.*/
+#bPanel{
+	position: fixed;
+	bottom:0px;
+	left:0px;
+	height: 34px;
+	line-height: 34px;
+	background: url("img/bottom.jpg") repeat;
+	width: 100px;
+}
+
+.st-container > input,
+.st-container > a {
+	position: fixed;
+	bottom:0px;
+	font-size: 1.0em;
+	width:25%;
+	height:34px;
+	line-height:34px;
+/*	background: url("img/bottom.jpg") repeat;*/
+	overflow: hidden;
+	cursor: pointer;
+	text-align: center;
+}
+
+.st-container > input {
+	opacity: 0;
+	z-index: 2;
+}
+
+.st-container > a {
+	z-index: 10;
+	font-weight: 700;
+/*	background: url("img/bottom.jpg") repeat; */
+	color: #fff;
+	text-align: center;
+	text-decoration:none;
+	text-shadow: 1px 1px 1px rgba(151,24,64,0.2);
+/*	border-top:solid 2px #000; */
+}
+
+.st-container > input:checked + a,
+.st-container > input:checked:hover + a{
+	background-color: rgba(0,0,0,0.5);
+}
+
+.st-container > input:hover + a{
+	background-color: rgba(0,0,0,0.2);
+}
+
+/* "Fix" for percentage rounding: add a background bar pseudo element with the same color like the labels */
+.st-container:before {
+	content: '';
+	position: fixed;
+	width: 100%;
+	height: 34px;
+	background: url("img/bottom.jpg") repeat;
+	z-index: 1;
+	bottom: 0;
+}
+/*put the bottom element at the right position*/
+#st-control-1, #st-control-1 + a {
+	left: 0;
+}
+
+#st-control-2, #st-control-2 + a {
+	left: 25%;
+}
+
+#st-control-3, #st-control-3 + a {
+	left: 50%;
+}
+
+#st-control-4, #st-control-4 + a {
+	left: 75%;
+}
+
+.st-panel{
+	position: fixed;
+	top:2px;
+	left:5%;
+	width:90%;
+	height:0;
+	display: none;
+/*	text-align: center;*/
+/*	background: #12AAEE;*/
+}
+
+.RaphaelIcons{
+	font-family: 'RaphaelIcons';
+	margin: 0 5px;
+	font-size: 1.5em;
+}
+
+h3{
+	border-bottom: 2px solid #12AAEE;
+	color: #FF8A00;
+/*	text-shadow: 1px 1px 1px rgba(151,24,64,0.1);*/
+	height:40px;
+	line-height:40px;
+	font-weight: bold;
+/*	vertical-align: baseline;*/
+/*	display: inline-table;*/
+/*	color: #669900*/
+}
+
+H1{
+	color: #FF8A00;
+	text-shadow: 1px 1px 1px rgba(151,24,64,0.2);
+	text-align: center;
+}
+.textGreen{
+	color:  #12AAEE;
+}
+
+.textOrange{
+	color: #FF8A00;
+}
+
+.textBold{
+	font-weight: bold;
+}
+
+.lineGreen{
+	height: 2px;
+	line-height: 2px;
+	display: block;
+	background-color:  #12AAEE;
+}
+
+.textGray{
+	color: #686868;
+}
+
+.textRight{
+	text-align: right;
+}
+
+
+
+.cInput{
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	border: 1px solid #12AAEE;
+	line-height: 30px;
+	height: 30px;
+	width: 93%;
+	padding: 0 15px;
+}
+
+.lInput{
+	border: none;
+	background: transparent;
+/*	border-bottom: 1px solid #12AAEE;*/
+}
+
+.bLine{
+	border-bottom: 1px solid #12AAEE;
+	line-height: 30px;
+	height: 30px;
+}
+
+.button{
+	border: none;
+	border-radius:10px;
+	background: #12AAEE;
+	color: #FFF;
+	padding: 5px 5px;
+}
+
+.iList1,.iList2{
+	padding: 10px 0px 0px 10px;
+	line-height: 30px;
+	height: 30px;
+	vertical-align: middle;
+	border-left: 3px solid #F1AB19; 
+}
+
+.iList2{
+	border-left: 3px solid #8FB12A; 
+}
+
+.iList1:hover,.iList2:hover{
+	background: rgba(18,170,238,0.2);
+}
+
+.H25{
+	line-height: 25px;
+	height: 25px;
+}
