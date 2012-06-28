@@ -107,7 +107,7 @@ function addNewItem(){ //add or update.
 	
 	Android.processQuestion(JSON.stringify(q), "create")
 	
-	alert(Android.getAllQuestions());
+	//alert(Android.getAllQuestions());
 	//return (JSON.stringify(q));
 }
 
@@ -175,7 +175,13 @@ function saveDelay(){
 	alert(JSON.stringify(para));
 }
 
-
+function getList(){
+	//Android.getAllQuestions();
+	
+	var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
+	
+	
+}
 
 
 

@@ -65,7 +65,7 @@ public class YiRiSanXingActivity extends Activity {
         myWebView.addJavascriptInterface(jsInterface, "Android");
 
         // Load a web page
-        myWebView.loadUrl("file:///android_asset/index.html");
+        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/myindex.html");
     }
     
