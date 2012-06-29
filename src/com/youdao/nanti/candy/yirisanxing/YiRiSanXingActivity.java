@@ -33,7 +33,7 @@ public class YiRiSanXingActivity extends Activity {
         //add key board.
         myWebView.requestFocusFromTouch();
         
-		        
+		     
 		//enable javaScript alert.
         final Context myApp = this;
         myWebView.setWebChromeClient(new WebChromeClient(){
