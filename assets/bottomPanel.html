@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>bottom panel</title>
+<style>
+	@font-face{
+		font-family: "RaphaelIcons";
+		src: url('css/fonts/raphaelicons-webfont.ttf');
+	}
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/newStyle.css" />
+
+ <!--jQuery-->
+ <script language="JavaScript" src="js/jquery-1.7.2.min.js"></script>
+ <!--jQuery END-->
+
+<script>
+	$(document).ready(function(){
+		
+		/*bottom control panel functions*/
+		$("#st-control-1-a").click(function(){
+			$("#st-control-1").click();
+			
+		});
+		$("#st-control-2-a").click(function(){
+			$("#st-control-2").click();
+			
+		});
+		$("#st-control-3-a").click(function(){
+			$("#st-control-3").click();
+			
+		});
+		$("#st-control-4-a").click(function(){
+			$("#st-control-4").click();
+			
+		});
+		
+		
+	});
+</script>
+</head>
+<body>
+	 <div class="container" id="container" style="width:100%; position: fixed; left:0;">
+			
+			<div class="st-container"> 		
+				<input type="radio" name="radio-set" checked="checked" id="st-control-1"/>
+				<a href="#st-panel-1" id="st-control-1-a"><span class="bText">S</span></a>
+				<input type="radio" name="radio-set" id="st-control-2"/>
+				<a href="#st-panel-2" id="st-control-2-a"><span class="bText">H</span></a>
+				<input type="radio" name="radio-set" id="st-control-3"/>
+				<a href="#st-panel-3" id="st-control-3-a"><span class="bText">Ì</span></a>
+				<input type="radio" name="radio-set" id="st-control-4"/>
+				<a href="#st-panel-4" id="st-control-4-a"><span class="bText">Ñ</span></a>
+			</div>
+	</div>
+</body>
+</html>

@@ -43,17 +43,7 @@ body {
 	width:100%;
 }
 
-.st-container {
-	position: absolute;
-	width:100%;
-	height: 100%;
-	top:0px;
-	left:0px;
-	font-family: Sans,serif,sans-serif;
-	/*Set content bg*/
-/*	background: url("img/pattern.png") repeat;*/
-/*	background: url("img/white_texture.png") repeat; */
-}
+
 
 #topLine{
 	height: 2px;
@@ -74,6 +64,18 @@ body {
 	line-height: 50px;
 	background: url("img/bottom.jpg") repeat;
 	width: 100px;
+}
+
+.st-container {
+	position: absolute;
+	width:100%;
+	height: 100%;
+	top:0px;
+	left:0px;
+	font-family: Sans,serif,sans-serif;
+	/*Set content bg*/
+/*	background: url("img/pattern.png") repeat;*/
+/*	background: url("img/white_texture.png") repeat; */
 }
 
 .st-container > input,

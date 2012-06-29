@@ -15,6 +15,8 @@ public class YiRiSanXingActivity extends Activity {
 	private WebView myWebView;
 	private JavaScriptInterface jsInterface;
 	
+	private WebView bPanel; //bottom panel
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,14 @@ public class YiRiSanXingActivity extends Activity {
         // Load a web page
         myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
+        
+        bPanel = (WebView) findViewById(R.id.bPanel);
+        bPanel.loadUrl("file:///android_asset/bottomPanel.html");
+        WebSettings bPanelSettings = bPanel.getSettings();
+        bPanelSettings.setJavaScriptEnabled(true);
+        //hidden scroll bar.
+        bPanel.setHorizontalScrollBarEnabled(false);
+        bPanel.setVerticalScrollBarEnabled(false);
     }
     
     @Override
