@@ -110,5 +110,57 @@ body {
 	left: 75%;
 }
 
-
 /********************Bottom Panel END*********************/
+
+
+
+/********************TOP Panel Panel*********************/
+
+#topPanel{
+	width:100%;
+	margin:0px;
+}
+#topLine{
+	border-top: solid 0.2em #12AAEE;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	width:100%
+}
+
+#topLine div{
+	position: absolute;
+	display: inline-block;
+	width: 20%;
+	height: 0.2em;
+}
+
+#tl1{
+	background: #F3A01E;
+	left:0;
+}
+
+#tl2{
+	background: #D05D2A;
+	left:20%;
+}
+
+#tl3{
+	background: #9DC425;
+	left:40%;
+}
+
+#tl4{
+	background: #4B8DB5;
+	left:60%;
+}
+
+#tl5{
+	background: #7C48B5;
+	left:80%;
+}
+
+#move{
+	margin-top: 100%;
+}
+/********************TOP Panel END*********************/

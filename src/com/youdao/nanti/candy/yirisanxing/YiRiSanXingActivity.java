@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -16,6 +17,8 @@ public class YiRiSanXingActivity extends Activity {
 	private JavaScriptInterface jsInterface;
 	
 	private WebView bPanel; //bottom panel
+	private Handler handler = new Handler();
+	
 	
     /** Called when the activity is first created. */
     @Override
@@ -40,6 +43,7 @@ public class YiRiSanXingActivity extends Activity {
         final Context myApp = this;
         myWebView.setWebChromeClient(new WebChromeClient(){
 			
+        	// Handle javaScript alert in webview.
 			@Override
 			public boolean onJsAlert(WebView view, String url, String message,
 					final android.webkit.JsResult result) {
@@ -59,16 +63,23 @@ public class YiRiSanXingActivity extends Activity {
 				
 				return true;
 			}
+			
+			
 		});
 
         
         jsInterface = new JavaScriptInterface(this);
         jsInterface.open();
         myWebView.addJavascriptInterface(jsInterface, "Android");
-
+        
+        
+        
         // Load a web page
-        myWebView.loadUrl("file:///android_asset/index.html?id=2");
+//        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
+        myWebView.loadUrl("file:///android_asset/topPanel.html");
+        
+        //////-----------For bottom panel-----------------------------/////////
         
         bPanel = (WebView) findViewById(R.id.bPanel);
         bPanel.loadUrl("file:///android_asset/bottomPanel.html");
@@ -77,6 +88,11 @@ public class YiRiSanXingActivity extends Activity {
         //hidden scroll bar.
         bPanel.setHorizontalScrollBarEnabled(false);
         bPanel.setVerticalScrollBarEnabled(false);
+        
+        //bind top panel communication interface.
+        bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "top");
+        
+        //////-----------bottom panel END-----------------------------/////////
     }
     
     @Override
