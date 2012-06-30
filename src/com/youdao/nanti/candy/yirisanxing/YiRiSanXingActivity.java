@@ -77,7 +77,7 @@ public class YiRiSanXingActivity extends Activity {
         // Load a web page
 //        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
-        myWebView.loadUrl("file:///android_asset/topPanel.html");
+        myWebView.loadUrl("file:///android_asset/addNewItem.html");
         
         //////-----------For bottom panel-----------------------------/////////
         

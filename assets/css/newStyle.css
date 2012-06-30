@@ -125,7 +125,10 @@ body {
 	height: 0;
 	margin: 0;
 	padding: 0;
-	width:100%
+	width:100%;
+	position: fixed;
+	top:0;
+	left:0;
 }
 
 #topLine div{
@@ -163,4 +166,87 @@ body {
 #move{
 	margin-top: 100%;
 }
+
+
+h3{
+	border-bottom: 2px solid #12AAEE;
+	color: #FF8A00;
+/*	text-shadow: 1px 1px 1px rgba(151,24,64,0.1);*/
+	height:2.5em;
+	line-height:2.5em;
+	font-weight: bold;
+/*	vertical-align: baseline;*/
+/*	display: inline-table;*/
+/*	color: #669900*/
+}
+
+
+.textGreen{
+	color:  #12AAEE;
+}
+
+.textOrange{
+	color: #FF8A00;
+}
+
+.textBold{
+	font-weight: bold;
+}
+
+.lineGreen{
+	height: 2px;
+	line-height: 2px;
+	display: block;
+	background-color:  #12AAEE;
+}
+
+.textGray{
+	color: #686868;
+}
+
+.textRight{
+	text-align: right;
+}
+
+.cInput{
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	border: 1px solid #12AAEE;
+	line-height: 30px;
+	height: 30px;
+	width: 93%;
+	padding: 0 15px;
+}
+
+.lInput{
+	border: none;
+	background: transparent;
+/*	border-bottom: 1px solid #12AAEE;*/
+}
+
+
+.bLine{
+	border-bottom: 1px solid #12AAEE;
+	line-height: 2em;
+	height: 2em;
+}
+
+.Line{
+	margin-top: 1em;
+}
+
+.button{
+	border: none;
+	border-radius:10px;
+	background: #12AAEE;
+	color: #FFF;
+	padding: 5px 5px;
+}
+
+.st-panel{
+	width:100%;
+}
+
+
 /********************TOP Panel END*********************/
+
