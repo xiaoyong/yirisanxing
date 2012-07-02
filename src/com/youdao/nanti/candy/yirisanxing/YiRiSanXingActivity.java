@@ -15,14 +15,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 public class YiRiSanXingActivity extends Activity {
-	
-	private WebView myWebView;
-	private JavaScriptInterface jsInterface;
-	
-	private WebView bPanel; //bottom panel
-	private Handler handler = new Handler();
-	
-	
+    
+    private WebView myWebView;
+    private JavaScriptInterface jsInterface;
+    
+    private WebView bPanel; //bottom panel
+    private Handler handler = new Handler();
+    
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,9 +33,9 @@ public class YiRiSanXingActivity extends Activity {
         
         Intent intent = getIntent();
         if (intent.getAction().equals("android.intent.action.MAIN")) {
-        	loadMain();
+            loadMain();
         } else if (intent.getAction().equals(Action.REVIEW)) {
-        	loadReview();
+            loadReview();
         }
         
     }
@@ -47,39 +47,39 @@ public class YiRiSanXingActivity extends Activity {
         
         //hidden scroll bar.
         myWebView.setHorizontalScrollBarEnabled(false);
-        myWebView.setVerticalScrollBarEnabled(true);
+        myWebView.setVerticalScrollBarEnabled(false);
         
         //add key board.
         myWebView.requestFocusFromTouch();
         
-		     
-		//enable javaScript alert.
+             
+        //enable javaScript alert.
         final Context myApp = this;
         myWebView.setWebChromeClient(new WebChromeClient(){
-			
-        	// Handle javaScript alert in webview.
-			@Override
-			public boolean onJsAlert(WebView view, String url, String message,
-					final android.webkit.JsResult result) {
-				new AlertDialog.Builder(myApp)
-					.setTitle("javaScript dialog")
-					.setMessage(message)
-					.setPositiveButton(android.R.string.ok, 
-							new AlertDialog.OnClickListener(){
-		    				public void onClick(DialogInterface dialog,
-		    						int which) {
-		    					result.confirm();
-		    				}
-					})
-					.setCancelable(false)
-					.create()
-					.show();
-				
-				return true;
-			}
-			
-			
-		});
+            
+            // Handle javaScript alert in webview.
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message,
+                    final android.webkit.JsResult result) {
+                new AlertDialog.Builder(myApp)
+                    .setTitle("javaScript dialog")
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, 
+                            new AlertDialog.OnClickListener(){
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                result.confirm();
+                            }
+                    })
+                    .setCancelable(false)
+                    .create()
+                    .show();
+                
+                return true;
+            }
+            
+            
+        });
 
         
         jsInterface = new JavaScriptInterface(this);
@@ -124,7 +124,7 @@ public class YiRiSanXingActivity extends Activity {
         jsInterface.open();
         myWebView.addJavascriptInterface(jsInterface, "Android");
         
-        
+        // TODO: load review.html
         // Load a web page
 //        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
@@ -133,32 +133,32 @@ public class YiRiSanXingActivity extends Activity {
     
     @Override
     protected void onResume() {
-    	jsInterface.open();
-    	super.onResume();
+        jsInterface.open();
+        super.onResume();
     }
     
     @Override
     protected void onPause() {
-    	jsInterface.close();
-    	super.onPause();
+        jsInterface.close();
+        super.onPause();
     }
         
     @Override
     public void onBackPressed() {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this); 
-    	builder.setMessage("Are you sure you want to exit?") 
-               .setCancelable(false) 
-               .setPositiveButton("Yes", new DialogInterface.OnClickListener() { 
-                   public void onClick(DialogInterface dialog, int id) { 
-                	   finish();
-                   }                    
-               })                               
-               .setNegativeButton("No", new DialogInterface.OnClickListener() {                 
-            	   public void onClick(DialogInterface dialog, int id) {                      
-            		   dialog.cancel();                 
-            	   }             
-               });      
-    	AlertDialog alert = builder.create(); 
-    	alert.show();        	
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to exit?")
+               .setCancelable(false)
+               .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       finish();
+                   }
+               })
+               .setNegativeButton("No", new DialogInterface.OnClickListener() {        
+                   public void onClick(DialogInterface dialog, int id) {              
+                       dialog.cancel();   
+                   }
+               });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
