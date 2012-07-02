@@ -33,8 +33,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "_id INTEGER PRIMARY KEY, "
             + "question_id INTEGER REFERENCES questions(_id) ON DELETE CASCADE, "
             + "option_id INTEGER REFERENCES options(_id), "
-            + "reviewd INTEGER, "
-            + "created INTEGER"
+            + "reviewed INTEGER, "
+            + "created INTEGER, "
+            + "comment TEXT"
             + ");";
 
     public DatabaseHelper(Context context) {

@@ -83,7 +83,6 @@ public class YiRiSanXingActivity extends Activity {
 
         
         jsInterface = new JavaScriptInterface(this);
-        jsInterface.open();
         myWebView.addJavascriptInterface(jsInterface, "Android");
         
         
