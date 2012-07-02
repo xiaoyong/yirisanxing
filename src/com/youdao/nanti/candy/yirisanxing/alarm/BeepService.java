@@ -18,9 +18,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class BeepService extends Service {
-	
-	private static final String TAG = "BeepService";
-	
+    
+    private static final String TAG = "BeepService";
+    
     private boolean mPlaying = false;
         
     private Vibrator mVibrator;
@@ -51,19 +51,19 @@ public class BeepService extends Service {
     private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
         public void onCallStateChanged(int state, String ignored) {
-        	if (state != TelephonyManager.CALL_STATE_IDLE) {
-        		stopSelf();
-        	}
+            if (state != TelephonyManager.CALL_STATE_IDLE) {
+                stopSelf();
+            }
         }
     };
 
     @Override
     public void onCreate() {
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-		mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
-		// do not acquire wake lock, in case of misoperation
-		/*
+        mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+        // do not acquire wake lock, in case of misoperation
+        /*
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
                 PowerManager.ACQUIRE_CAUSES_WAKEUP |
@@ -77,8 +77,8 @@ public class BeepService extends Service {
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-    	// KEEP
-    	// No intent, tell the system not to restart us.
+        // KEEP
+        // No intent, tell the system not to restart us.
         if (intent == null) {
             stopSelf();
             return START_NOT_STICKY;
@@ -100,7 +100,7 @@ public class BeepService extends Service {
         Uri alert = RingtoneManager.getDefaultUri(ringtone);
 
         try {
-            //´´½¨media player
+            //ï¿½ï¿½ï¿½ï¿½media player
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setDataSource(this, alert);
             final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -111,9 +111,9 @@ public class BeepService extends Service {
                         mMediaPlayer.start();
               }
         } catch (Exception ex) {
-        	//TODO : exception
-        	Log.e(TAG, "play ringtone failed");
-        	Toast.makeText(this, "play ringtone failed", Toast.LENGTH_LONG).show();
+            //TODO : exception
+            Log.e(TAG, "play ringtone failed");
+            Toast.makeText(this, "play ringtone failed", Toast.LENGTH_LONG).show();
         }
         
             
@@ -142,11 +142,11 @@ public class BeepService extends Service {
         }
     }
     
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
-	
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+    
     @Override
     public void onDestroy() {
         stop();

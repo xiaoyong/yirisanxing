@@ -52,10 +52,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    	Log.w(DatabaseHelper.class.getName(), "Upgrading database from version " + oldVersion + " to "
+        Log.w(DatabaseHelper.class.getName(), "Upgrading database from version " + oldVersion + " to "
                 + newVersion + ", which will destroy all old data");
         
-    	// Drop older table if existed
+        // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS questions");
         db.execSQL("DROP TABLE IF EXISTS options");
         db.execSQL("DROP TABLE IF EXISTS reviews");

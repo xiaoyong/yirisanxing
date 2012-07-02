@@ -16,7 +16,7 @@ import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 
 /** Database access interface for JavaScript */
 public class JavaScriptInterface {
-	
+    
     Context mContext;
     
     // Database fields
@@ -202,7 +202,7 @@ public class JavaScriptInterface {
     /** Object converting helpers */
     private ContentValues questionToContentValues(Question question) {
         ContentValues values = new ContentValues();
-	
+    
         if (question.getId() > 0) {
             values.put("_id", question.getId());
         }
@@ -250,25 +250,26 @@ public class JavaScriptInterface {
     
     
     // alarm related
-	public void setAlarm(long questionId) {
-	    Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
-		cursor.moveToFirst();
-		Alarm alarm = new Alarm(cursor);
-		//alarm.alert(mContext);
-		alarm.testAlert(mContext);
-		cursor.close();
-	}
-	
-	public void delay(long questionId, long time) {
-	    Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
-		cursor.moveToFirst();
-		Alarm alarm = new Alarm(cursor);
-		alarm.delay(mContext, time);
-		cursor.close();
-	}
-	
-	public void mute() {
-    	mContext.stopService(new Intent(Action.BEEP));
-	}
+    public void setAlarm(long questionId) {
+        // TODO: test or release
+        Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
+        cursor.moveToFirst();
+        Alarm alarm = new Alarm(cursor);
+        //alarm.alert(mContext);
+        alarm.testAlert(mContext);
+        cursor.close();
+    }
+    
+    public void delay(long questionId, long time) {
+        Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
+        cursor.moveToFirst();
+        Alarm alarm = new Alarm(cursor);
+        alarm.delay(mContext, time);
+        cursor.close();
+    }
+    
+    public void mute() {
+        mContext.stopService(new Intent(Action.BEEP));
+    }
 
 }
