@@ -24,6 +24,11 @@
 	$(document).ready(function(){
 		openPage(); // call page open animation
 		
+		var action = getQueryStringRegExp("action");
+		if(action=="update"){
+			var id = getQueryStringRegExp("id"); // exception for wrong id.
+			getItemByID(id);
+		}
 		
        	//focus then close
 		$(".cl").focus(function(){
@@ -51,13 +56,13 @@
 		});
 		
 		$("#addItemBTN").click(function(){
-			addNewItem();
+			aadOrUpdateItem();
 			//getItemByID();
 		});
 	
 	}); //----jQuery END-----//
 	
-	function addNewItem(){ //add or update.
+	function aadOrUpdateItem(){ //add or update.
 		//	alert("here!");
 			var q = new Object();
 			q.id = $("#addItem").attr("dID"); //add negative add, alter positive id.
@@ -83,8 +88,26 @@
 			q.alertType = "1";
 			alert(JSON.stringify(q));
 			
-			Android.processQuestion(JSON.stringify(q), "create")
+			//Android.processQuestion(JSON.stringify(q), "create");
 	}
+	
+	function getItemByID(id){ //get question by ID.
+		var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
+		
+		var q = eval('('+result+')');
+		//alert(q.question);
+		$("#addItem").attr("dID",q.id);
+		$("#newItem1").val(q.question);
+		$("#add_repeat").val(q.repeat_type);
+		$("#add_time").val(q.hour + ":" + q.minute);
+		
+		$("#aList").empty();
+		for(var i in q.options){
+			//alert(q.options[i].id);
+			var e = '<div class="ndel Line" oID="'+q.options[i].id+'"><span class="bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>'
+			$("#aList").append(e);
+		}
+	};
 		
 </script>
 </head>
