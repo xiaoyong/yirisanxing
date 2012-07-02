@@ -48,7 +48,9 @@ public class JavaScriptInterface {
     }
 
     public void close() {
-        dbHelper.close();
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
     }
 
     /** Question related JavaScript interfaces */
@@ -207,7 +209,7 @@ public class JavaScriptInterface {
             values.put("_id", question.getId());
         }
         values.put("question", question.getQuestion());
-        values.put("is_enabled", question.getIsEnabled());
+        values.put("is_enabled", question.getIsEnabled() ? 1 : 0);
         values.put("repeat_type", question.getRepeatType());
         values.put("interval", question.getInterval());
         values.put("days_of_week", question.getDaysOfWeek());

@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
     function createQuestion() {
-        var question = {"id": -1, "question": "My question", "options": [{"id": -1, "option": "Yes"}, {"id": -1, "option": "No"}], "repeatType": 2, "hour": 13, "minute": 15};
+        var question = {"id": -1, "question": "My question", "isEnabled": true, "options": [{"id": -1, "option": "Yes"}, {"id": -1, "option": "No"}], "repeatType": 2, "hour": 13, "minute": 15};
         Android.processQuestion(JSON.stringify(question), "create");
         listAllQuestions();
     }

@@ -62,7 +62,7 @@ public class YiRiSanXingActivity extends Activity {
             public boolean onJsAlert(WebView view, String url, String message,
                     final android.webkit.JsResult result) {
                 new AlertDialog.Builder(myApp)
-                    .setTitle("javaScript dialog")
+                    .setTitle("JavaScript Dialog")
                     .setMessage(message)
                     .setPositiveButton(android.R.string.ok, 
                             new AlertDialog.OnClickListener(){
@@ -121,7 +121,6 @@ public class YiRiSanXingActivity extends Activity {
         myWebView.requestFocusFromTouch();
         
         jsInterface = new JavaScriptInterface(this);
-        jsInterface.open();
         myWebView.addJavascriptInterface(jsInterface, "Android");
         
         // TODO: load review.html
@@ -146,14 +145,14 @@ public class YiRiSanXingActivity extends Activity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to exit?")
+        builder.setMessage("确定退出？")
                .setCancelable(false)
-               .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+               .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        finish();
                    }
                })
-               .setNegativeButton("No", new DialogInterface.OnClickListener() {        
+               .setNegativeButton("取消", new DialogInterface.OnClickListener() {        
                    public void onClick(DialogInterface dialog, int id) {              
                        dialog.cancel();   
                    }
