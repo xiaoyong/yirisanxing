@@ -47,7 +47,7 @@ public class YiRiSanXingActivity extends Activity {
         
         //hidden scroll bar.
         myWebView.setHorizontalScrollBarEnabled(false);
-        myWebView.setVerticalScrollBarEnabled(true);
+        myWebView.setVerticalScrollBarEnabled(false);
         
         //add key board.
         myWebView.requestFocusFromTouch();
