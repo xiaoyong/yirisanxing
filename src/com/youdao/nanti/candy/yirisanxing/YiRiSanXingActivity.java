@@ -145,14 +145,14 @@ public class YiRiSanXingActivity extends Activity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("确定退出？")
+        builder.setMessage(R.string.exit_message)
                .setCancelable(false)
-               .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+               .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        finish();
                    }
                })
-               .setNegativeButton("取消", new DialogInterface.OnClickListener() {        
+               .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {        
                    public void onClick(DialogInterface dialog, int id) {              
                        dialog.cancel();   
                    }

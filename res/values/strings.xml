@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, YiRiSanXing22Activity!</string>
     <string name="app_name">一日三省</string>
-
+    <string name="exit_message">确定退出一日三省？</string>
+    
 </resources>
