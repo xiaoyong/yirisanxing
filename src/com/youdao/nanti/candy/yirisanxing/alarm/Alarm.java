@@ -50,9 +50,8 @@ public class Alarm {
 	    hour = cursor.getInt(6);
 	    minute = cursor.getInt(7);
 	    alert_type = cursor.getInt(8);
-
 	}
-	
+		
 	public void testAlert(Context context) {
 		long time = System.currentTimeMillis() + 3000;
 		

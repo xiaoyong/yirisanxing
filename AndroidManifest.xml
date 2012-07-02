@@ -18,8 +18,10 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.youdao.nanti.candy.yirisanxing.action.REVIEW" />                
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.youdao.nanti.candy.yirisanxing.action.REVIEW" />                
                 <category android:name="android.intent.category.DEFAULT" />                
                 <data android:scheme="question" />
             </intent-filter>

@@ -80,7 +80,7 @@
 			var t = $("#add_time").val().split(":");
 			q.hour = t[0];
 			q.minute = t[1];
-			q.alertType = "2";
+			q.alertType = "1";
 			alert(JSON.stringify(q));
 			
 			Android.processQuestion(JSON.stringify(q), "create")

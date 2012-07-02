@@ -5,17 +5,17 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
+import com.youdao.nanti.candy.yirisanxing.alarm.Action;
 import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 
 /** Database access interface for JavaScript */
 public class JavaScriptInterface {
-	
-	private static final String TAG = "JavaScriptInterface";
 	
     Context mContext;
     
@@ -177,6 +177,7 @@ public class JavaScriptInterface {
     }
     private long createReview(Review review) {
         ContentValues values = reviewToContentValues(review);
+        //mute();
         return database.insert("reviews", null, values);
     }
     private int updateQuestion(Question question) {
@@ -289,6 +290,8 @@ public class JavaScriptInterface {
         return values;
     }
     
+    
+    // alarm related
 	public void setAlarm(long questionId) {
 	    Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
 		cursor.moveToFirst();
@@ -304,6 +307,10 @@ public class JavaScriptInterface {
 		Alarm alarm = new Alarm(cursor);
 		alarm.delay(mContext, time);
 		cursor.close();
+	}
+	
+	public void mute() {
+    	mContext.stopService(new Intent(Action.BEEP));
 	}
 
 }

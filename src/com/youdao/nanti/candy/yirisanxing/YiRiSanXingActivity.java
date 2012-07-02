@@ -1,9 +1,13 @@
 package com.youdao.nanti.candy.yirisanxing;
 
+
+import com.youdao.nanti.candy.yirisanxing.alarm.Action;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.webkit.WebChromeClient;
@@ -26,13 +30,24 @@ public class YiRiSanXingActivity extends Activity {
         setContentView(R.layout.main);
         
         myWebView = (WebView) findViewById(R.id.webview);
+        
+        Intent intent = getIntent();
+        if (intent.getAction().equals("android.intent.action.MAIN")) {
+        	loadMain();
+        } else if (intent.getAction().equals(Action.REVIEW)) {
+        	loadReview();
+        }
+        
+    }
+    
+    private void loadMain() {
         // Enable JavaScript
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         
         //hidden scroll bar.
         myWebView.setHorizontalScrollBarEnabled(false);
-        myWebView.setVerticalScrollBarEnabled(false);
+        myWebView.setVerticalScrollBarEnabled(true);
         
         //add key board.
         myWebView.requestFocusFromTouch();
@@ -92,6 +107,29 @@ public class YiRiSanXingActivity extends Activity {
         bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "top");
         
         //////-----------bottom panel END-----------------------------/////////
+    }
+    
+    private void loadReview() {
+        // Enable JavaScript
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        
+        //hidden scroll bar.
+        myWebView.setHorizontalScrollBarEnabled(false);
+        myWebView.setVerticalScrollBarEnabled(true);
+        
+        //add key board.
+        myWebView.requestFocusFromTouch();
+        
+        jsInterface = new JavaScriptInterface(this);
+        jsInterface.open();
+        myWebView.addJavascriptInterface(jsInterface, "Android");
+        
+        
+        // Load a web page
+//        myWebView.loadUrl("file:///android_asset/index.html?id=2");
+        //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
+        myWebView.loadUrl("file:///android_asset/index.html");
     }
     
     @Override

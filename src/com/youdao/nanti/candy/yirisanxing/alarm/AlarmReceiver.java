@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 
@@ -86,16 +87,20 @@ public class AlarmReceiver extends BroadcastReceiver {
 		String question = alarm.question;
 		
 		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent notify = new Intent(Action.REVIEW);
+        Intent notify = new Intent(Action.REVIEW, Uri.parse("question:" + String.valueOf(questionId)));
         PendingIntent pendingNotify = PendingIntent.getActivity(context, 0, notify, 0);
 
         String title = context.getResources().getString(R.string.app_name);
-        Notification n = new Notification(R.drawable.ic_launcher, "", System.currentTimeMillis());
-        n.setLatestEventInfo(context, title, question, pendingNotify);
-        n.flags |= Notification.FLAG_SHOW_LIGHTS
+        Notification notification = new Notification(R.drawable.ic_launcher, "", System.currentTimeMillis());
+        notification.setLatestEventInfo(context, title, question, pendingNotify);
+        notification.flags |= Notification.FLAG_SHOW_LIGHTS
                 | Notification.FLAG_ONGOING_EVENT
         		| Notification.FLAG_AUTO_CANCEL;
-        n.defaults |= Notification.DEFAULT_LIGHTS;
-        nm.notify((int) questionId, n);
+        notification.defaults |= Notification.DEFAULT_LIGHTS;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        // TODO: custom sounds ?
+        notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        		
+        nm.notify((int) questionId, notification);
 	}
 }
