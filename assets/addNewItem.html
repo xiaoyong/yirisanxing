@@ -75,14 +75,15 @@
 				q.options.push(o);
 			});	
 		
-			q.repeat_type = 1;
+			q.repeatType = "1";
 			q.interval = $("#add_repeat").val();
 			var t = $("#add_time").val().split(":");
 			q.hour = t[0];
 			q.minute = t[1];
+			q.alertType = "2";
 			alert(JSON.stringify(q));
 			
-			//Android.processQuestion(JSON.stringify(q), "create")
+			Android.processQuestion(JSON.stringify(q), "create")
 	}
 		
 </script>

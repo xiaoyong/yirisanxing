@@ -14,6 +14,9 @@ import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 
 /** Database access interface for JavaScript */
 public class JavaScriptInterface {
+	
+	private static final String TAG = "JavaScriptInterface";
+	
     Context mContext;
     
     // Database fields
@@ -161,8 +164,8 @@ public class JavaScriptInterface {
     private long createQuestion(Question question) {
         ContentValues values = questionToContentValues(question);
         long questionId = database.insert("questions", null, values);
-        
-        //setAlarm(questionId);
+
+        setAlarm(questionId);
         return questionId;
         
     }
