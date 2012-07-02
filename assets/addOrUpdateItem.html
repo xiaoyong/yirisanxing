@@ -56,13 +56,13 @@
 		});
 		
 		$("#addItemBTN").click(function(){
-			aadOrUpdateItem();
+			addOrUpdateItem();
 			//getItemByID();
 		});
 	
 	}); //----jQuery END-----//
 	
-	function aadOrUpdateItem(){ //add or update.
+	function addOrUpdateItem(){ //add or update.
 		//	alert("here!");
 			var q = new Object();
 			q.id = $("#addItem").attr("dID"); //add negative add, alter positive id.
@@ -120,7 +120,7 @@
 	 -->
 	</div>
 	<div id="move"></div>
-	<!-- 添加提醒 panel  -->
+	<!-- 添加或更新提醒 panel  -->
 					<section class="st-panel" id="st-panel-1">						
 						<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">E<span class="textOrange" style="margin-left:10px;">添加提醒</span></span></h3>
 			<!-- ADD ITEM -->			

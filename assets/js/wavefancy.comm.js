@@ -35,3 +35,34 @@ function getQueryStringRegExp(name)
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return ""; 
 };
 
+
+
+//--------------------Functions for Block UI---------------------------//
+/**
+ * unblockUI whit delay time.
+ * @param {Object} delayTime
+ */
+function unBlockUI(delayTime){
+	setTimeout($.unblockUI,delayTime);	
+}
+
+/**
+ * Block UI
+ * @param message
+ */
+function blockUI(message){
+	
+	 $.blockUI({message: message , 
+		  
+		 css: { 
+          border: 'none', 
+          padding: '15px', 
+          backgroundColor: '#000', 
+          '-webkit-border-radius': '10px', 
+          '-moz-border-radius': '10px', 
+          opacity: .5, 
+          color: '#fff' 
+	 } });
+}
+//--------------------Functions for Block UI END---------------------------//
+

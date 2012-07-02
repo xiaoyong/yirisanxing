@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0 ,user-scalable=no,target-densitydpi=device-dpi"> 
+
+<title>Top Panel Test</title>
+
+<style>
+	@font-face{
+		font-family: "RaphaelIcons";
+		src: url('css/fonts/raphaelicons-webfont.ttf');
+	}
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/newStyle.css" />
+
+ <!--jQuery-->
+ 	<script language="JavaScript" src="js/jquery-1.7.2.min.js"></script>
+ <!--jQuery END-->
+ 	<script language="JavaScript" src="js/wavefancy.comm.js"></script>
+ 
+  <!-- Load jQuery Block UI -->
+     <script language="JavaScript" src="js/jquery.blockUI.js"></script>
+  <!-- End load jQuery block ui -->
+
+<script>
+	$(document).ready(function(){
+		openPage();  // call page open animation
+		
+		setCurrentItem();
+		
+		$("#curr-1").click(function(){
+       	    	   //alert("here");
+       	    	   
+    		blockUI("设置成功!");
+    		unBlockUI(600);
+       	});
+       	
+       	$("#delayBTN").click(function(){
+			saveDelay();
+		});
+
+	});
+	
+/**
+ * Save delay setting for current active items.
+ */
+function saveDelay(){
+	var para = new Object();
+	para.id = $("#currItem").attr("dID");
+	para.delay = $("#delay").val();
+	
+	alert(JSON.stringify(para));
+}
+
+function setCurrentItem(){
+	var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
+	
+	var q = eval('('+result+')');
+	
+	$("#currItem").attr("dID",q.id);
+	$("#currItemQuestion").val(q.question);
+	
+	$("#currItemList").empty();
+	for(var i in q.options){
+		//alert(q.options[i].id);
+		var e = '<div class="currList" oID="'+q.options[i].id+'"><span class="bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Ã</span></span></div>'
+		$("#currItemList").append(e);
+	}
+	
+	//alert($("#delay").val());
+	//bind option choose functions.
+	bindOptionToActiveItem();
+};
+
+function bindOptionToActiveItem(){
+	$(".currList").click(function(){
+		saveOptionChoose($(this).attr("oID"));
+	});
+};
+
+function saveOptionChoose(optionID){
+	var para = new Object();
+	para.id = $("#currItem").attr("dID");
+	para.optionID = optionID;
+	
+	alert(JSON.stringify(para));
+	
+	blockUI("设置成功!");
+    unBlockUI(600);
+}
+
+
+
+</script>
+</head>
+<body>
+<div id="topPanel">
+
+	<div id="topLine">
+	<!-- 
+		<div id="tl1"></div> <div id="tl2"></div> <div id="tl3"></div> <div id="tl4"></div> <div id="tl5"></div>
+	 -->
+	</div>
+	<div id="move"></div>
+	<!-- Current Active Item -->	
+					<section class="st-panel" id="st-panel-3">
+						<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">"<span class="textOrange" style="margin-left:10px;">当前提醒</span></span></h3>
+						<div id="currItem" dID="-1">
+							<input id="currItemQuestion"  class="cInput" value="请添加提醒问题" readonly/>
+							   <div style="text-align:right;">
+						    		<div style="margin-top:10px;">
+						    			<span class="bLine" style="width:50%;"> 请点击回答项 <span class="RaphaelIcons textGreen" style="display: inline-table;">c</span></span>
+						    		</div>
+						    	<div id="currItemList">	
+						    		<div oID="-1" class="currList">
+						    		   	<span class="bLine" > 是 <span class="RaphaelIcons textGray" style="display: inline-table;">Ã</span></span>
+						    		</div>
+						    		<div oID="-1" class="currList">
+						    		   	<span class="bLine" > 否 <span class="RaphaelIcons textGray" style="display: inline-table;">Ã</span></span>
+						    		</div>
+						    	</div>
+						    	
+						    <div class="bLine"></div>
+						    <div>
+						      <span class="bLine" style="width:50%; height:30px;"> 延迟提醒 <input id="delay" class="lInput" value="20" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen" style="display: inline-table;">3</span>分钟后</span>
+						      <input id="delayBTN" class="button" type="button" value="确认延迟"/>
+						    </div>
+						    		<!-- 
+							    		<div>
+							    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+							    		</div>
+							    		<div>
+							    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input class="lInput" value="13:15" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen" style="display: inline-table;">3</span></span>
+							    		</div>
+							    	 -->
+						    	</div>
+						</div>
+						
+					</section>
+			 <!-- Current Active Item END -->	
+</div>
+</body>
+</html>
