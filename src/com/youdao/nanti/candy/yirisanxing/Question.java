@@ -2,19 +2,35 @@ package com.youdao.nanti.candy.yirisanxing;
 
 import java.util.List;
 
+import android.database.Cursor;
+
 class Question {
     private long id;
     private String question;
-    private int isEnabled;
+    private boolean isEnabled;
     private int repeatType;
     private int interval;
     private int daysOfWeek;
     private int alertType;
     private int hour;
     private int minute;
-    private int created;
-    private int updated;
+    private long created;
+    private long updated;
     private List<Option> options;
+    
+    public Question(Cursor cursor) {
+        id = cursor.getLong(0);
+        question = cursor.getString(1);
+        isEnabled = (cursor.getInt(2) == 1);
+        repeatType = cursor.getInt(3);
+        interval = cursor.getInt(4);
+        daysOfWeek = cursor.getInt(5);
+        alertType = cursor.getInt(6);
+        hour = cursor.getInt(7);
+        minute = cursor.getInt(8);
+        created = cursor.getLong(9);
+        updated = cursor.getLong(10);
+    }
     
     public long getId() {
         return id;
@@ -28,10 +44,10 @@ class Question {
     public void setQuestion(String question) {
         this.question = question;
     }
-    public int getIsEnabled() {
+    public boolean getIsEnabled() {
         return isEnabled;
     }
-    public void setIsEnabled(int isEnabled) {
+    public void setIsEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
     }
     public int getRepeatType() {
@@ -70,16 +86,16 @@ class Question {
     public void setMinute(int minute) {
         this.minute = minute;
     }
-    public int getCreated() {
+    public long getCreated() {
         return created;
     }
-    public void setCreated(int created) {
+    public void setCreated(long created) {
         this.created = created;
     }
-    public int getUpdated() {
+    public long getUpdated() {
         return updated;
     }
-    public void setUpdated(int updated) {
+    public void setUpdated(long updated) {
         this.updated = updated;
     }
     public List<Option> getOptions() {

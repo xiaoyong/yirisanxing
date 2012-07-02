@@ -85,7 +85,7 @@ public class JavaScriptInterface {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Question question = cursorToQuestion(cursor);
+            Question question = new Question(cursor);
             question.setOptions(getAllOptions(question.getId()));
             questions.add(question);
             cursor.moveToNext();
@@ -102,7 +102,7 @@ public class JavaScriptInterface {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Option option = cursorToOption(cursor);
+            Option option = new Option(cursor);
             options.add(option);
             cursor.moveToNext();
         }
@@ -118,7 +118,7 @@ public class JavaScriptInterface {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Review review = cursorToReview(cursor);
+            Review review = new Review(cursor);
             reviews.add(review);
             cursor.moveToNext();
         }
@@ -196,48 +196,6 @@ public class JavaScriptInterface {
     }
     
     /** Object converting helpers */
-    private Question cursorToQuestion(Cursor cursor) {
-        Question question = new Question();
-	
-        question.setId(cursor.getLong(0));
-        question.setQuestion(cursor.getString(1));
-        question.setIsEnabled((int) cursor.getLong(2));
-        question.setRepeatType((int) cursor.getLong(3));
-        question.setInterval((int) cursor.getLong(4));
-        question.setDaysOfWeek((int) cursor.getLong(5));
-        question.setAlertType((int) cursor.getLong(6));
-        question.setHour((int) cursor.getLong(7));
-        question.setMinute((int) cursor.getLong(8));
-        question.setCreated((int) cursor.getLong(9));
-        question.setUpdated((int) cursor.getLong(10));
-
-        return question;
-    }
-    
-    private Option cursorToOption(Cursor cursor) {
-        Option option = new Option();
-    
-        option.setId(cursor.getLong(0));
-        option.setQuestionId(cursor.getLong(1));
-        option.setOption(cursor.getString(2));
-        option.setValue((int) cursor.getLong(3));
-
-        return option;
-    }
-    
-    private Review cursorToReview(Cursor cursor) {
-        Review review = new Review();
-    
-        review.setId(cursor.getLong(0));
-        review.setQuestionId(cursor.getLong(1));
-        review.setOptionId(cursor.getLong(2));
-        review.setReviewed((int) cursor.getLong(3));
-        review.setCreated((int) cursor.getLong(4));
-        review.setIsReviewed((int) cursor.getLong(5));
-
-        return review;
-    }
-    
     private ContentValues questionToContentValues(Question question) {
         ContentValues values = new ContentValues();
 	
@@ -280,8 +238,8 @@ public class JavaScriptInterface {
         values.put("question_id", review.getQuestionId());
         values.put("option_id", review.getOptionId());
         values.put("reviewed", review.getReviewed());
-        values.put("createdd", review.getCreated());
-        values.put("is_reviewed", review.getIsReviewed());
+        values.put("created", review.getCreated());
+        values.put("comment", review.getComment());
         
         return values;
     }

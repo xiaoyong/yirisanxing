@@ -1,13 +1,23 @@
 package com.youdao.nanti.candy.yirisanxing;
 
+import android.database.Cursor;
+
 public class Review {
     private long id;
     private long questionId;
     private long optionId;
-    private int reviewed;
-    private int created;
-    private int isReviewed;
+    private long reviewed;
+    private long created;
+    private String comment;
     
+    public Review(Cursor cursor) {
+        id = cursor.getLong(0);
+        questionId = cursor.getLong(1);
+        optionId = cursor.getLong(2);
+        reviewed = cursor.getLong(3);
+        created = cursor.getLong(4);
+        comment = cursor.getString(5);
+    }
     public long getId() {
         return id;
     }
@@ -26,24 +36,23 @@ public class Review {
     public void setOptionId(long optionId) {
         this.optionId = optionId;
     }
-    public int getReviewed() {
+    public long getReviewed() {
         return reviewed;
     }
-    public void setReviewed(int reviewed) {
+    public void setReviewed(long reviewed) {
         this.reviewed = reviewed;
     }
-    public int getCreated() {
+    public long getCreated() {
         return created;
     }
-    public void setCreated(int created) {
+    public void setCreated(long created) {
         this.created = created;
     }
-    public int getIsReviewed() {
-        return isReviewed;
+    public String getComment() {
+        return comment;
     }
-    public void setIsReviewed(int isReviewed) {
-        this.isReviewed = isReviewed;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
-
     
 }
