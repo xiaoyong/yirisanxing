@@ -27,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		long alertTime = intent.getLongExtra(Alarm.ALERT_TIME, System.currentTimeMillis());
 		
 		if (Action.ALERT.equals(intent.getAction())) {
-			Log.v(TAG, "action GENERATE_REVIEW");
+			Log.v(TAG, "action ALERT");
 
 			// next alarm
 			// TODO: check whether the time is right
@@ -39,11 +39,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 		    Alarm alarm = new Alarm(cursor); 
 		    alarm.alert(context);
 		    
+		    Log.v(TAG, String.valueOf(alarm.repeat_type));
+		    
 		    // notification or alarmclock
 		    if (alarm.alert_type == QuestionColumns.ALERT_TYPE_NOTIFICATION) {
+		    	Log.v(TAG, "notification alert");
 		    	updateNotification(context, alarm, alertTime);
-		    } else if (alarm.alert_type == QuestionColumns.ALERT_TYPE_ALARMCLOCK) { // alarm clock alert
+		    } else if (alarm.alert_type == QuestionColumns.ALERT_TYPE_ALARMCLOCK) {
+		    	Log.v(TAG, "alarmclock alert");
 		    	popAlert(context, questionId, alertTime);
+		    } else {
+		    	Log.e(TAG, "unspecified alert type");
 		    }
 		} else if (Action.DELAY.equals(intent.getAction())) {
 			Log.v(TAG, "action DELAY");
@@ -60,7 +66,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         context.sendBroadcast(closeDialogs);
 
         // popup activity
-		Intent alertIntent = new Intent(Action.REVIEW, Uri.parse("review:" + String.valueOf(questionId)));
+		Intent alertIntent = new Intent(Action.REVIEW, Uri.parse("question:" + String.valueOf(questionId)));
 		alertIntent.putExtra(Alarm.ALERT_TIME, time);
 		//TODO: should be the question uri
 		alertIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -68,9 +74,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 		alertIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		context.startActivity(alertIntent);
 
+		/*
 		// start beep service
 		Intent playAlarm = new Intent(Action.BEEP);
 		context.startService(playAlarm);
+		*/
 	}
 	
 	protected void updateNotification(Context context, Alarm alarm, long time) {

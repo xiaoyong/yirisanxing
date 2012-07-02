@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -105,16 +104,23 @@ public class YiRiSanXingActivity extends Activity {
     	jsInterface.close();
     	super.onPause();
     }
-    
+        
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // Check if the key event was the Back button and if there's history
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView.canGoBack()) {
-            myWebView.goBack();
-            return true;
-        }
-        // If it wasn't the Back key or there's no web page history, bubble up to the default
-        // system behavior (probably exit the activity)
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+    	builder.setMessage("Are you sure you want to exit?") 
+               .setCancelable(false) 
+               .setPositiveButton("Yes", new DialogInterface.OnClickListener() { 
+                   public void onClick(DialogInterface dialog, int id) { 
+                	   finish();
+                   }                    
+               })                               
+               .setNegativeButton("No", new DialogInterface.OnClickListener() {                 
+            	   public void onClick(DialogInterface dialog, int id) {                      
+            		   dialog.cancel();                 
+            	   }             
+               });      
+    	AlertDialog alert = builder.create(); 
+    	alert.show();        	
     }
 }
