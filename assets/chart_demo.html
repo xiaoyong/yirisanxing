@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes,target-densitydpi=device-dpi" /> 
+  <title>Create Table</title>
+  <link href="css/charting/basic.css" type="text/css" rel="stylesheet" />
+  <link href="css/charting/visualize.css" type="text/css" rel="stylesheet" />
+  <link href="css/charting/visualize-light.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/visualize.jQuery.js"></script>
+  <script>
+    $(document).ready(function(){
+      var $wrap = $('<div>').attr('id', 'tableWrap');
+      $wrap.css({"width": "100%", "margin": "auto", "border":"1px solid gray"});
+      var $tbl = $('<table>').attr('id', 'basicTable');
+      $tbl.css("width", "85%");
+
+      $tbl.append($('<caption>').text("提醒问题"));
+      $tbl.append($('<thead>')
+        .append($('<tr>')
+          .append($('<td>'),
+            $('<th>').attr("scope", "col").text("是"),
+            $('<th>').text("否"))
+        ));
+
+      //for (var i = 0; i < 10; i++) {
+
+        $tbl.append($('<tbody>')
+          .append($('<tr>')
+            .append($('<th>').attr("scope", "row").text("Mary"),
+              $('<td>').text(20),
+              $('<td>').text(10))
+          ));
+      //}
+
+      $wrap.append($tbl);
+      $('body').append($wrap);
+      $('table').visualize({type: "bar"});
+      $('table').visualize({type: "line"});
+      $('table').visualize({type: "pie"});
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
