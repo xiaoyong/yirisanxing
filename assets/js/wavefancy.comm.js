@@ -6,6 +6,8 @@ var pURL = null;
 /**
  * This function will be called by the bottom panel.
  * In order to add a animation for page close.
+ * 
+ * This function also need to be call when want to transite to a another page.
  */
 function topLoad(URL){
 	pURL = URL;
