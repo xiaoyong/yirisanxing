@@ -104,7 +104,7 @@ public class YiRiSanXingActivity extends Activity {
         bPanel.setVerticalScrollBarEnabled(false);
         
         //bind top panel communication interface.
-        bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "top");
+        bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "TopInterface");
         
         //////-----------bottom panel END-----------------------------/////////
     }
@@ -126,11 +126,9 @@ public class YiRiSanXingActivity extends Activity {
         
         // TODO: load review.html
         // Load a web page
-//        myWebView.loadUrl("file:///android_asset/index.html?id=2");
-        //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
-        myWebView.loadUrl("file:///android_asset/index.html");
+        myWebView.loadUrl("file:///android_asset/activeItem.html");
     }
-    
+
     @Override
     protected void onResume() {
         jsInterface.open();

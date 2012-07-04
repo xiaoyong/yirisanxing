@@ -100,7 +100,7 @@ public class BeepService extends Service {
         Uri alert = RingtoneManager.getDefaultUri(ringtone);
 
         try {
-            //����media player
+            //media player
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setDataSource(this, alert);
             final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
