@@ -175,6 +175,7 @@ h3{
 	height:2.5em;
 	line-height:2.5em;
 	font-weight: bold;
+	font-size:2em;
 /*	vertical-align: baseline;*/
 /*	display: inline-table;*/
 /*	color: #669900*/
@@ -212,10 +213,11 @@ h3{
 	-webkit-border-radius: 20px;
 	border-radius: 20px;
 	border: 1px solid #12AAEE;
-	line-height: 30px;
-	height: 30px;
+	line-height: 2em;
+	height: 2em;
 	width: 93%;
 	padding: 0 15px;
+	font-size: 1.5em;
 }
 
 .lInput{
@@ -229,12 +231,19 @@ h3{
 	border-bottom: 1px solid #12AAEE;
 	line-height: 2em;
 	height: 2em;
+	font-size: 1.5em;
 }
 
 .currList{
-	margin-top: 1em;
+/*	margin-top: 2em;*/
 	line-height: 2em;
 	height: 2em;
+	padding-top:3em;
+}
+
+#currItemList{
+	margin:0;
+	padding:0;	
 }
 
 .Line{
@@ -253,7 +262,7 @@ h3{
 	background-color:#12AAEE;
 	padding:10px;
 	position:relative;
-	font-size:0.8em;
+	font-size:1.2em;
 	text-decoration:none;
 	color:#fff;
 	border: solid 1px #186f8f;
@@ -307,6 +316,7 @@ h3{
 	line-height: 2em;
 	box-shadow: 0px 1px 5px #06c;
 	display:none;
+	font-size: 2em;
 /*	width: 80%;*/
 }
 
