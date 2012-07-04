@@ -258,7 +258,7 @@ h3{
 	padding: 10px 10px;
 }*/
 
-.button{
+.button, .button-red{
 	background-color:#12AAEE;
 	padding:10px;
 	position:relative;
@@ -285,6 +285,19 @@ h3{
 /*	-moz-border-radius: 5px;
 	-o-border-radius: 5px;*/
 	border-radius: 10px;
+}
+
+.button-red{
+	border: solid 1px #AA1C1C;
+	background-color:#C81A1A;
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, rgb(200,26,26)),
+	color-stop(1, rgb(241,55,55))
+	);
+	-webkit-box-shadow: inset 0px 1px 0px #F13737, 0px 1px 0px #fff;
 }
 
 .st-panel{
@@ -326,6 +339,10 @@ h3{
 	text-align: center;
 	margin:0;
 	padding:0;
+}
+
+.fLeft{
+	float: left;
 }
 /********************TOP Panel END*********************/
 

@@ -37,16 +37,21 @@
     		unBlockUI(600);
        	});
        	
+       	//call delay function.
        	$("#delayBTN").click(function(){
-			saveDelay();
+			callDelay();
 		});
-
+		
+		//call mute funtion
+		$("#muteBTN").click(function(){
+			callMute();
+		});
 	});
 	
 /**
  * Save delay setting for current active items.
  */
-function saveDelay(){
+function callDelay(){
 	var para = new Object();
 	para.id = $("#currItem").attr("dID");
 	para.delay = $("#delay").val();
@@ -54,6 +59,16 @@ function saveDelay(){
 	alert(JSON.stringify(para));
 }
 
+/**
+ * Call native mute function.
+ */
+function callMute(){
+	alert("Please mute");
+}
+
+/**
+ * Initiate the content of current item.
+ */
 function setCurrentItem(){
 	var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 	
@@ -74,12 +89,18 @@ function setCurrentItem(){
 	bindOptionToActiveItem();
 };
 
+/*
+ * bind functions to option choice.
+ */
 function bindOptionToActiveItem(){
 	$(".currList").click(function(){
 		saveOptionChoose($(this).attr("oID"));
 	});
 };
 
+/**
+ * Save option choice to database.
+ */
 function saveOptionChoose(optionID){
 	var para = new Object();
 	para.id = $("#currItem").attr("dID");
@@ -123,9 +144,15 @@ function saveOptionChoose(optionID){
 						    	</div>
 						    	
 						    <div class="bLine"></div>
-						    <div>
+						    <div style="margin-top: 0.5em;">
+						    	
+						   <!-- 	
 						      <span class="bLine" style="width:50%; height:30px;"> 延迟提醒 <input id="delay" class="lInput" value="20" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen" style="display: inline-table;">3</span>分钟后</span>
-						      <input id="delayBTN" class="button" type="button" value="确认延迟"/>
+						   -->
+						    <span class="fLeft">		
+						   	  <input id="muteBTN" class="button-red" type="button" value="静音,很吵呢！"/>	
+						   	</span>
+						      <input id="delayBTN" class="button" type="button" value="延迟提醒"/>
 						    </div>
 						    		<!-- 
 							    		<div>
