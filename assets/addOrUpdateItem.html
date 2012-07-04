@@ -21,6 +21,8 @@
  <script language="JavaScript" src="js/wavefancy.comm.js"></script>
 
 <script>
+	var tClick = 0; //title click.
+	
 	$(document).ready(function(){
 		openPage(); // call page open animation
 		
@@ -29,12 +31,22 @@
 			var id = getQueryStringRegExp("id"); // exception for wrong id.
 			
 			$("#title").text("修改提醒");
+			$("#addItemBTN").val("确认修改提醒");
+			
 			getItemByID(id);
 		}
 		
        	//focus then close
 		$(".cl").focus(function(){
 			$(this).val("");
+		});
+       	
+		//Remove the title remind at the first time. 
+		$("#newItem1").click(function(){
+			if(tClick <=0){
+				$(this).val("");
+				tClick ++;
+			}
 		});
 
 		//automaticall add answer list.
@@ -43,19 +55,20 @@
 				return;
 			}
 			
-			var c = ' <div oID="-1" class="ndel Line"><span class="bLine" > '+$(this).val()+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
+			var c = ' <div oID="-1" class="Line"><span class="ndel bLine" > '+$(this).val()+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
 			$("#aList").append(c);
 			$(this).val("");
 			
 			//rebine function
 			$(".ndel").click(function(){
-    			$(this).remove();
+    			$(this).parent().remove();
     		});
 		});
 		//remove item.
 		$(".ndel").click(function(){
-			$(this).remove();
+			$(this).parent().remove();
 		});
+		
 		
 		$("#addItemBTN").click(function(){
 			addOrUpdateItem();
@@ -90,6 +103,11 @@
 			q.alertType = "1";
 			alert(JSON.stringify(q));
 			
+			if(q.id <=0 ){
+				Android.processQuestion(JSON.stringify(q), "create");
+			}else{
+				Android.processQuestion(JSON.stringify(q), "update");
+			}
 			//Android.processQuestion(JSON.stringify(q), "create");
 	}
 	
@@ -106,9 +124,12 @@
 		$("#aList").empty();
 		for(var i in q.options){
 			//alert(q.options[i].id);
-			var e = '<div class="ndel Line" oID="'+q.options[i].id+'"><span class="bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>'
+			var e = '<div class="Line" oID="'+q.options[i].id+'"><span class="ndel bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>'
 			$("#aList").append(e);
 		}
+		
+		//don't remove the title content when focus on.
+		tClick = 1;
 	};
 		
 </script>
@@ -127,17 +148,17 @@
 						<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">E<span id="title" class="textOrange" style="margin-left:10px;">添加提醒</span></span></h3>
 			<!-- ADD ITEM -->			
 						<div id="addItem" dID="-1">
-							<input id="newItem1" class="cInput cl" value="请添加提醒问题"/>
+							<input id="newItem1" class="cInput" value="请添加提醒问题"/>
 						    	<div style="text-align:right;">
 						    		<div class="Line">
 						    			<span class="bLine" style="width:50%;"> <input id="answer" class="lInput cl" value="请添加备选回答项"/> <span class="RaphaelIcons textGreen" style="display: inline-table;">@</span></span>
 						    		</div>
 						    	<div id="aList">	
-						    		<div class="ndel Line" oID="-1">
-						    		   	<span class="bLine" > 是 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+						    		<div class="Line" oID="-1">
+						    		   	<span class="bLine ndel" > 是 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
 						    		</div>
-						    		<div class="ndel Line" oID="-1">
-						    		   	<span class="bLine" > 否 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+						    		<div class="Line" oID="-1">
+						    		   	<span class="bLine ndel" > 否 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
 						    		</div>
 						    	</div>
 						    	
