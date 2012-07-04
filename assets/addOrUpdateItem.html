@@ -27,6 +27,8 @@
 		var action = getQueryStringRegExp("action");
 		if(action=="update"){
 			var id = getQueryStringRegExp("id"); // exception for wrong id.
+			
+			$("#title").text("修改提醒");
 			getItemByID(id);
 		}
 		
@@ -122,7 +124,7 @@
 	<div id="move"></div>
 	<!-- 添加或更新提醒 panel  -->
 					<section class="st-panel" id="st-panel-1">						
-						<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">E<span class="textOrange" style="margin-left:10px;">添加提醒</span></span></h3>
+						<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">E<span id="title" class="textOrange" style="margin-left:10px;">添加提醒</span></span></h3>
 			<!-- ADD ITEM -->			
 						<div id="addItem" dID="-1">
 							<input id="newItem1" class="cInput cl" value="请添加提醒问题"/>
