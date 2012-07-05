@@ -13,4 +13,5 @@ public class Action {
     public static final String DELAY = "com.youdao.nanti.candy.yirisanxing.action.DELAY";
     public static final String REVIEW = "com.youdao.nanti.candy.yirisanxing.action.REVIEW";
 
+    public static final String MAIN = "android.intent.action.MAIN";
 }
