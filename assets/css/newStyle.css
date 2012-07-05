@@ -344,5 +344,15 @@ h3{
 .fLeft{
 	float: left;
 }
+
+textarea{
+	border: 1px solid #12AAEE;
+	height: 3em;
+	width: 80%;
+	border-radius: 20px;
+	font-size:1.5em;
+	margin:1em 0em 1em 1em;
+	padding: 0.5em;
+}
 /********************TOP Panel END*********************/
 

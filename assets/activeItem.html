@@ -105,10 +105,11 @@ function saveOptionChoose(optionID){
 	var para = new Object();
 	para.id = $("#currItem").attr("dID");
 	para.optionID = optionID;
+	para.comment = $("#comment").val();
 	
 	alert(JSON.stringify(para));
 	
-	blockUI("设置成功!");
+	blockUINoOverlay("设置成功!");
     unBlockUI(600);
 }
 
@@ -145,14 +146,20 @@ function saveOptionChoose(optionID){
 						    	
 						    <div class="bLine"></div>
 						    <div style="margin-top: 0.5em;">
+							    	
+							   <!-- 	
+							      <span class="bLine" style="width:50%; height:30px;"> 延迟提醒 <input id="delay" class="lInput" value="20" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen" style="display: inline-table;">3</span>分钟后</span>
+							   -->
+							    <span class="fLeft">		
+							   	  <input id="muteBTN" class="button-red" type="button" value="静音,很吵呢！"/>	
+							   	</span>
+							      <input id="delayBTN" class="button" type="button" value="延迟提醒"/>
+						    </div>
+						    <!--Comment area-->
+						    <div class="textRight">
+						    	<span class="bLine" style=" display:inline-block;padding-bottom: 0.5em;"> 添加备注 <span class="RaphaelIcons textGreen" style="display: inline-table;">P</span></span>
 						    	
-						   <!-- 	
-						      <span class="bLine" style="width:50%; height:30px;"> 延迟提醒 <input id="delay" class="lInput" value="20" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen" style="display: inline-table;">3</span>分钟后</span>
-						   -->
-						    <span class="fLeft">		
-						   	  <input id="muteBTN" class="button-red" type="button" value="静音,很吵呢！"/>	
-						   	</span>
-						      <input id="delayBTN" class="button" type="button" value="延迟提醒"/>
+						    	<textarea id="comment"></textarea>
 						    </div>
 						    		<!-- 
 							    		<div>
