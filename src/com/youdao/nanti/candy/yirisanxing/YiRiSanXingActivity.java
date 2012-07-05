@@ -1,8 +1,6 @@
 package com.youdao.nanti.candy.yirisanxing;
 
 
-import com.youdao.nanti.candy.yirisanxing.alarm.Action;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,9 +8,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
+import com.youdao.nanti.candy.yirisanxing.alarm.Action;
+import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 
 public class YiRiSanXingActivity extends Activity {
     
@@ -22,6 +25,7 @@ public class YiRiSanXingActivity extends Activity {
     private WebView bPanel; //bottom panel
     private Handler handler = new Handler();
     
+    private String mAction;
     
     /** Called when the activity is first created. */
     @Override
@@ -32,10 +36,13 @@ public class YiRiSanXingActivity extends Activity {
         myWebView = (WebView) findViewById(R.id.webview);
         
         Intent intent = getIntent();
-        if (intent.getAction().equals("android.intent.action.MAIN")) {
+        mAction = intent.getAction();
+        if (mAction.equals("android.intent.action.MAIN")) {
             loadMain();
-        } else if (intent.getAction().equals(Action.REVIEW)) {
-            loadReview();
+        } else if (mAction.equals(Action.REVIEW)) {
+            long id = Long.valueOf(intent.getData().getSchemeSpecificPart());
+            long time = intent.getLongExtra(Alarm.ALERT_TIME, System.currentTimeMillis());
+            loadReview(id, time);
         }
         
     }
@@ -104,12 +111,15 @@ public class YiRiSanXingActivity extends Activity {
         bPanel.setVerticalScrollBarEnabled(false);
         
         //bind top panel communication interface.
-        bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "top");
+        bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "TopInterface");
         
         //////-----------bottom panel END-----------------------------/////////
     }
     
-    private void loadReview() {
+    private void loadReview(long id, long time) {
+        // full screen
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         // Enable JavaScript
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -123,10 +133,15 @@ public class YiRiSanXingActivity extends Activity {
         
         jsInterface = new JavaScriptInterface(this);
         myWebView.addJavascriptInterface(jsInterface, "Android");
-        
-        // TODO: load review.html
+
+        String sId = String.valueOf(id);
+        String sTime = String.valueOf(time);
         // Load a web page
+        //myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
         myWebView.loadUrl("file:///android_asset/activeItem.html");
+        
+        bPanel = (WebView) findViewById(R.id.bPanel);
+        bPanel.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -140,9 +155,27 @@ public class YiRiSanXingActivity extends Activity {
         jsInterface.close();
         super.onPause();
     }
+    
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (intent.getAction().equals(Action.REVIEW)) {
+            if (mAction.equals(Action.MAIN)) {
+                long id = Long.valueOf(intent.getData().getSchemeSpecificPart());
+                long time = intent.getLongExtra(Alarm.ALERT_TIME, System.currentTimeMillis());
+                loadReview(id, time);
+            } else if (mAction.equals(Action.REVIEW)) {
+                //jsInterface.queueReview()
+            }
+        }
+        mAction = intent.getAction();
+    }
         
     @Override
     public void onBackPressed() {
+        // lock back when review from alarm clock
+        if (mAction.equals(Action.REVIEW)) {
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.exit_message)
                .setCancelable(false)

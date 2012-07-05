@@ -34,11 +34,14 @@ public class TopPanelCommunicationInterface {
      */
     public void topLoad(String URL) {
         TopPanelCommunicationInterface.URL = URL;
+        webView.loadUrl("javascript:topLoad('"+TopPanelCommunicationInterface.URL+"')");
+        /*
         handler.post(new Runnable() {    
             @Override
             public void run() {        
                 webView.loadUrl("javascript:topLoad('"+TopPanelCommunicationInterface.URL+"')");
             }
         });
+        */
     }
 }

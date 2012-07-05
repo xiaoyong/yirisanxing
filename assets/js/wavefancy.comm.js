@@ -25,7 +25,7 @@ function pageLoad(){
  * animation for open page
  */
 function openPage(){
-	$("#move").animate({"margin-top":"0"},{duration:aTime});
+	$("#move").css({"margin-top":"150%"}).animate({"margin-top":"0"},{duration:aTime});
 }
 
 /**
