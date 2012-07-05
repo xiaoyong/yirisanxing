@@ -1,7 +1,9 @@
 package com.youdao.nanti.candy.yirisanxing;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,6 +31,9 @@ public class JavaScriptInterface {
         UPDATE,
         DELETE
     }
+    
+    Queue<ReviewHint> reviewQueue = new LinkedList<ReviewHint>();
+    
     /** Instantiate the interface and set the context */
     public JavaScriptInterface(Context c) {
         mContext = c;
@@ -273,5 +278,31 @@ public class JavaScriptInterface {
     public void mute() {
         mContext.stopService(new Intent(Action.BEEP));
     }
-
+    
+    // queue related
+    public class ReviewHint {
+        public long id;
+        public long time;
+        public ReviewHint(long id, long time) {
+            this.id = id;
+            this.time = time;
+        }        
+    }
+    
+    // called at activity
+    public void queueReview(long id, long time) {
+        reviewQueue.add(new ReviewHint(id, time));
+    }
+    
+    // called at webview
+    public void nextReview() {
+        if (!reviewQueue.isEmpty()) {
+            ReviewHint reviewHint = reviewQueue.remove();
+        } else {
+            
+        }
+    }
+    
+    
+    
 }
