@@ -29,7 +29,7 @@ INPUT: {"id":"1"}
 processQuestion(JSON,"DelItemByID").
 
 返回结果 example:
-{"result",-1} //successful.
+{"result",1} //successful.
 or
 {"result",-1} //failed.
 
