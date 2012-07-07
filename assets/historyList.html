@@ -25,6 +25,9 @@
  <!-- End load jQuery block ui -->
 
 <script>
+	//temp object in this page.
+	var openCurr = null; //opened item. 
+
 	$(document).ready(function(){
 		openPage();  // call page open animation
 		
@@ -43,7 +46,7 @@
 		for(var i in list){
 			var j = i%2 + 1;
 			h.append('<div id="h'+list[i].id+'" class="bLine iList'+j+' hl">'+list[i].question+'</div>');
-			h.append('<div id="h'+list[i].id+'-c" class="hOptions"><span class="RaphaelIcons textGreen edit">?</span><span class="RaphaelIcons textGreen del">Â</span><span class="RaphaelIcons textGreen viewh">:</span></div>');
+			h.append('<div id="h'+list[i].id+'-c" class="hOptions"><span class="RaphaelIcons textGreen edit">?</span><span class="RaphaelIcons textGreen del">Â</span><span class="RaphaelIcons textGreen hDetail">Ì</span><span class="RaphaelIcons textGreen viewh">:</span></div>');
 		}
 		
 		//fire functions;
@@ -54,7 +57,14 @@
 		//animate for item questions.
 		$(".hl").click(function(){
 			var id = $(this).attr("id");
-			$("#"+id + "-c").slideToggle();
+			var curr =  $("#"+id + "-c")
+			if(openCurr != null){
+				openCurr.slideToggle();
+			}
+			
+			//$("#"+id + "-c").slideToggle();
+			curr.slideToggle();
+			openCurr = curr;
 		});
 		
 		//update
@@ -91,6 +101,18 @@
 			//window.location.href="addOrUpdateItem.html?action=update&id="+id;
 			// topLoad("addOrUpdateItem.html?action=update&id="+id);
 		});
+		
+		//view reveiw list detail.
+		$(".hDetail").click(function(){
+			var id = $(this).parent().attr("id");
+			//alert(id);
+			id = id.substring(1,id.length-2);
+			alert(id);
+			//window.location.href="addOrUpdateItem.html?action=update&id="+id;
+			// topLoad("addOrUpdateItem.html?action=update&id="+id);
+		});
+		
+		
 	}
 	
 
@@ -119,6 +141,7 @@
 							<div id="h1-c" class="hOptions">
 									<span class="RaphaelIcons textGreen edit">?</span>
 									<span class="RaphaelIcons textGreen del">Â</span> 
+									<span class="RaphaelIcons textGreen hDetail">Ì</span> 
 									<span class="RaphaelIcons textGreen viewh">:</span> 
 							</div>
 							
