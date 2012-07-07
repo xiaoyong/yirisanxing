@@ -57,14 +57,24 @@
 		//animate for item questions.
 		$(".hl").click(function(){
 			var id = $(this).attr("id");
-			var curr =  $("#"+id + "-c")
+			var curr =  $("#"+id + "-c");
+			
 			if(openCurr != null){
-				openCurr.slideToggle();
+				//if( openCurr.attr("id") == curr.attr("id")){
+				//	openCurr.slideToggle();
+				//	return;
+				//}else{
+					openCurr.slideToggle();
+				//}
 			}
 			
+			//alert(curr.attr("id"));
 			//$("#"+id + "-c").slideToggle();
-			curr.slideToggle();
-			openCurr = curr;
+		//	if( openCurr.attr("id") != curr.attr("id")){
+				curr.slideToggle();
+				openCurr = curr;
+		//	}
+			
 		});
 		
 		//update

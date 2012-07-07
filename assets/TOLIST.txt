@@ -1,1 +1,48 @@
 //Communication here!
+
+1. Add item.
+JSON={"id":"-1","question":"1212","options":[{"option":"是 ","id":"-1"},{"option":"否 ","id":"-1"},{"option":"13 ","id":"-1"},{"option":"123233 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}
+
+processQuestion(JSON,"create");
+
+2. update item
+JSON={"id":"1","question":"1212","options":[{"option":"是 ","id":"-1"},{"option":"否 ","id":"-1"},{"option":"13 ","id":"-1"},{"option":"123233 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}
+
+processQuestion(JSON,"create");
+
+3. Get all list.	
+processQuestion("","getAllList")
+返回结果 example:
+'[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
+	
+	
+4. GetItemByID
+INPUT: {"id":"1"}
+processQuestion(JSON,"GetItemByID").
+
+返回结果 example:
+{"id":"1","question":"1212","options":[{"option":"是 ","id":"-1"},{"option":"否 ","id":"-1"},{"option":"13 ","id":"-1"},{"option":"123233 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}
+
+
+5. DelItemByID
+INPUT: {"id":"1"}
+processQuestion(JSON,"DelItemByID").
+
+返回结果 example:
+{"result",-1} //successful.
+or
+{"result",-1} //failed.
+
+6. ViewReviewListByID.
+INPUT: {"itemId":"1"}
+processQuestion(JSON,"ViewReviewListByID").
+
+返回结果 review list.
+
+
+7. InsertReview
+INPUT: {"id":"1","optionID":"1","comment":"备注 "}
+processQuestion(JSON,"InsertReview").
+
+
+
