@@ -28,8 +28,11 @@ public class JavaScriptInterface {
     
     private enum Actions {
         CREATE,
-        UPDATE,
-        DELETE
+        GETALLLIST,
+        GETITEMBYID,
+        DELITEMBYID,
+        VIEWREVIEWLISTBYID,
+        INSERTREVIEW
     }
     
     Queue<ReviewHint> reviewQueue = new LinkedList<ReviewHint>();
@@ -59,36 +62,80 @@ public class JavaScriptInterface {
     }
 
     /** Question related JavaScript interfaces */
-    public int processQuestion(String questionString, String actionString) {
-        Question question = gs.fromJson(questionString, Question.class);
-        //System.out.println(gs.toJson(question));
+    public String processQuestion(String questionString, String actionString) {
+        Question question;
         Actions action = Actions.valueOf(actionString.toUpperCase());
+        int arows = 0;
         System.out.println("action: " + action);
+        
         switch (action) {
         case CREATE:
-            long questionId = createQuestion(question);
+            question = gs.fromJson(questionString, Question.class);
+            //System.out.println(gs.toJson(question));
+            long inputId = question.getId();
+            long questionId = -1;
+            if (inputId < 0) { // Create question
+                questionId = createQuestion(question);
+            } else if (inputId > 0) { // Update question
+                arows = updateQuestion(question);
+            }
             for (Option option : question.getOptions()) {
                 option.setQuestionId(questionId);
                 //System.out.println("option: " + gs.toJson(option));
                 processOption(option);
             }
-            break;
-        case UPDATE:
-            updateQuestion(question);
-            for (Option option : question.getOptions()) {
-                processOption(option);
+            if ((inputId < 0 && questionId > 0) || (inputId > 0 && arows > 0)) {
+                return "0";
+            } else {
+                return "-1";
             }
-            break;
-        case DELETE:
-            deleteQuestion(question.getId());
-            break;
+        case GETALLLIST:
+            return gs.toJson(getAllQuestions());
+        case GETITEMBYID:
+            question = gs.fromJson(questionString, Question.class);
+            return gs.toJson(getQuestionByID(question.getId()));
+        case DELITEMBYID:
+            question = gs.fromJson(questionString, Question.class);
+            arows = deleteQuestion(question.getId());
+            if (arows > 0) {
+                return "0";
+            } else {
+                return "-1";
+            }
+        case VIEWREVIEWLISTBYID:
+            question = gs.fromJson(questionString, Question.class);
+            return gs.toJson(getAllReviews(question.getId()));
+        case INSERTREVIEW:
+            Review review = gs.fromJson(questionString, Review.class);
+            long reviewId = createReview(review);
+            if (reviewId > 0)
+                return "0";
+            else {
+                return "-1";
+            }
         default:
             break;
         }
-        return 0;
+        
+        return "0";
+        
+    }
+    private Question getQuestionByID(long questionId) {
+        Cursor cursor = database.query("questions", null, "_id = " + questionId, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        
+        Question question = new Question(cursor);
+        question.setOptions(getAllOptions(question.getId()));
+        
+        // Make sure to close the cursor
+        cursor.close();
+        return question;
     }
     
-    public String getAllQuestions() {
+    private List<Question> getAllQuestions() {
         List<Question> questions = new ArrayList<Question>();
 
         Cursor cursor = database.query("questions", null, null, null, null, null, null);
@@ -102,7 +149,7 @@ public class JavaScriptInterface {
         }
         // Make sure to close the cursor
         cursor.close();
-        return gs.toJson(questions);
+        return questions;
     }
     
     private List<Option> getAllOptions(long questionId) {
@@ -137,34 +184,14 @@ public class JavaScriptInterface {
         return reviews;
     }
     
-    /** Review related JavaScript interfaces */
-    public int processReview(String reviewString, String actionString) {
-        Review review = gs.fromJson(reviewString, Review.class);
-        Actions action = Actions.valueOf(actionString.toUpperCase());
-        
-        switch (action) {
-        case CREATE:
-            createReview(review);
-            break;
-        case UPDATE:
-            updateReview(review);
-            break;
-        case DELETE:
-            deleteReview(review.getId());
-            break;
-        default:
-            break;
-        }
-        return 0;
-    }
-    
-    private void processOption(Option option) {
+    private long processOption(Option option) {
         if (option.getId() < 0) {
             //System.out.println("Creating new option...");
-            createOption(option);
+            return createOption(option);
         } else if (option.getId() > 0) {
-            updateOption(option);
+            return updateOption(option);
         }
+        return -1;
     }
     
     /** CRUD operations */
