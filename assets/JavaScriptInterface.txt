@@ -19,31 +19,31 @@ output:
 	- "-1": fail
 
 3. Get all list
-processQuestion("","getAllList")
+processQuestion("","getAllList");
 返回结果 example:
 '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
 
 4. GetItemByID
-INPUT: {"id":"1"}
-processQuestion(JSON,"getItemByID");
+var id = "1";
+processQuestion(id,"getItemByID");
 返回结果 example:
 {"id":"1","question":"1212","options":[{"option":"是 ","id":"-1"},{"option":"否 ","id":"-1"},{"option":"13 ","id":"-1"},{"option":"123233 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}
 
 5. DelItemByID
-INPUT: {"id":"1"}
-output = processQuestion(JSON,"delItemByID");
+var id = "1";
+output = processQuestion(id,"delItemByID");
 output:
 	- "0": success
 	- "-1": fail
 
 6. ViewReviewListByID.
-INPUT: {"id":"1"}
-processQuestion(JSON,"viewReviewListByID");
+var id = "1";
+processQuestion(id,"viewReviewListByID");
 返回结果 review list.
 
 7. InsertReview
 INPUT: {"id":"1","questionId":"1","optionID":"1","comment":"备注 "}
-output = processQuestion(JSON,"InsertReview");
+output = processQuestion(JSON,"insertReview");
 output:
 	- "0": success
 	- "-1": fail

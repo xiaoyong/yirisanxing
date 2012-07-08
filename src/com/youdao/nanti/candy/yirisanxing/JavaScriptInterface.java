@@ -92,19 +92,16 @@ public class JavaScriptInterface {
         case GETALLLIST:
             return gs.toJson(getAllQuestions());
         case GETITEMBYID:
-            question = gs.fromJson(questionString, Question.class);
-            return gs.toJson(getQuestionByID(question.getId()));
+            return gs.toJson(getQuestionByID(Long.parseLong(questionString)));
         case DELITEMBYID:
-            question = gs.fromJson(questionString, Question.class);
-            arows = deleteQuestion(question.getId());
+            arows = deleteQuestion(Long.parseLong(questionString));
             if (arows > 0) {
                 return "0";
             } else {
                 return "-1";
             }
         case VIEWREVIEWLISTBYID:
-            question = gs.fromJson(questionString, Question.class);
-            return gs.toJson(getAllReviews(question.getId()));
+            return gs.toJson(getAllReviews(Long.parseLong(questionString)));
         case INSERTREVIEW:
             Review review = gs.fromJson(questionString, Review.class);
             long reviewId = createReview(review);
