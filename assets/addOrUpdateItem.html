@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0 ,user-scalable=no,target-densitydpi=device-dpi" /> 
 
-<title>Top Panel Test</title>
+<title>addOrUpdate</title>
 
 <style>
 	@font-face{
@@ -58,20 +58,21 @@
 				return;
 			}
 			
-			var c = ' <div oID="-1" class="Line"><span class="ndel bLine" > '+$(this).val()+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
+			var c = ' <div oID="-1" class="Line" isEnabled="true"><span class="ndel bLine" > '+$(this).val()+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
 			$("#aList").append(c);
 			$(this).val("");
 			
-			//rebine function
-			$(".ndel").click(function(){
-    			$(this).parent().remove();
-    		});
+			//rebine delete option function
+			bindDelOption();
+			// $(".ndel").click(function(){
+    			// $(this).parent().remove();
+    		// });
 		});
 		//remove item.
-		$(".ndel").click(function(){
-			$(this).parent().remove();
-		});
-		
+		// $(".ndel").click(function(){
+			// $(this).parent().remove();
+		// });
+		bindDelOption();
 		
 		$("#addItemBTN").click(function(){
 			addOrUpdateItem();
@@ -79,6 +80,14 @@
 		});
 	
 	}); //----jQuery END-----//
+	
+	//bind funtion for delete option.
+	function bindDelOption(){
+		$(".ndel").click(function(){
+			$(this).parent().hide();
+			$(this).parent().attr("isEnabled",false);
+		});
+	}
 	
 	function addOrUpdateItem(){ //add or update.
 		//	alert("here!");
@@ -94,6 +103,7 @@
 				var o = new Object();
 				o.option = s.substring(0,s.length-1);
 				o.id = $(this).attr("oID");
+				o.isEnabled = $(this).attr("isEnabled");
 		//		alert(s.substring(0,s.length-1));
 				q.options.push(o);
 			});	
@@ -105,18 +115,19 @@
 			q.minute = t[1];
 			q.alertType = "2";
 			
-
+			
+			alert(JSON.stringify(q));
 			if(q.id <=0 ){
 				//Android.processQuestion(JSON.stringify(q), "create");
 				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
-					blockUI("添加提醒成功！");
-					unBlockUI(600);
+					blockUINoOverlay("添加提醒成功！");
+					unBlockUI(oTime);
 				}
 			}else{
 				//Android.processQuestion(JSON.stringify(q), "update");
 				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
-					blockUI("修改提醒成功！");
-					unBlockUI(600);
+					blockUINoOverlay("修改提醒成功！");
+					unBlockUI(oTime);
 				}
 			}
 			
@@ -135,7 +146,7 @@
 		$("#aList").empty();
 		for(var i in q.options){
 			//alert(q.options[i].id);
-			var e = '<div class="Line" oID="'+q.options[i].id+'"><span class="ndel bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>'
+			var e = '<div class="Line" oID="'+q.options[i].id+'" isEnabled="true"><span class="ndel bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>'
 			$("#aList").append(e);
 		}
 		
@@ -165,10 +176,10 @@
 						    			<span class="bLine" style="width:50%;"> <input id="answer" class="lInput cl" value="请添加备选回答项"/> <span class="RaphaelIcons textGreen" style="display: inline-table;">@</span></span>
 						    		</div>
 						    	<div id="aList">	
-						    		<div class="Line" oID="-1">
+						    		<div class="Line" oID="-1" isEnabled="true">
 						    		   	<span class="bLine ndel" > 是 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
 						    		</div>
-						    		<div class="Line" oID="-1">
+						    		<div class="Line" oID="-1" isEnabled="true">
 						    		   	<span class="bLine ndel" > 否 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
 						    		</div>
 						    	</div>
