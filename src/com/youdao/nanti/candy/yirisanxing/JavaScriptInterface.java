@@ -1,9 +1,7 @@
 package com.youdao.nanti.candy.yirisanxing;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
@@ -25,9 +24,11 @@ public class JavaScriptInterface {
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
     private Gson gs = new Gson();
+    private static final String TAG = "JavaScriptInterface";
     
     private enum Actions {
         CREATE,
+        UPDATE,
         GETALLLIST,
         GETITEMBYID,
         DELITEMBYID,
@@ -63,26 +64,22 @@ public class JavaScriptInterface {
     public String processQuestion(String questionString, String actionString) {
         Question question;
         Actions action = Actions.valueOf(actionString.toUpperCase());
-        int arows = 0;
-        System.out.println("action: " + action);
+        Log.v(TAG, "action: " + action);
+        
         
         switch (action) {
         case CREATE:
             question = gs.fromJson(questionString, Question.class);
-            //System.out.println(gs.toJson(question));
-            long inputId = question.getId();
-            long questionId = inputId;
-            if (inputId < 0) { // Create question
-                questionId = createQuestion(question);
-            } else if (inputId > 0) { // Update question
-                arows = updateQuestion(question);
+            Log.v(TAG, gs.toJson(question));
+            if (createQuestion(question) > 0) {
+                return "0";
+            } else {
+                return "-1";
             }
-            for (Option option : question.getOptions()) {
-                option.setQuestionId(questionId);
-                //System.out.println("option: " + gs.toJson(option));
-                processOption(option);
-            }
-            if ((inputId < 0 && questionId > 0) || (inputId > 0 && arows > 0)) {
+        case UPDATE:
+            question = gs.fromJson(questionString, Question.class);
+            Log.v(TAG, gs.toJson(question));
+            if (updateQuestion(question) > 0) {
                 return "0";
             } else {
                 return "-1";
@@ -92,8 +89,7 @@ public class JavaScriptInterface {
         case GETITEMBYID:
             return gs.toJson(getQuestionByID(Long.parseLong(questionString)));
         case DELITEMBYID:
-            arows = deleteQuestion(Long.parseLong(questionString));
-            if (arows > 0) {
+            if (deleteQuestion(Long.parseLong(questionString)) > 0) {
                 return "0";
             } else {
                 return "-1";
@@ -193,7 +189,13 @@ public class JavaScriptInterface {
     private long createQuestion(Question question) {
         ContentValues values = questionToContentValues(question);
         long questionId = database.insert("questions", null, values);
-
+        
+        for (Option option : question.getOptions()) {
+            option.setQuestionId(questionId);
+            if (option.getId() < 0)
+                createOption(option);
+        }
+        
         setAlarm(questionId);
         return questionId;
         
@@ -210,7 +212,18 @@ public class JavaScriptInterface {
         return database.insert("reviews", null, values);
     }
     private int updateQuestion(Question question) {
-        return database.update("questions", questionToContentValues(question), "_id = " + question.getId(), null);
+        int arows = database.update("questions", questionToContentValues(question), "_id = " + question.getId(), null);
+        long questionId = question.getId();
+        
+        for (Option option : question.getOptions()) {
+            option.setQuestionId(questionId);
+            Log.v(TAG, gs.toJson(option));
+            if (option.getId() < 0)
+                createOption(option);
+            else if (option.getId() == 0)
+                deleteOption(option.getId());
+        }
+        return arows;
     }
     private int updateOption(Option option) {
         return database.update("options", optionToContentValues(option), "_id = " + option.getId(), null);

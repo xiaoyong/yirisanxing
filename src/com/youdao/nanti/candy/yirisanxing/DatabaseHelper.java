@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Add a demo question
         ContentValues values = new ContentValues();
         
-        values.put("question", "今天按时吃早饭了吗");
+        values.put("question", "今天按时吃早饭了吗？");
         values.put("is_enabled", 1);
         values.put("repeat_type", 1);
         values.put("interval", 1);
