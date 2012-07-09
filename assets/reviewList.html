@@ -24,17 +24,25 @@
 	$(document).ready(function(){
 		openPage();  // call page open animation
 		
+		var id = getQueryStringRegExp("id");
+			// var id = getQueryStringRegExp("id"); // exception for wrong id.
+// 			
+			// $("#title").text("修改提醒");
+			// $("#addItemBTN").val("确认修改提醒");
+// 			
+			// getItemByID(id);
+			
+		alert(id);
+		
+		var reviewList = Android.processQuestion(id,"viewReviewListByID");
+		
+		alert(reviewList);
+		
+		
 	});
 	
-//	function topLoad(URL){
-//		alert(URL);
-//		this.location.href=URL;
-//	}
-/*	
-	function testJavaCall(m){
-		alert(m);
-	}
-*/	
+	
+	
 </script>
 </head>
 <body>
@@ -47,6 +55,8 @@
 	</div>
 	<div id="move"></div>
 	<input type="button" value="BTN-BTN" id="BTN">
+	
+	
 </div>
 </body>
 </html>
