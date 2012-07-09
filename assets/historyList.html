@@ -99,9 +99,12 @@
 			
 			//alert(JSON.stringify(para));
 			if (Android.processQuestion(id, "delItemByID") == 0) {
-				blockUI("删除成功！");
-				unBlockUI(600);
+				blockUINoOverlay("删除成功！");
+				unBlockUI(oTime);
 			}
+			
+			//refresh list.
+			getList();
 		});
 		
 		//view history graph

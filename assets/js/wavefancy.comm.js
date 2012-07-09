@@ -1,5 +1,6 @@
 
 aTime=600;
+oTime=600;
 
 var pURL = null; 
 
