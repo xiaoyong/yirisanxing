@@ -50,9 +50,30 @@ processQuestion(JSON,"ViewReviewListByID").
 INPUT: {"id":"1","optionID":"1","comment":"备注 "}
 processQuestion(JSON,"InsertReview").
 
+TO wang:
 
-8. refresh the web page after every operation: e.g. delete a question.
+8. refresh the web page after some operations: e.g. delete a question.
 
 9. confirm when delete a question.
 
-10. gray the text "请添加"
+10. gray the text "请添加..."
+
+11. return to list page after update or create a question
+
+To Xiaoyong:
+
+请添加处理函数：
+getOptionByID
+INPUT: {"id":"1"}
+processQuestion('{"id":"1"}',"getOptionByID");
+OUTPUT: {"option":"是 ","id":"-1"} or JOSN string of option;
+
+searchItems
+processQuestion('{"keyWord":"key"}',"searchItems");
+OUTPUT: same as getAllList.
+
+
+
+
+
+

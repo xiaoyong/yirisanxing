@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.youdao.nanti.candy.yirisanxing"
     android:versionCode="1"
-    android:versionName="1.0"
-    android:installLocation="preferExternal" >
+    android:versionName="1.0" >
+    <!-- android:installLocation="preferExternal" > -->
     
     <uses-sdk android:minSdkVersion="8" />
     
@@ -40,11 +40,17 @@
         
         <receiver android:name=".alarm.BootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            	<action android:name="android.intent.action.BOOT_COMPLETED" />
+            	<action android:name="android.intent.action.TIME_SET" />
+            	<action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            	<action android:name="android.intent.action.LOCALE_CHANGED" />
             </intent-filter>
+            <!-- 
+            <intent-filter>
+            	<action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <data android:scheme="file" />
+            </intent-filter>
+             -->
         </receiver>
         
         <service android:name=".alarm.BeepService">
@@ -55,7 +61,8 @@
         
         <activity
             android:name="ua.com.vassiliev.androidfilebrowser.FileBrowserActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light" >
         </activity>
         
         

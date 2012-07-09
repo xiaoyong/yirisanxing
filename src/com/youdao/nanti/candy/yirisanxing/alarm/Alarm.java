@@ -57,8 +57,8 @@ public class Alarm {
         long time = System.currentTimeMillis() + 5000;
         /*
         Date now = new Date(System.currentTimeMillis());
-        now.setHours(14);
-        now.setMinutes(11);
+        now.setHours(9);
+        now.setMinutes(15);
         long time = now.getTime();
         */
         

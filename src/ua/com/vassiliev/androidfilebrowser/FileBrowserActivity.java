@@ -17,7 +17,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -224,7 +223,7 @@ public class FileBrowserActivity extends Activity {
 	
 	private void initializeFileListView() {
 		ListView lView = (ListView)this.findViewById(R.id.fileListView);
-		lView.setBackgroundColor(Color.LTGRAY);
+		//lView.setBackgroundColor(Color.LTGRAY);
 		LinearLayout.LayoutParams lParam =
 				new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		lParam.setMargins(15, 5, 15, 5);
@@ -396,7 +395,7 @@ public class FileBrowserActivity extends Activity {
 				int dp3 = (int) (3 * getResources().getDisplayMetrics().density + 0.5f);
 				//TODO: change next line for empty directory, so text will be centered
 				textView.setCompoundDrawablePadding(dp3);
-				textView.setBackgroundColor(Color.LTGRAY);
+				//textView.setBackgroundColor(Color.LTGRAY);
 				return view;
 			}//public View getView(int position, View convertView, ViewGroup parent) {
 		};//adapter = new ArrayAdapter<Item>(this,

@@ -32,11 +32,32 @@
 // 			
 			// getItemByID(id);
 			
-		alert(id);
+		//alert(id);
+		  //get question
+		  var result = Android.processQuestion(id, "getItemByID");
+	      var q = JSON.parse(result);
+	      
+	      result = Android.processQuestion(id, "viewReviewListByID");
+	      var reviews = JSON.parse(result);
 		
-		var reviewList = Android.processQuestion(id,"viewReviewListByID");
+		  var reviews = Android.processQuestion(id,"viewReviewListByID");
 		
-		alert(reviewList);
+		  //alert(reviewList);
+		  $("#reviewList").empty();
+		  
+		  var reviews_len = reviews.length;
+	      for (var i = 0; i < reviews_len; ++i) {
+	    	  var d = new Date(reviews[i].created);
+	    	 // var o = Android.processQuestion('{"id":"1"}',"getOptionByID");
+	    	  var s = '<div><span class="bLine" style="margin-left: 0.5em;"> <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>'+
+				 '<span class="rTime"> '+[d.getFullYear(), d.getMonth(), d.getDate()].join("-")+' </span> <span>optionLabels</span> </span></div>'
+	    	  
+	        
+	        //tr.append($('<th>').attr("scope", "col").text([d.getFullYear(), d.getMonth(), d.getDate()].join("-") + " " + [d.getHours(), d.getMinutes()].join(":")));
+	      	
+	      }
+	      
+	      
 		
 		
 	});
@@ -54,9 +75,26 @@
 	 -->
 	</div>
 	<div id="move"></div>
-	<input type="button" value="BTN-BTN" id="BTN">
 	
-	
+	<section class="st-panel" id="st-panel-3">
+			<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">y<span class="textOrange" style="margin-left:10px;">回答列表</span></span></h3>
+			<div class="bLine"> <span style="margin-left: 0.5em;"> 问题  </span></div>
+		
+			<div id="reviewList">
+					<div>	
+					     <span class="bLine" style="margin-left: 0.5em;">
+						 <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>
+						 <span class="rTime"> 2012-05-30</span> 
+						 <span>是否</span> </span>
+					 </div>
+					 <div>
+						 <span class="bLine" style="margin-left: 0.5em;">
+						 <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>
+						 <span class="rTime"> 2012-35-30</span> 
+						 <span>是否</span> </span>
+					 </div>
+			</div>		
+	</section>
 </div>
 </body>
 </html>

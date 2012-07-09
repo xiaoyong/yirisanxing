@@ -354,5 +354,15 @@ textarea{
 	margin:1em 0em 1em 1em;
 	padding: 0.5em;
 }
+
+.rTime{
+	width: 5em;
+	color: #3E94F3;
+}
+
+.rReview{
+	border-left: solid 1px #949494;
+}
+
 /********************TOP Panel END*********************/
 
