@@ -32,6 +32,11 @@ class Question {
         updated = cursor.getLong(10);
     }
     
+    public Question() {
+        isEnabled = true;
+        created = System.currentTimeMillis();
+    }
+
     public long getId() {
         return id;
     }

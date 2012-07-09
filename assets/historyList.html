@@ -35,9 +35,9 @@
 	});
 	
 	function getList(){
-		//Android.getAllQuestions();
-		
-		var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
+		var result = Android.processQuestion("", "getAllList");
+		//alert(result);
+		//var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
 		
 		var list = eval('('+result+')');
 		
@@ -96,10 +96,11 @@
 			para.action = "delteItem";
 			para.id = id;
 			
-			alert(JSON.stringify(para));
-			
-			blockUI("删除成功！");
-			unBlockUI(600);
+			//alert(JSON.stringify(para));
+			if (Android.processQuestion(id, "delItemByID") == 0) {
+				blockUI("删除成功！");
+				unBlockUI(600);
+			}
 		});
 		
 		//view history graph

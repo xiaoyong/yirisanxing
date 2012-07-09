@@ -18,6 +18,10 @@ public class Review {
         created = cursor.getLong(4);
         comment = cursor.getString(5);
     }
+    
+    public Review() {
+        reviewed = System.currentTimeMillis();
+    }
     public long getId() {
         return id;
     }

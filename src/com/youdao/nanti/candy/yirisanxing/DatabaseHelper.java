@@ -1,5 +1,6 @@
 package com.youdao.nanti.candy.yirisanxing;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,7 +9,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "yirisanxing.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String QUESTIONS_TABLE_CREATE = "CREATE TABLE questions ("
             + "_id INTEGER PRIMARY KEY, "
             + "question TEXT, "
@@ -47,6 +48,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(QUESTIONS_TABLE_CREATE);
         db.execSQL(OPTIONS_TABLE_CREATE);
         db.execSQL(REVIEWS_TABLE_CREATE);
+        
+        // Add a demo question
+        ContentValues values = new ContentValues();
+        
+        values.put("question", "今天按时吃早饭了吗");
+        values.put("is_enabled", 1);
+        values.put("repeat_type", 1);
+        values.put("interval", 1);
+        values.put("days_of_week", 0);
+        values.put("alert_type", 2);
+        values.put("hour", 22);
+        values.put("minute", 0);
+        values.put("created", System.currentTimeMillis());
+        values.put("updated", 0);
+        long questionId = db.insert("questions", null, values);
+        
+        // Add demo options
+        values.clear();
+        values.put("question_id", questionId);
+        values.put("option", "有");
+        values.put("value", 1);
+        db.insert("options", null, values);
+        
+        values.clear();
+        values.put("question_id", questionId);
+        values.put("option", "没有");
+        values.put("value", 0);
+        db.insert("options", null, values);
 
     }
     

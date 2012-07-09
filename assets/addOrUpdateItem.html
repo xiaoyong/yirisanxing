@@ -19,6 +19,9 @@
  <script language="JavaScript" src="js/jquery-1.7.2.min.js"></script>
  <!--jQuery END-->
  <script language="JavaScript" src="js/wavefancy.comm.js"></script>
+ <!-- Load jQuery Block UI -->
+ <script language="JavaScript" src="js/jquery.blockUI.js"></script>
+ <!-- End load jQuery block ui -->
 
 <script>
 	var tClick = 0; //title click.
@@ -108,17 +111,20 @@
 			}else{
 			//	Android.processQuestion(JSON.stringify(q), "update");
 			}
-			//Android.processQuestion(JSON.stringify(q), "create");
+			if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
+				blockUI("添加/修改成功！");
+				unBlockUI(600);
+			}
 	}
 	
 	function getItemByID(id){ //get question by ID.
-		var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
-		
+		//var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
+		var result = Android.processQuestion(id, "getItemByID");
 		var q = eval('('+result+')');
 		//alert(q.question);
 		$("#addItem").attr("dID",q.id);
 		$("#newItem1").val(q.question);
-		$("#add_repeat").val(q.repeat_type);
+		$("#add_repeat").val(q.repeatType);
 		$("#add_time").val(q.hour + ":" + q.minute);
 		
 		$("#aList").empty();
