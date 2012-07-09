@@ -78,8 +78,25 @@
 			addOrUpdateItem();
 			//getItemByID();
 		});
-	
+		
+		$("#add_time").click(function(){
+  			Activity.pickTime();
+		});
+		
 	}); //----jQuery END-----//
+	
+	function setTime(hour, minute) {
+  		$("#add_time").val(fillString(hour, 2) + ":" + fillString(minute, 2));
+	}
+	
+	function fillString(s, length) {
+  		if(!String.repeat){//判断是否存在这个方法
+    		String.prototype.repeat = function(l){//创建repeat方法
+    			return new Array(l+1).join(this);//创建元素值为空、个数为重复次数+1的数组，用字符串自身做为分隔符连接起来，返回连接后的值。
+    		}
+    	}
+  		return '0'.repeat(length - s.length) + s;
+	}
 	
 	//bind funtion for delete option.
 	function bindDelOption(){
@@ -140,7 +157,7 @@
 		$("#addItem").attr("dID",q.id);
 		$("#newItem1").val(q.question);
 		$("#add_repeat").val(q.repeatType);
-		$("#add_time").val(q.hour + ":" + q.minute);
+		$("#add_time").val(fillString(hour, 2) + ":" + fillString(minute, 2));
 		
 		$("#aList").empty();
 		for(var i in q.options){
@@ -187,7 +204,7 @@
 						    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
 						    		</div>
 						    		<div class="Line">
-						    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen" style="display: inline-table;">3</span></span>
+						    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
 						    		</div>
 						    		
 						    		<div class="bLine"></div>

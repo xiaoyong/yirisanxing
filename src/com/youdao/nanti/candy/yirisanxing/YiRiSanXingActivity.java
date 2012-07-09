@@ -14,6 +14,8 @@ import java.util.Queue;
 import ua.com.vassiliev.androidfilebrowser.FileBrowserActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,12 +28,14 @@ import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
 import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 
-public class YiRiSanXingActivity extends Activity {
+public class YiRiSanXingActivity extends Activity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     
     private WebView myWebView;
     private JavaScriptInterface jsInterface;
@@ -213,6 +217,34 @@ public class YiRiSanXingActivity extends Activity {
         alert.show();
     }
     
+    // queue related
+    public class ReviewHint {
+        public long id;
+        public long time;
+        public ReviewHint(long id, long time) {
+            this.id = id;
+            this.time = time;
+        }        
+    }
+    
+    // called at activity
+    private void queueReview(long id, long time) {
+        reviewQueue.add(new ReviewHint(id, time));
+    }
+    
+    // called at webview
+    public void nextReview() {
+        if (!reviewQueue.isEmpty()) {
+            ReviewHint reviewHint = reviewQueue.remove();
+            String sId = String.valueOf(reviewHint.id);
+            String sTime = String.valueOf(reviewHint.time);
+            myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
+        } else {
+            // TODO: gets weird exit when you review mannually
+            finish();
+        }
+    }
+    
     // import/export related
     // TODO: should be in webChromeClient??
     private final int REQUEST_CODE_PICK_DIR = 1;
@@ -285,34 +317,6 @@ public class YiRiSanXingActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
     }
     
-    // queue related
-    public class ReviewHint {
-        public long id;
-        public long time;
-        public ReviewHint(long id, long time) {
-            this.id = id;
-            this.time = time;
-        }        
-    }
-    
-    // called at activity
-    public void queueReview(long id, long time) {
-        reviewQueue.add(new ReviewHint(id, time));
-    }
-    
-    // called at webview
-    public void nextReview() {
-        if (!reviewQueue.isEmpty()) {
-            ReviewHint reviewHint = reviewQueue.remove();
-            String sId = String.valueOf(reviewHint.id);
-            String sTime = String.valueOf(reviewHint.time);
-            myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
-        } else {
-            // TODO: gets weird exit when you review mannually
-            finish();
-        }
-    }
-    
     private boolean copy(String fromPath, String toPath) {
         File from = new File(fromPath);
         File to = new File(toPath);
@@ -349,12 +353,29 @@ public class YiRiSanXingActivity extends Activity {
         }
     }
     
-    private void validateDatabase(String path) {
-        
-    }
     
+    // UI related interface
     public void closeActivity() {
         finish();
     }
+    
+    public void pickTime() {
+        new TimePickerDialog(this, this, 22, 00, true).show();
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        myWebView.loadUrl("javascript:setTime('" + String.valueOf(hourOfDay) + "', '" + String.valueOf(minute) + "')");
+    }
+    
+    public void pickDate() {
+        new DatePickerDialog(this, this, 2012, 1, 1).show();
+    }
+    
+    @Override
+    public void  onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        
+    }
+
     
 }
