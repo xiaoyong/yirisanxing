@@ -50,6 +50,12 @@
             </intent-filter>
         </service>
         
+        <activity
+            android:name="ua.com.vassiliev.androidfilebrowser.FileBrowserActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
+        
     </application>
 
 </manifest>

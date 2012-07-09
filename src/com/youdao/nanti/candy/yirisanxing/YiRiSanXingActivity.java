@@ -1,18 +1,22 @@
 package com.youdao.nanti.candy.yirisanxing;
 
 
+import ua.com.vassiliev.androidfilebrowser.FileBrowserActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
 import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
@@ -85,14 +89,16 @@ public class YiRiSanXingActivity extends Activity {
                 return true;
             }
             
+            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+                Toast.makeText(getBaseContext(), "openfile", Toast.LENGTH_LONG).show();
+            
+            }
             
         });
-
-        
+       
         jsInterface = new JavaScriptInterface(this);
         myWebView.addJavascriptInterface(jsInterface, "Android");
-        
-        
+        myWebView.addJavascriptInterface(this, "Activity");
         
         // Load a web page
 //        myWebView.loadUrl("file:///android_asset/index.html?id=2");
@@ -191,5 +197,67 @@ public class YiRiSanXingActivity extends Activity {
                });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+    
+    // import/export related
+    // TODO: should be in webChromeClient??
+    private final int REQUEST_CODE_PICK_DIR = 1;
+    private final int REQUEST_CODE_PICK_FILE = 2;
+
+    
+    public void chooseFolder() {
+        Intent fileExploreIntent = new Intent(
+                FileBrowserActivity.INTENT_ACTION_SELECT_DIR,
+                null,
+                this,
+                FileBrowserActivity.class
+                );
+        startActivityForResult(
+                fileExploreIntent,
+                REQUEST_CODE_PICK_DIR
+                );
+    }
+    
+    public void chooseFile() {
+        Intent fileExploreIntent = new Intent(
+                ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.INTENT_ACTION_SELECT_FILE,
+                null,
+                this,
+                ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.class
+                );
+        startActivityForResult(
+                fileExploreIntent,
+                REQUEST_CODE_PICK_FILE
+                );
+    }
+    
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICK_DIR) {
+            if(resultCode == this.RESULT_OK) {
+                String newDir = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnDirectoryParameter);
+                myWebView.loadUrl("javascript:getPath('"+newDir+"')");
+            } else {//if(resultCode == this.RESULT_OK) {
+                Toast.makeText(
+                        this, 
+                        "Received NO result from file browser",
+                        Toast.LENGTH_LONG).show(); 
+            }//END } else {//if(resultCode == this.RESULT_OK) {
+        }//if (requestCode == REQUEST_CODE_PICK_DIR) {
+        
+        if (requestCode == REQUEST_CODE_PICK_FILE) {
+            if(resultCode == this.RESULT_OK) {
+                String newFile = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnFileParameter);
+                myWebView.loadUrl("javascript:getPath('"+newFile+"')");
+            } else {//if(resultCode == this.RESULT_OK) {
+                Toast.makeText(
+                        this, 
+                        "Received NO result from file browser",
+                        Toast.LENGTH_LONG).show(); 
+            }//END } else {//if(resultCode == this.RESULT_OK) {
+        }//if (requestCode == REQUEST_CODE_PICK_FILE) {
+        
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

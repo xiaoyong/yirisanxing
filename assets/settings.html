@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0 ,user-scalable=no,target-densitydpi=device-dpi" /> 
+
+  <title>Settings</title>
+
+  <style>
+    @font-face{
+      font-family: "RaphaelIcons";
+      src: url('css/fonts/raphaelicons-webfont.ttf');
+    }
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="css/newStyle.css" />
+
+  <!--jQuery-->
+  <script language="JavaScript" src="js/jquery-1.7.2.min.js"></script>
+  <!--jQuery END-->
+  <script language="JavaScript" src="js/wavefancy.comm.js"></script>
+ 
+  <script type="text/javascript">
+  	function getPath(path) {
+      alert(path);
+  	}
+  
+  	$(document).ready(function(){
+      openPage();
+		
+      $("#importl").click(function(){
+        //alert("jquery");
+        Activity.chooseFolder();
+      });
+  	});
+  </script>
+</head>
+
+<body>
+  <div id="topPanel">
+    <div id="topLine"></div>
+    <div id="move"></div>
+  
+    <input type="button" id="importl" value="browse"/>
+  
+    <form method="post" action="" enctype="multipart/form-data">
+      <input type="file" id="f2">
+      <input type="submit" name="submit">
+    </form>
+  </div>
+</body>
+</html>
