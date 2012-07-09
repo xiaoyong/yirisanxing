@@ -62,7 +62,7 @@ public class Scheduler {
         }
         
         cursor.close();
-        db.close();
+        mDbHelper.close();
 
     }
     

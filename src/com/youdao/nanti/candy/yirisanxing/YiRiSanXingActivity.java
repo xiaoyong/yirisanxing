@@ -17,12 +17,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -267,15 +267,19 @@ public class YiRiSanXingActivity extends Activity {
             if(resultCode == this.RESULT_OK) {
                 String filePath = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnFileParameter);
                 String toPath = "/data/data/com.youdao.nanti.candy.yirisanxing/databases/yirisanxing.db";
+                try {
+                    SQLiteDatabase validateDb = SQLiteDatabase.openDatabase(filePath, null, 0);
+                    validateDb.close();
+                } catch (SQLiteException e) {
+                    Toast.makeText(this, "Import database failed: selected file is not a proper database file!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if(copy(filePath, toPath)) {
                     Toast.makeText(this, "import success!", Toast.LENGTH_LONG).show();
                 }
                 //myWebView.loadUrl("javascript:getPath('"+newFile+"')");
             } else {
-                Toast.makeText(
-                        this, 
-                        "Received NO result from file browser",
-                        Toast.LENGTH_LONG).show(); 
+                Toast.makeText(this, "Received NO result from file browser", Toast.LENGTH_LONG).show(); 
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -343,6 +347,10 @@ public class YiRiSanXingActivity extends Activity {
             Toast.makeText(this, "io error", Toast.LENGTH_LONG).show();
             return false;
         }
+    }
+    
+    private void validateDatabase(String path) {
+        
     }
     
     public void closeActivity() {
