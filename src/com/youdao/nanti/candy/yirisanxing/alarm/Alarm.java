@@ -54,7 +54,13 @@ public class Alarm {
     }
         
     public void testAlert(Context context) {
-        long time = System.currentTimeMillis() + 3000;
+        long time = System.currentTimeMillis() + 5000;
+        /*
+        Date now = new Date(System.currentTimeMillis());
+        now.setHours(14);
+        now.setMinutes(11);
+        long time = now.getTime();
+        */
         
         Intent intent = new Intent(Action.ALERT, Uri.parse("alarm:" + String.valueOf(id)));
         //Intent intent = new Intent(Action.DELAY_ALERT, Uri.parse("alarm:" + String.valueOf(id)));
@@ -83,7 +89,7 @@ public class Alarm {
         if (alert_type != 2) { return; }
         
         SharedPreferences preferences = context.getSharedPreferences(Settings.PATH, 0);
-        long delayInterval = preferences.getLong(Settings.DELAY_INTERVAL, Settings.DELAY_INTERVAL_DEFAULT);
+        long delayInterval = preferences.getLong(Settings.DELAY_INTERVAL, Settings.DELAY_INTERVAL_DEFAULT) * 1000 * 60;
 
         long delayTime = System.currentTimeMillis() + delayInterval;
         

@@ -49,9 +49,6 @@ public class YiRiSanXingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        String path = getApplicationContext().getFilesDir().getAbsolutePath();
-        Toast.makeText(this, path, Toast.LENGTH_LONG).show();
-        
         myWebView = (WebView) findViewById(R.id.webview);
         
         Intent intent = getIntent();
@@ -104,10 +101,11 @@ public class YiRiSanXingActivity extends Activity {
                 return true;
             }
             
+            /*
             public void openFileChooser(ValueCallback<Uri> uploadMsg) {
                 Toast.makeText(getBaseContext(), "openfile", Toast.LENGTH_LONG).show();
-            
             }
+            */
             
         });
        
@@ -154,12 +152,12 @@ public class YiRiSanXingActivity extends Activity {
         
         jsInterface = new JavaScriptInterface(this);
         myWebView.addJavascriptInterface(jsInterface, "Android");
+        myWebView.addJavascriptInterface(this, "Activity");
 
         String sId = String.valueOf(id);
         String sTime = String.valueOf(time);
-        // Load a web page
-        //myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
-        myWebView.loadUrl("file:///android_asset/activeItem.html");
+        myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
+        //myWebView.loadUrl("file:///android_asset/activeItem.html");
         
         bPanel = (WebView) findViewById(R.id.bPanel);
         bPanel.setVisibility(View.INVISIBLE);
@@ -340,6 +338,10 @@ public class YiRiSanXingActivity extends Activity {
             Toast.makeText(this, "io error", Toast.LENGTH_LONG).show();
             return false;
         }
+    }
+    
+    public void closeActivity() {
+        finish();
     }
     
 }

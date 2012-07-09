@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
@@ -19,7 +20,7 @@ import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 public class JavaScriptInterface {
     
     Context mContext;
-    
+        
     // Database fields
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
@@ -305,15 +306,19 @@ public class JavaScriptInterface {
         cursor.close();
     }
     
-    public void delay(long questionId, long time) {
-        Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
+    public void delay(String questionId, String time) {
+        mute();
+        Toast.makeText(mContext, "delay", Toast.LENGTH_LONG).show();
+        
+        Cursor cursor = database.query("questions", Alarm.columns, "_id=" + questionId, null, null, null, null);
         cursor.moveToFirst();
         Alarm alarm = new Alarm(cursor);
-        alarm.delay(mContext, time);
+        alarm.delay(mContext, Long.valueOf(time));
         cursor.close();
     }
     
     public void mute() {
+    	System.out.println("MUTE");
         mContext.stopService(new Intent(Action.BEEP));
     }
         
