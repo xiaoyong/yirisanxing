@@ -111,8 +111,8 @@
 			q.repeatType = "1";
 			q.interval = $("#add_repeat").val();
 			var t = $("#add_time").val().split(":");
-			q.hour = t[0];
-			q.minute = t[1];
+			q.hour = parseInt(t[0]);
+			q.minute = parseInt(t[1]);
 			q.alertType = "2";
 			
 			
