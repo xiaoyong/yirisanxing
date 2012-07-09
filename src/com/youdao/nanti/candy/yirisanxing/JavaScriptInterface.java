@@ -191,9 +191,11 @@ public class JavaScriptInterface {
         ContentValues values = questionToContentValues(question);
         long questionId = database.insert("questions", null, values);
         
+        int v = 0;
         for (Option option : question.getOptions()) {
-            option.setQuestionId(questionId);
             if (option.getId() < 0)
+                option.setQuestionId(questionId);
+                option.setValue(++v);
                 createOption(option);
         }
         
@@ -217,12 +219,14 @@ public class JavaScriptInterface {
         int arows = database.update("questions", questionToContentValues(question), "_id = " + question.getId(), null);
         long questionId = question.getId();
         
+        int v = getMaximalOptionValue(questionId);
+        
         for (Option option : question.getOptions()) {
             option.setQuestionId(questionId);
-            Log.v(TAG, gs.toJson(option));
-            if (option.getId() < 0)
+            if (option.getId() < 0) {
+                option.setValue(++v);
                 createOption(option);
-            else if (! option.getIsEnabled())
+            } else if (! option.getIsEnabled())
                 updateOption(option);
         }
         
@@ -245,6 +249,22 @@ public class JavaScriptInterface {
         return database.delete("reviews", "_id = " + id, null);
     }
     
+    private int getMaximalOptionValue(long questionId) {
+        int v = 0;
+
+        Cursor cursor = database.query("options", null, "question_id = " + questionId, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int tmp_v = cursor.getInt(3);
+            if (v < tmp_v)
+                v = tmp_v;
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return v;
+    }
     /** Object converting helpers */
     private ContentValues questionToContentValues(Question question) {
         ContentValues values = new ContentValues();
