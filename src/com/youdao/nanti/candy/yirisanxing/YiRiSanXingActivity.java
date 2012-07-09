@@ -178,12 +178,13 @@ public class YiRiSanXingActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent.getAction().equals(Action.REVIEW)) {
+            long id = Long.valueOf(intent.getData().getSchemeSpecificPart());
+            long time = intent.getLongExtra(Alarm.ALERT_TIME, System.currentTimeMillis());
             if (mAction.equals(Action.MAIN)) {
-                long id = Long.valueOf(intent.getData().getSchemeSpecificPart());
-                long time = intent.getLongExtra(Alarm.ALERT_TIME, System.currentTimeMillis());
                 loadReview(id, time);
             } else if (mAction.equals(Action.REVIEW)) {
                 //jsInterface.queueReview()
+                queueReview(id, time);
             }
         }
         mAction = intent.getAction();
@@ -299,8 +300,12 @@ public class YiRiSanXingActivity extends Activity {
     public void nextReview() {
         if (!reviewQueue.isEmpty()) {
             ReviewHint reviewHint = reviewQueue.remove();
+            String sId = String.valueOf(reviewHint.id);
+            String sTime = String.valueOf(reviewHint.time);
+            myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
         } else {
-            
+            // TODO: gets weird exit when you review mannually
+            finish();
         }
     }
     

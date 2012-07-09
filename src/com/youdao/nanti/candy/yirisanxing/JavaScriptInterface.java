@@ -226,6 +226,8 @@ public class JavaScriptInterface {
             else if (! option.getIsEnabled())
                 updateOption(option);
         }
+        
+        setAlarm(questionId);
         return arows;
     }
     private int updateOption(Option option) {
@@ -308,7 +310,6 @@ public class JavaScriptInterface {
     
     public void delay(String questionId, String time) {
         mute();
-        Toast.makeText(mContext, "delay", Toast.LENGTH_LONG).show();
         
         Cursor cursor = database.query("questions", Alarm.columns, "_id=" + questionId, null, null, null, null);
         cursor.moveToFirst();
