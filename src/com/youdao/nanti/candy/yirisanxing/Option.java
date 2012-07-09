@@ -7,13 +7,20 @@ public class Option {
     private long questionId;
     private String option;
     private int value;
+    private boolean isEnabled;
     
     public Option(Cursor cursor) {
         id = cursor.getLong(0);
         questionId = cursor.getLong(1);
         option = cursor.getString(2);
         value = cursor.getInt(3);
+        isEnabled = (cursor.getInt(4) == 1);
     }
+    
+    public Option() {
+        isEnabled = true;
+    }
+    
     public long getId() {
         return id;
     }
@@ -38,5 +45,10 @@ public class Option {
     public void setValue(int value) {
         this.value = value;
     }
-
+    public boolean getIsEnabled() {
+        return isEnabled;
+    }
+    public void setIsEnabled(Boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
 }

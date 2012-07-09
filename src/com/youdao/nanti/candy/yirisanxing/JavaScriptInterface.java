@@ -129,7 +129,7 @@ public class JavaScriptInterface {
     private List<Question> getAllQuestions() {
         List<Question> questions = new ArrayList<Question>();
 
-        Cursor cursor = database.query("questions", null, null, null, null, null, null);
+        Cursor cursor = database.query("questions", null, null, null, null, null, "updated DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -151,7 +151,8 @@ public class JavaScriptInterface {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Option option = new Option(cursor);
-            options.add(option);
+            if (option.getIsEnabled())
+                options.add(option);
             cursor.moveToNext();
         }
         // Make sure to close the cursor
@@ -212,6 +213,7 @@ public class JavaScriptInterface {
         return database.insert("reviews", null, values);
     }
     private int updateQuestion(Question question) {
+        question.setUpdated(System.currentTimeMillis());
         int arows = database.update("questions", questionToContentValues(question), "_id = " + question.getId(), null);
         long questionId = question.getId();
         
@@ -220,8 +222,8 @@ public class JavaScriptInterface {
             Log.v(TAG, gs.toJson(option));
             if (option.getId() < 0)
                 createOption(option);
-            else if (option.getId() == 0)
-                deleteOption(option.getId());
+            else if (! option.getIsEnabled())
+                updateOption(option);
         }
         return arows;
     }
@@ -271,6 +273,7 @@ public class JavaScriptInterface {
         values.put("question_id", option.getQuestionId());
         values.put("option", option.getOption());
         values.put("value", option.getValue());
+        values.put("is_enabled", option.getIsEnabled() ? 1 : 0);
         
         return values;
     }

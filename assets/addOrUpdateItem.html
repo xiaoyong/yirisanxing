@@ -107,14 +107,12 @@
 			
 
 			if(q.id <=0 ){
-				//Android.processQuestion(JSON.stringify(q), "create");
 				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
 					blockUI("添加提醒成功！");
 					unBlockUI(600);
 				}
 			}else{
-				//Android.processQuestion(JSON.stringify(q), "update");
-				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
+				if (Android.processQuestion(JSON.stringify(q), "update") == 0) {
 					blockUI("修改提醒成功！");
 					unBlockUI(600);
 				}
