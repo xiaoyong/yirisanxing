@@ -157,7 +157,8 @@
 		$("#addItem").attr("dID",q.id);
 		$("#newItem1").val(q.question);
 		$("#add_repeat").val(q.repeatType);
-		$("#add_time").val(fillString(hour, 2) + ":" + fillString(minute, 2));
+		$("#add_time").val(fillString(q.hour + '', 2) + ':' + fillString(q.minute + '', 2));
+		//$("#add_time").val(q.hour + ":" + q.minute);
 		
 		$("#aList").empty();
 		for(var i in q.options){
