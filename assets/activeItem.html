@@ -74,6 +74,10 @@ function callMute(){
  * Initiate the content of current item.
  */
 function setCurrentItem(){
+  	var id = getQueryStringRegExp("id"); // exception for wrong id.
+  	var time = getQueryStringRegExp("time");
+  	//var result = Android.processQuestion(id, "GETITEMBYID");
+
 	var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 	
 	var q = eval('('+result+')');

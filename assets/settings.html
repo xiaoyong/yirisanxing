@@ -29,7 +29,10 @@
       openPage();
 		
       $("#importl").click(function(){
-        //alert("jquery");
+        Activity.chooseFile();
+      });
+      
+      $("#exportl").click(function(){
         Activity.chooseFolder();
       });
   	});
@@ -40,13 +43,22 @@
   <div id="topPanel">
     <div id="topLine"></div>
     <div id="move"></div>
+    
+    <section class="st-panel st-color" id="st-panel-2">
+    <h3><span class="RaphaelIcons textGreen" style="display: inline-table;">Û<span class="textOrange" style="margin-left:10px;">设置</span></span></h3>
+    
   
-    <input type="button" id="importl" value="browse"/>
+    <input class="button" type="button" id="exportl" value="export"/> <br /> <br />
+    <input class="button" type="button" id="importl" value="import"/>
+    
+    </section>
   
+  <!-- 
     <form method="post" action="" enctype="multipart/form-data">
       <input type="file" id="f2">
       <input type="submit" name="submit">
     </form>
+  -->
   </div>
 </body>
 </html>

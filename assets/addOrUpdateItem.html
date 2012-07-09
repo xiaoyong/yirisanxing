@@ -107,9 +107,9 @@
 			alert(JSON.stringify(q));
 			
 			if(q.id <=0 ){
-			//	Android.processQuestion(JSON.stringify(q), "create");
+				Android.processQuestion(JSON.stringify(q), "create");
 			}else{
-			//	Android.processQuestion(JSON.stringify(q), "update");
+				Android.processQuestion(JSON.stringify(q), "update");
 			}
 			if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
 				blockUI("添加/修改成功！");
