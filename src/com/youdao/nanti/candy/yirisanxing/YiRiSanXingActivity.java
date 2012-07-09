@@ -1,6 +1,16 @@
 package com.youdao.nanti.candy.yirisanxing;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import ua.com.vassiliev.androidfilebrowser.FileBrowserActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,11 +41,16 @@ public class YiRiSanXingActivity extends Activity {
     
     private String mAction;
     
+    private Queue<ReviewHint> reviewQueue = new LinkedList<ReviewHint>();
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        String path = getApplicationContext().getFilesDir().getAbsolutePath();
+        Toast.makeText(this, path, Toast.LENGTH_LONG).show();
         
         myWebView = (WebView) findViewById(R.id.webview);
         
@@ -231,33 +246,100 @@ public class YiRiSanXingActivity extends Activity {
                 );
     }
     
-    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PICK_DIR) {
             if(resultCode == this.RESULT_OK) {
-                String newDir = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnDirectoryParameter);
-                myWebView.loadUrl("javascript:getPath('"+newDir+"')");
-            } else {//if(resultCode == this.RESULT_OK) {
-                Toast.makeText(
-                        this, 
-                        "Received NO result from file browser",
-                        Toast.LENGTH_LONG).show(); 
-            }//END } else {//if(resultCode == this.RESULT_OK) {
-        }//if (requestCode == REQUEST_CODE_PICK_DIR) {
+                //String basePath = getApplicationContext().getFilesDir().getAbsolutePath();
+                //String fromPath = basePath + "/databases/yirisanxing.db";
+                String fromPath = "/data/data/com.youdao.nanti.candy.yirisanxing/databases/yirisanxing.db";
+                String dirPath = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnDirectoryParameter);
+                String toPath = dirPath + "/yirisanxing.db.backup";
+                if(copy(fromPath, toPath)) {
+                    Toast.makeText(this, "export success!", Toast.LENGTH_LONG).show();
+                }
+                //myWebView.loadUrl("javascript:getPath('"+newDir+"')");
+            } else {
+                Toast.makeText(this, "Received NO result from file browser", Toast.LENGTH_LONG).show(); 
+            }
+        }
         
         if (requestCode == REQUEST_CODE_PICK_FILE) {
             if(resultCode == this.RESULT_OK) {
-                String newFile = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnFileParameter);
-                myWebView.loadUrl("javascript:getPath('"+newFile+"')");
-            } else {//if(resultCode == this.RESULT_OK) {
+                String filePath = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnFileParameter);
+                String toPath = "/data/data/com.youdao.nanti.candy.yirisanxing/databases/yirisanxing.db";
+                if(copy(filePath, toPath)) {
+                    Toast.makeText(this, "import success!", Toast.LENGTH_LONG).show();
+                }
+                //myWebView.loadUrl("javascript:getPath('"+newFile+"')");
+            } else {
                 Toast.makeText(
                         this, 
                         "Received NO result from file browser",
                         Toast.LENGTH_LONG).show(); 
-            }//END } else {//if(resultCode == this.RESULT_OK) {
-        }//if (requestCode == REQUEST_CODE_PICK_FILE) {
-        
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
+    
+    // queue related
+    public class ReviewHint {
+        public long id;
+        public long time;
+        public ReviewHint(long id, long time) {
+            this.id = id;
+            this.time = time;
+        }        
+    }
+    
+    // called at activity
+    public void queueReview(long id, long time) {
+        reviewQueue.add(new ReviewHint(id, time));
+    }
+    
+    // called at webview
+    public void nextReview() {
+        if (!reviewQueue.isEmpty()) {
+            ReviewHint reviewHint = reviewQueue.remove();
+        } else {
+            
+        }
+    }
+    
+    private boolean copy(String fromPath, String toPath) {
+        File from = new File(fromPath);
+        File to = new File(toPath);
+        if (!from.exists()) {
+            Toast.makeText(this, "Failed: database file missing!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        // TODO: use action to.
+        try {
+            InputStream in = new FileInputStream(from);    
+            OutputStream out = new FileOutputStream(to);
+            byte[] buf = new byte[1024];    
+            int len;    
+            while ((len = in.read(buf)) != -1)
+            {    
+                out.write(buf, 0, len);    
+            }
+    
+            in.close();
+            out.close();
+            return true;
+        }
+        catch (FileNotFoundException e)    
+        {
+            e.printStackTrace();
+            Toast.makeText(this, "file error", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        catch (IOException e)    
+        {
+            e.printStackTrace();
+            Toast.makeText(this, "io error", Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
+    
 }

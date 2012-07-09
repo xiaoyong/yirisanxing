@@ -38,6 +38,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             Cursor cursor = db.query("questions", Alarm.columns, selection, null, null, null, null, null);
             cursor.moveToFirst();
             Alarm alarm = new Alarm(cursor); 
+            cursor.close();
+            mDbHelper.close();
+            
             alarm.alert(context);
             
             Log.v(TAG, String.valueOf(alarm.repeat_type));
