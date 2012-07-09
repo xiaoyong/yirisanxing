@@ -41,6 +41,5 @@ public class TopPanelCommunicationInterface {
                 webView.loadUrl("javascript:topLoad('"+TopPanelCommunicationInterface.URL+"')");
             }
         });
-        
     }
 }

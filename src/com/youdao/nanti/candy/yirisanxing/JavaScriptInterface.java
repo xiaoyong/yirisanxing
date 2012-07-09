@@ -71,7 +71,7 @@ public class JavaScriptInterface {
             question = gs.fromJson(questionString, Question.class);
             //System.out.println(gs.toJson(question));
             long inputId = question.getId();
-            long questionId = -1;
+            long questionId = inputId;
             if (inputId < 0) { // Create question
                 questionId = createQuestion(question);
             } else if (inputId > 0) { // Update question
