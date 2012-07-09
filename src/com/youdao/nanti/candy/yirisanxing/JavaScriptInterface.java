@@ -322,8 +322,8 @@ public class JavaScriptInterface {
         Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
         cursor.moveToFirst();
         Alarm alarm = new Alarm(cursor);
-        //alarm.alert(mContext);
-        alarm.testAlert(mContext);
+        alarm.alert(mContext);
+        //alarm.testAlert(mContext);
         cursor.close();
     }
     
