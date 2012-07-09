@@ -77,12 +77,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         alertIntent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
         alertIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(alertIntent);
-
-        /*
+        
         // start beep service
         Intent playAlarm = new Intent(Action.BEEP);
         context.startService(playAlarm);
-        */
+        
         
     }
     
