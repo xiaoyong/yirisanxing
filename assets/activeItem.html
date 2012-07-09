@@ -115,10 +115,13 @@ function bindOptionToActiveItem(){
 function saveOptionChoose(optionID){
 	var para = new Object();
 	para.id = $("#currItem").attr("dID");
-	para.optionID = optionID;
+	para.questionId = getQueryStringRegExp("id");
+	para.optionId = optionID;
 	para.comment = $("#comment").val();
+	para.created = getQueryStringRegExp("time");
 	
 	alert(JSON.stringify(para));
+
 	var output = Android.processQuestion(JSON.stringify(para),"insertReview");
 	if(output == 0){
 		blockUINoOverlay("设置成功!");
@@ -128,10 +131,8 @@ function saveOptionChoose(optionID){
 		unBlockUI(oTime);
 		return;
 	}
-	
+
 	Activity.nextReview();
-//	blockUINoOverlay("设置成功!");
-//  unBlockUI(600);
 }
 
 

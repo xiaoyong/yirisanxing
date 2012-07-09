@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
@@ -99,12 +98,12 @@ public class JavaScriptInterface {
             return gs.toJson(getAllReviews(Long.parseLong(questionString)));
         case INSERTREVIEW:
             Review review = gs.fromJson(questionString, Review.class);
+            Log.v(TAG, gs.toJson(review));
             long reviewId = createReview(review);
             if (reviewId > 0)
                 return "0";
-            else {
+            else
                 return "-1";
-            }
         default:
             break;
         }
