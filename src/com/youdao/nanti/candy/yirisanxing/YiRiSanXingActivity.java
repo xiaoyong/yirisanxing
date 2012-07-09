@@ -117,7 +117,7 @@ public class YiRiSanXingActivity extends Activity {
 //        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
         myWebView.loadUrl("file:///android_asset/historyList.html");
-        //myWebView.loadUrl("file:///android_asset/chart_demo.html");
+        //myWebView.loadUrl("file:///android_asset/charting.html?id=1");
         
         //////-----------For bottom panel-----------------------------/////////
         

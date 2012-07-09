@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,target-densitydpi=device-dpi" /> 
+  <title>Charting View</title>
+  <link href="css/charting/basic.css" type="text/css" rel="stylesheet" />
+  <link href="css/charting/visualize.css" type="text/css" rel="stylesheet" />
+  <link href="css/charting/visualize-light.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/visualize.jQuery.js"></script>
+  <script type="text/javascript" src="js/wavefancy.comm.js"></script>
+  <script>
+    $(document).ready(function(){
+      var id = getQueryStringRegExp("id");
+      var result = Android.processQuestion(id, "getItemByID");
+      var q = JSON.parse(result);
+      result = Android.processQuestion(id, "viewReviewListByID");
+      var reviews = JSON.parse(result);
+
+      //var $wrap = $('<div>').attr('id', 'tableWrap');
+      //$wrap.css({"width": "100%", "margin": "auto", "border":"1px solid gray"});
+      var $tbl = $('<table>').attr('id', 'basicTable');
+      $tbl.css({"width": "80%", "margin-left":"auto", "margin-right":"auto"});
+      //console.log("window width: " + window.innerWidth);
+      //console.log("table width: " + $tbl.css("width"));
+
+      // Set caption
+      $tbl.append($('<caption>').text(q.question));
+
+      // Set head (time points)
+      var tr = $('<tr>');
+      tr.append($('<td>'));
+      var reviews_len = reviews.length;
+      for (var i = 0; i < reviews_len; ++i) {
+        var d = new Date(reviews[i].created);
+        tr.append($('<th>').attr("scope", "col").text([d.getFullYear(), d.getMonth(), d.getDate()].join("-") + " " + [d.getHours(), d.getMinutes()].join(":")));
+      }
+
+      $tbl.append($('<thead>').append(tr));
+
+      // set ylabels
+      var optionLabels = [];
+      var values = [];
+      var options_len = q.options.length;
+      for (var i = 0; i < options_len; i++) {
+        optionLabels[q.options[i].value] = q.options[i].option;
+        values[q.options[i].id] = q.options[i].value;
+      }
+
+      // Set contents
+      tbl_body = $('<tbody>');
+      //console.log("options len: " + options_len);
+      for (var i = 0; i < options_len; i++) {
+        var tr = $('<tr>')
+          .append($('<th>').attr("scope", "row").text(q.options[i].option));
+        for (var j = 0; j < reviews_len; j++) {
+          if (q.options[i].id == reviews[j].optionId) {
+            tr.append($('<td>').text(1));
+          } else {
+            tr.append($('<td>').text(0));
+          }
+        }
+        tbl_body.append(tr);
+      }
+
+      tr = $('<tr>')
+        .append($('<th>').attr("scope", "row").text("Value"));
+      for (var i = 0; i < reviews_len; ++i) {
+        tr.append($('<td>').text(values[reviews[i].optionId]));
+      }
+      tbl_body.append(tr);
+      $tbl.append(tbl_body);
+
+        /*$tbl.append($('<tbody>')
+          .append($('<tr>')
+            .append($('<th>').attr("scope", "row").text("有"),
+              $('<td>').text(0),
+              $('<td>').text(1))
+                )
+          .append($('<tr>')
+            .append($('<th>').attr("scope", "row").text("没有"),
+              $('<td>').text(1),
+              $('<td>').text(0))
+                )
+          .append($('<tr>')
+            .append($('<th>').attr("scope", "row").text("Value"),
+              $('<td>').text(3),
+              $('<td>').text(2))
+                )
+          );*/
+
+      //$wrap.append($tbl);
+      //$('body').append($wrap);
+      $('body').append($tbl);
+      //$('table').addClass('accessHide');
+      charting();
+      //console.log("bar width: " + pie.css("width"));
+      $(window).resize(function() { 
+        console.log("Window resized");
+        //$('.visualize').trigger('visualizeRefresh');
+        //bar.trigger('visualizeRefresh');
+        //line.trigger('visualizeRefresh');
+        //pie.trigger('visualizeRefresh');
+        $('.visualize').remove();
+        charting();
+      });
+
+      function charting() {
+        $('table').visualize({type: "line", appendKey: false, rowFilter:':last', customYLabels:optionLabels});
+        $('table').visualize({type: "pie", rowFilter:':not(:last)'});
+        $('.visualize').css({"margin-left":"auto", "margin-right":"auto"});
+      }
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>

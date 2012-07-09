@@ -28,7 +28,8 @@ $.fn.visualize = function(options, container){
 			lineWeight: 4, //for line and area - stroke weight
 			barGroupMargin: 10,
 			barMargin: 1, //space around bars in bar chart (added to both sides of bar)
-			yLabelInterval: 30 //distance between y labels
+			yLabelInterval: 30, //distance between y labels
+			customYLabels: []
 		},options);
 		
 		//reset width, height to numbers
@@ -405,7 +406,11 @@ $.fn.visualize = function(options, container){
 		var totalYRange = tableData.totalYRange();
 		var zeroLoc = o.height * (topValue/totalYRange);
 		var xLabels = tableData.xLabels();
-		var yLabels = tableData.yLabels();
+		if (o.customYLabels.length > 0) {
+			var yLabels = o.customYLabels;
+		} else {
+			var yLabels = tableData.yLabels();
+		}
 								
 		//title/key container
 		if(o.appendTitle || o.appendKey){

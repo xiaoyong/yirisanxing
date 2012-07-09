@@ -98,7 +98,6 @@ public class JavaScriptInterface {
             return gs.toJson(getAllReviews(Long.parseLong(questionString)));
         case INSERTREVIEW:
             Review review = gs.fromJson(questionString, Review.class);
-            Log.v(TAG, gs.toJson(review));
             long reviewId = createReview(review);
             if (reviewId > 0)
                 return "0";
@@ -195,7 +194,7 @@ public class JavaScriptInterface {
         for (Option option : question.getOptions()) {
             if (option.getId() < 0)
                 option.setQuestionId(questionId);
-                option.setValue(++v);
+                option.setValue(v++);
                 createOption(option);
         }
         
