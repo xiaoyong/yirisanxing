@@ -35,6 +35,7 @@ class Question {
     public Question() {
         isEnabled = true;
         created = System.currentTimeMillis();
+        updated = created;
     }
 
     public long getId() {

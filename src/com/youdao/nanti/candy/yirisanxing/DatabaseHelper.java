@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "question_id INTEGER REFERENCES questions(_id) ON DELETE CASCADE, "
             + "option TEXT, "
             + "value INTEGER, "
+            + "is_enabled INTEGER, "
             + "UNIQUE (question_id, option)"
             + ");";
     private static final String REVIEWS_TABLE_CREATE = "CREATE TABLE reviews ("
@@ -53,15 +54,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         
         values.put("question", "今天按时吃早饭了吗？");
-        values.put("is_enabled", 1);
+        values.put("is_enabled", 0);
         values.put("repeat_type", 1);
         values.put("interval", 1);
         values.put("days_of_week", 0);
         values.put("alert_type", 2);
         values.put("hour", 22);
         values.put("minute", 0);
-        values.put("created", System.currentTimeMillis());
-        values.put("updated", 0);
+        long t = System.currentTimeMillis();
+        values.put("created", t);
+        values.put("updated", t);
         long questionId = db.insert("questions", null, values);
         
         // Add demo options
@@ -69,12 +71,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("question_id", questionId);
         values.put("option", "有");
         values.put("value", 1);
+        values.put("is_enabled", 1);
         db.insert("options", null, values);
         
         values.clear();
         values.put("question_id", questionId);
         values.put("option", "没有");
         values.put("value", 0);
+        values.put("is_enabled", 1);
         db.insert("options", null, values);
 
     }
