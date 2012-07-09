@@ -5,6 +5,8 @@
 1. Add item
 JSON={"id":"-1","question":"1212","options":[{"option":"是 ","id":"-1"},{"option":"否 ","id":"-1"},{"option":"13 ","id":"-1"},{"option":"123233 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}
 
+web: {"id":"-1","question":"1232","options":[{"option":"是 ","id":"-1"},{"option":"否 ","id":"-1"},{"option":"121323 ","id":"-1"},{"option":"1212 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}
+
 output = processQuestion(JSON,"create");
 output:
 	- "0": success
