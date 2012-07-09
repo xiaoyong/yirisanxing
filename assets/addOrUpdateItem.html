@@ -101,13 +101,16 @@
 			q.hour = t[0];
 			q.minute = t[1];
 			q.alertType = "2";
-			alert(JSON.stringify(q));
 			
-			if(q.id <=0 ){
-				Android.processQuestion(JSON.stringify(q), "create");
-			}else{
-				Android.processQuestion(JSON.stringify(q), "update");
-			}
+			var r = Android.processQuestion(JSON.stringify(q), "create");
+			alert(r);
+			//alert(JSON.stringify(q));
+			
+			// if(q.id <=0 ){
+				// Android.processQuestion(JSON.stringify(q), "create");
+			// }else{
+				// Android.processQuestion(JSON.stringify(q), "update");
+			// }
 			//Android.processQuestion(JSON.stringify(q), "create");
 	}
 	
