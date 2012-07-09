@@ -107,14 +107,19 @@
 			
 
 			if(q.id <=0 ){
-				Android.processQuestion(JSON.stringify(q), "create");
+				//Android.processQuestion(JSON.stringify(q), "create");
+				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
+					blockUI("添加提醒成功！");
+					unBlockUI(600);
+				}
 			}else{
-				Android.processQuestion(JSON.stringify(q), "update");
+				//Android.processQuestion(JSON.stringify(q), "update");
+				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
+					blockUI("修改提醒成功！");
+					unBlockUI(600);
+				}
 			}
-			if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
-				blockUI("添加/修改成功！");
-				unBlockUI(600);
-			}
+			
 	}
 	
 	function getItemByID(id){ //get question by ID.
@@ -178,7 +183,7 @@
 						    		<div class="bLine"></div>
 						    		<div>
 						    		  <span class="bLine" style="width:50%; height:30px;"><span class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>设置完成</span>
-								      <input id="addItemBTN" class="button" type="button" value="确认添加条目"/>
+								      <input id="addItemBTN" class="button" type="button" value="确认添加提醒"/>
 								    </div>
 						    	</div>
 						    
