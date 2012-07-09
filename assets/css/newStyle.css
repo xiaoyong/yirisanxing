@@ -311,11 +311,11 @@ h3{
 	line-height: 2em;
 	height: 2em;
 	vertical-align: middle;
-	border-left: 3px solid #F1AB19; 
+	border-left: 0.25em solid #F1AB19; 
 }
 
 .iList2{
-	border-left: 3px solid #8FB12A; 
+	border-left: 0.25em solid #8FB12A; 
 }
 
 .iList1:hover,.iList2:hover{
