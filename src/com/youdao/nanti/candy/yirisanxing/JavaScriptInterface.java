@@ -130,7 +130,7 @@ public class JavaScriptInterface {
     private List<Question> getAllQuestions() {
         List<Question> questions = new ArrayList<Question>();
 
-        Cursor cursor = database.query("questions", null, null, null, null, null, null);
+        Cursor cursor = database.query("questions", null, null, null, null, null, "updated DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -305,7 +305,6 @@ public class JavaScriptInterface {
     
     public void delay(String questionId, String time) {
         mute();
-        Toast.makeText(mContext, "delay", Toast.LENGTH_LONG).show();
         
         Cursor cursor = database.query("questions", Alarm.columns, "_id=" + questionId, null, null, null, null);
         cursor.moveToFirst();

@@ -79,9 +79,9 @@ function callMute(){
 function setCurrentItem(){
   	var id = getQueryStringRegExp("id"); // exception for wrong id.
   	var time = getQueryStringRegExp("time");
-  	//var result = Android.processQuestion(id, "GETITEMBYID");
+  	var result = Android.processQuestion(id, "GETITEMBYID");
 
-	var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
+	//var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 	
 	var q = eval('('+result+')');
 	
@@ -119,7 +119,9 @@ function saveOptionChoose(optionID){
 	para.comment = $("#comment").val();
 	
 	alert(JSON.stringify(para));
-	
+
+	Activity.nextReview();
+
 	blockUINoOverlay("设置成功!");
     unBlockUI(600);
 }
