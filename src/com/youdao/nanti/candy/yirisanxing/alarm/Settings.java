@@ -13,7 +13,7 @@ public class Settings {
     public static final int RINGTONE_DEFAULT = RingtoneManager.TYPE_ALARM;
 
     public static final String DELAY_INTERVAL = "com.youdao.nanti.candy.yirisanxing.key.DELAY_INTERVAL";
-    public static final long DELAY_INTERVAL_DEFAULT = 15 * 60;
+    public static final long DELAY_INTERVAL_DEFAULT = 15;
     
     public void export() {
         

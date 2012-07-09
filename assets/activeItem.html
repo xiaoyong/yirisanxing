@@ -58,7 +58,10 @@ function callDelay(){
 	
 	alert(JSON.stringify(para));
 
-	Android.delay();
+	var id = getQueryStringRegExp("id"); // exception for wrong id.
+	var time = getQueryStringRegExp("time");
+	Android.delay(id, time);
+	Activity.closeActivity();
 }
 
 /**
