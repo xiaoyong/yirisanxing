@@ -226,6 +226,8 @@ public class JavaScriptInterface {
             else if (! option.getIsEnabled())
                 updateOption(option);
         }
+        
+        setAlarm(questionId);
         return arows;
     }
     private int updateOption(Option option) {

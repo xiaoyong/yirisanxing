@@ -51,4 +51,8 @@ INPUT: {"id":"1","optionID":"1","comment":"备注 "}
 processQuestion(JSON,"InsertReview").
 
 
+8. refresh the web page after every operation: e.g. delete a question.
 
+9. confirm when delete a question.
+
+10. gray the text "请添加"
