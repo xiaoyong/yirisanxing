@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
@@ -321,8 +322,8 @@ public class JavaScriptInterface {
         Cursor cursor = database.query("questions", Alarm.columns, "_id=" + String.valueOf(questionId), null, null, null, null);
         cursor.moveToFirst();
         Alarm alarm = new Alarm(cursor);
-        //alarm.alert(mContext);
-        alarm.testAlert(mContext);
+        alarm.alert(mContext);
+        //alarm.testAlert(mContext);
         cursor.close();
     }
     

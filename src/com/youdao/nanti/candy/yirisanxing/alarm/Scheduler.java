@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.youdao.nanti.candy.yirisanxing.DatabaseHelper;
 
@@ -21,7 +22,7 @@ public class Scheduler {
         
         long now = System.currentTimeMillis();
         
-        for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()) {
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             int id = cursor.getInt(0);
             Alarm a = new Alarm(cursor);
 
@@ -54,15 +55,18 @@ public class Scheduler {
         Cursor cursor = db.query(QuestionColumns.TABLE_NAME, Alarm.columns, "is_enabled=1", null, null, null, null);
         
         Log.v(TAG, "set total " + String.valueOf(cursor.getCount()) + " alarms");
+        //Toast.makeText(context, "set total " + String.valueOf(cursor.getCount()) + " alarms", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, context.getPackageName(), Toast.LENGTH_LONG).show();
         
-        cursor.moveToFirst();
-        for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()) {
+        //cursor.moveToFirst();
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            //Toast.makeText(context, "hour:" + String.valueOf(cursor.getInt(6)) + " minute:" + String.valueOf(cursor.getInt(7)) , Toast.LENGTH_LONG).show();
             Alarm a = new Alarm(cursor);
             a.alert(context);
         }
         
         cursor.close();
-        db.close();
+        mDbHelper.close();
 
     }
     
