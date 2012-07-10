@@ -361,6 +361,11 @@ textarea{
 	height: 50px;
 }
 
+.weekDay{
+	width:8em;
+	display:inline-block;
+}
+
 .pd{
 	height:2em;
 	line-height:2em;
