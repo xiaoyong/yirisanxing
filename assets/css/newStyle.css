@@ -307,7 +307,7 @@ h3{
 }
 
 
-.iList1,.iList2{
+.iList1,.iList2,.iList3{
 	margin-top: 1em;
 	padding: 10px 0px 0px 10px;
 	line-height: 2em;
@@ -320,7 +320,11 @@ h3{
 	border-left: 0.25em solid #8FB12A; 
 }
 
-.iList1:hover,.iList2:hover{
+.iList3{
+	border-left: 0.25em solid #171717;
+}
+
+.iList1:hover,.iList2:hover,.iList3:hover{
 	background: rgba(18,170,238,0.2);
 }
 

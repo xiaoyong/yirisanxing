@@ -54,6 +54,11 @@
 		
 		for(var i in list){
 			var j = i%2 + 1;
+			
+			if(list[i].isEnabled!=true){
+				//alert(list[i].isEnabled);
+				j=3;
+			}
 			h.append('<div id="h'+list[i].id+'" class="bLine iList'+j+' hl">'+list[i].question+'</div>');
 			h.append('<div id="h'+list[i].id+'-c" class="hOptions"><span class="RaphaelIcons textGreen edit">?</span><span class="RaphaelIcons textGreen del">Â</span><span class="RaphaelIcons textGreen hDetail">Ì</span><span class="RaphaelIcons textGreen viewh">:</span></div>');
 		}
