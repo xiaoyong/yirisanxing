@@ -11,8 +11,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Alarm {
+    
+    private Context mContext;
     
     public static final String TAG = "Alarm";
     
@@ -42,6 +45,7 @@ public class Alarm {
     public int alert_type;
         
     public Alarm(Cursor cursor) {
+        Log.v(TAG, "new alarm");
         //cursor.moveToFirst();
         
         id = cursor.getLong(0);
@@ -86,7 +90,7 @@ public class Alarm {
 
     public void alert(Context context) {
         if (!enabled) { return; }
-
+        
         long time = computeNextTime(System.currentTimeMillis());
         
         Intent intent = new Intent(Action.ALERT, Uri.parse("alarm:" + String.valueOf(id)));
