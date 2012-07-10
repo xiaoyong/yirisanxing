@@ -49,15 +49,14 @@
 	});
 	
 	function doSearch(){
-		var para = new Object();
-		para.keyWord = $("#key").val();
+		var keyWord = $("#key").val();
 		
 		//alert(JSON.stringify(para));
 		//processQuestion('{"keyWord":"key"}',"searchItems");
 		
 		//var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
 		
-		var result = Android.processQuestion(JSON.stringify(para),"searchItems");
+		var result = Android.processQuestion(keyWord.split(/\s+/).join("%"), "searchItems");
 		
 		var h = $("#hList");
 		h.empty();

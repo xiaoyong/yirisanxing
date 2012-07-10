@@ -13,7 +13,8 @@
   <script>
     $(document).ready(function(){
       BotInterface.adjustFocus("0");
-
+      openPage();
+      
       var id = getQueryStringRegExp("id");
       var result = Android.processQuestion(id, "GETFULLITEMBYID");
       var q = JSON.parse(result);
