@@ -203,7 +203,10 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
             return true;
         } else if ((keyCode == KeyEvent.KEYCODE_BACK) && !myWebView.canGoBack()) {
             confirmExit();
+        } else if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+            myWebView.loadUrl("file:///android_asset/searchPanel.html");
         }
+        
         // If it wasn't the Back key or there's no web page history, bubble up to the default
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
@@ -380,7 +383,23 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        myWebView.loadUrl("javascript:setTime('" + String.valueOf(hourOfDay) + "', '" + String.valueOf(minute) + "')");
+        //myWebView.loadUrl("javascript:setTime('" + String.valueOf(hourOfDay) + "', '" + String.valueOf(minute) + "')");
+        class JsThread implements Runnable {
+            private int mHour;
+            private int mMinute;
+            JsThread(int hour, int minute) {
+                mHour = hour;
+                mMinute = minute;
+            }
+            
+            @Override
+            public void run() {        
+                myWebView.loadUrl("javascript:setTime('" + String.valueOf(mHour) + "', '" + String.valueOf(mMinute) + "')");
+            }
+        }
+
+        handler.post(new JsThread(hourOfDay, minute));
+
     }
     
     public void pickDate() {

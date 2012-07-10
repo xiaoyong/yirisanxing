@@ -249,11 +249,12 @@
 			q.repeatType = "2";
 			q.interval = "1";
 			q.daysOfWeek = $("#add_repeat").val();
-			
+
 			var t = $("#add_time").val().split(":");
 			q.hour = parseInt(t[0]);
 			q.minute = parseInt(t[1]);
 			q.alertType = "2";
+			q.daysOfWeek = "1,2"
 			
 			
 			//alert(JSON.stringify(q));
@@ -311,6 +312,8 @@
 			var e = '<div class="Line" oID="'+q.options[i].id+'" isEnabled="true"><span class="ndel bLine" > '+q.options[i].option+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>'
 			$("#aList").append(e);
 		}
+		
+		alert(q.daysOfWeek);
 		
 		//don't remove the title content when focus on.
 		tClick = 1;
