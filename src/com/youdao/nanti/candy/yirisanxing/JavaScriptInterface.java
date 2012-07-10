@@ -94,7 +94,8 @@ public class JavaScriptInterface {
         case SEARCHITEMS:
             return gs.toJson(searchQuestions(questionString));
         case DISABLEORENABLEITEMBYID:
-            if (disableOrEnableItemByID(Long.parseLong(questionString)) > 0) {
+            question = gs.fromJson(questionString, Question.class);
+            if (disableOrEnableItemByID(question) > 0) {
                 return "0";
             } else {
                 return "-1";
@@ -123,10 +124,14 @@ public class JavaScriptInterface {
     }
 
     
-    private int disableOrEnableItemByID(long questionId) {
+    private int disableOrEnableItemByID(Question question) {
         ContentValues values = new ContentValues();
-        values.put("is_enabled", 0);
-        return database.update("options", values, "_id = " + questionId, null);
+        if (question.getIsEnabled())
+            values.put("is_enabled", 1);
+        else {
+            values.put("is_enabled", 0);
+        }
+        return database.update("options", values, "_id = " + question.getId(), null);
     }
 
     private List<Question> searchQuestions(String questionString) {

@@ -125,7 +125,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
 //        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
         myWebView.loadUrl("file:///android_asset/welcomePage.html");
-        //myWebView.loadUrl("file:///android_asset/charting.html?id=1");
+        //myWebView.loadUrl("file:///android_asset/activeItem.html?id=1&time=" + System.currentTimeMillis());
         
         //////-----------For bottom panel-----------------------------/////////
         
