@@ -366,7 +366,7 @@ textarea{
 
 .vComment{
 	margin: 0.1em 1em;
-/*	border:#8FB12A 1px solid;*/
+	border-left:#F1AB19 0.2em solid;
 /*	height: 2em;*/
 	line-height: 1.5em;
 	box-shadow: 0px 1px 5px #06c;

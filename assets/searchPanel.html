@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0 ,user-scalable=no,target-densitydpi=device-dpi"> 
+
+<title>search</title>
+
+<style>
+	@font-face{
+		font-family: "RaphaelIcons";
+		src: url('css/fonts/raphaelicons-webfont.ttf');
+	}
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/newStyle.css" />
+
+ <!--jQuery-->
+ <script language="JavaScript" src="js/jquery-1.7.2.min.js"></script>
+ <!--jQuery END-->
+ <script language="JavaScript" src="js/wavefancy.comm.js"></script>
+
+<script>
+	var tClick = 0;
+	var openCurr = null;
+	
+	$(document).ready(function(){
+		openPage();  // call page open animation
+		
+		//hide remind words.
+		$("#key").click(function(){
+			if(tClick <=0){
+				$(this).val("");
+				tClick ++;
+			}
+		});
+		
+		//automatically search when user input complete.
+		$("#key").blur(function(){
+			doSearch();
+		});
+		
+	});
+	
+	function doSearch(){
+		//processQuestion('{"keyWord":"key"}',"searchItems");
+		
+		var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
+		
+		var h = $("#hList");
+		h.empty();
+		
+		if(result == "[]"){
+			blockUINoOverlay("没有搜索结果！");
+			unBlockUI(oTime);
+			return;
+		}
+		
+		var list = eval('('+result+')');
+		
+		for(var i in list){
+			var j = i%2 + 1;
+			h.append('<div id="h'+list[i].id+'" class="bLine iList'+j+' hl">'+list[i].question+'</div>');
+			h.append('<div id="h'+list[i].id+'-c" class="hOptions"><span class="RaphaelIcons textGreen edit">?</span><span class="RaphaelIcons textGreen del">Â</span><span class="RaphaelIcons textGreen hDetail">Ì</span><span class="RaphaelIcons textGreen viewh">:</span></div>');
+		}
+		
+		//fire functions;
+		bindOptions();
+	}
+	
+	function bindOptions(){
+		//animate for item questions.
+		$(".hl").click(function(){
+			var id = $(this).attr("id");
+			var curr =  $("#"+id + "-c");
+			
+			if(openCurr != null){
+				openCurr.slideToggle();
+			}
+		
+			curr.slideToggle();
+			openCurr = curr;
+			
+		});
+		
+		//update
+		$(".edit").click(function(){
+			var id = $(this).parent().attr("id");
+			//alert(id);
+			id = id.substring(1,id.length-2);
+			//alert(id);
+			//window.location.href="addOrUpdateItem.html?action=update&id="+id;
+			topLoad("addOrUpdateItem.html?action=update&id="+id);
+		});
+		
+		//delete.
+		$(".del").click(function(){
+			var id = $(this).parent().attr("id");
+			id = id.substring(1,id.length-2);
+			
+			var para = new Object();
+			para.action = "delteItem";
+			para.id = id;
+			
+			//alert(JSON.stringify(para));
+			if (Android.processQuestion(id, "delItemByID") == 0) {
+				blockUINoOverlay("删除成功！");
+				unBlockUI(oTime);
+			}
+			
+			//refresh list.
+			doSearch();
+			//getList();
+		});
+		
+		//view history graph
+		$(".viewh").click(function(){
+			var id = $(this).parent().attr("id");
+			//alert(id);
+			id = id.substring(1,id.length-2);
+			//alert(id);
+			//window.location.href="addOrUpdateItem.html?action=update&id="+id;
+			topLoad("charting.html?id="+id);
+
+		});
+		
+		//view reveiw list detail.
+		$(".hDetail").click(function(){
+			var id = $(this).parent().attr("id");
+			//alert(id);
+			id = id.substring(1,id.length-2);
+		//	alert(id);
+			//window.location.href="addOrUpdateItem.html?action=update&id="+id;
+			topLoad("reviewList.html?id="+id);
+		});
+		
+	}
+	
+	
+</script>
+</head>
+<body>
+<div id="topPanel">
+
+	<div id="topLine">
+	</div>
+	<div id="move"></div>
+	<section class="st-panel" id="st-panel-1">						
+		<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">Á<span id="title" class="textOrange" style="margin-left:10px;">搜索</span></span></h3>
+		<input id="key" class="cInput" value="请添加搜索关键词"/>
+		
+		<div id="hList">
+			<div id="h1" class="bLine iList1 hl">
+				1. 123
+			 	<!--	
+					<span class="RaphaelIcons textGreen" style="display: inline-table;float:right;">:</span> 
+					<span class="RaphaelIcons textGreen" style="display: inline-table;float:right; width:30px;">?</span>
+				-->	
+			</div>
+			<div id="h1-c" class="hOptions">
+					<span class="RaphaelIcons textGreen edit">?</span>
+					<span class="RaphaelIcons textGreen del">Â</span> 
+					<span class="RaphaelIcons textGreen hDetail">Ì</span> 
+					<span class="RaphaelIcons textGreen viewh">:</span> 
+			</div>
+			
+			
+		</div>
+		
+	</section>
+</div>
+</body>
+</html>
