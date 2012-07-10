@@ -218,11 +218,13 @@ h3{
 	width: 93%;
 	padding: 0 15px;
 	font-size: 1.5em;
+	color:  #8E8E8E;
 }
 
 .lInput{
 	border: none;
 	background: transparent;
+	color:  #8E8E8E;
 /*	border-bottom: 1px solid #12AAEE;*/
 }
 
@@ -367,7 +369,7 @@ textarea{
 
 #welcome{
 	font-size: 2.5em;
-	padding: 1em 1em;
+	padding: 1em 0.5em;
 	line-height: 1.7em;
 }
 
