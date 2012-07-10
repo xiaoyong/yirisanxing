@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
@@ -33,6 +32,7 @@ public class JavaScriptInterface {
         GETALLLIST,
         GETITEMBYID,
         GETFULLITEMBYID,
+        SEARCHITEMS,
         DELITEMBYID,
         VIEWREVIEWLISTBYID,
         INSERTREVIEW
@@ -90,6 +90,8 @@ public class JavaScriptInterface {
             return gs.toJson(getQuestionByID(Long.parseLong(questionString), true));
         case GETFULLITEMBYID:
             return gs.toJson(getQuestionByID(Long.parseLong(questionString), false));
+        case SEARCHITEMS:
+            return gs.toJson(searchQuestions(questionString));
         case DELITEMBYID:
             if (deleteQuestion(Long.parseLong(questionString)) > 0) {
                 return "0";
@@ -112,6 +114,24 @@ public class JavaScriptInterface {
         return "0";
         
     }
+    
+    private List<Question> searchQuestions(String questionString) {
+        List<Question> questions = new ArrayList<Question>();
+
+        Cursor cursor = database.query("questions", null, "question LIKE ?", new String[]{"%"+questionString+"%"}, null, null, "updated DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Question question = new Question(cursor);
+            question.setOptions(getAllOptions(question.getId(), true));
+            questions.add(question);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return questions;
+    }
+
     private Question getQuestionByID(long questionId, boolean isEnabledOptionsOnly) {
         Cursor cursor = database.query("questions", null, "_id = " + questionId, null, null, null, null);
 
