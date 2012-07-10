@@ -54,9 +54,9 @@
 	$(document).ready(function(){
 		var action = getQueryStringRegExp("action");
 		if (action == "update") {
-			//BotInterface.adjustFocus("0");
+			BotInterface.adjustFocus("0");
 		} else {
-			//BotInterface.adjustFocus("2");
+			BotInterface.adjustFocus("2");
 		}
 		
 		openPage(); // call page open animation
@@ -146,7 +146,7 @@
 	    	}
 	    	
 	    	var para = new Object();
-	    	para.id = $("#addItem").attr("dID"); ;
+	    	para.id =parseInt( $("#addItem").attr("dID")); 
 	    	para.isEnabled = is;
 	    	
 	    	//alert(JSON.stringify(para));
