@@ -108,7 +108,7 @@
   			Activity.pickTime();
 		});
 		
-/*
+
 		//for mobiscroll
 		$('#select').scroller({
 	        preset: 'select',
@@ -119,8 +119,27 @@
 	        onSelect: function(d){
 	        	var v = -1;
 	        	if(d == '星期一'){
-	        		v = 0;
+	        		v = 1;
 	        	}
+	        	if(d == '星期二'){
+	        		v = 2;
+	        	}
+	        	if(d == '星期三'){
+	        		v = 3;
+	        	}
+	        	if(d == '星期四'){
+	        		v = 4;
+	        	}
+	        	if(d == '星期五'){
+	        		v = 5;
+	        	}
+	        	if(d == '星期六'){
+	        		v = 6;
+	        	}
+	        	if(d == '星期日'){
+	        		v = 7;
+	        	}
+	        	
 	        	var s = '<div class="Line" oID="'+v+'"><span class="bLine delwday" >'+d+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
 	    		$("#wd").append(s);
 	    		
@@ -133,7 +152,8 @@
 	        return false;
 	    });
 		
-*/
+
+/*
 		$("#add_repeat").click(function(){
   			var curr =  $("#h1-c");
   			curr.slideToggle();
@@ -152,17 +172,18 @@
 		$(".check").click(function(){
 			$(this).siblings(-1).click();
 		});
+	    */		
 
 	}); //----jQuery END-----//
 	
 	//-------------- for mobiscroll--------------
-	/*
+	
 	function bindDelWeekDay(){
 		$(".delwday").click(function(){
 			$(this).parent().remove();
 		});
 	}
-	*/
+	
 	//-------------- end mobiscroll--------------
 	
 	function setTime(hour, minute) {
@@ -187,6 +208,23 @@
 	}
 	
 	function addOrUpdateItem(){ //add or update.
+			var rp = [];
+			//var dayow = $("#wd").children("div");
+			$("#wd").children("div").each(function(){
+				var d = parseInt($(this).attr("oID"));
+				if(!contains(d,rp)){
+					rp.push($(this).attr("oID"));
+				}
+			});
+			
+			//alert(rp.length);
+			if(rp.length <= 0){
+				alert("请选择重复日期!");
+				return;
+			}
+			
+			alert(rp.join(","));
+			$("#add_repeat").val(rp.join(","));
 		//	alert("here!");
 			var q = new Object();
 			q.id = $("#addItem").attr("dID"); //add negative add, alter positive id.
@@ -284,10 +322,10 @@
 						    	</div>
 						    	
 						    		<div class="bLine"></div>
-<!-- 
+
 						    		
 							    	<div id="week">	
-							    		<input id="week_repeat" class="button-red" value="按星期重复" type="button"/>
+							    		<input id="week_repeat" class="button-red" value="添加重复日期" type="button"/>
 							    		
 							    		<select name=weekday id="select" >
 										    <option value="1">星期一</option>
@@ -301,37 +339,44 @@
 							    		
 							    		
 							    		<div id="wd">
+							    		<!--  
 							    			<div class="Line" oID="0">
 							    		   		<span class="bLine delwday" > 星期一 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
 							    			</div>
+							    		-->	
 							    		</div>
 							    	</div>	
 						    		
 						    		
 						    		<div class="bLine"></div>
 						    		
-							    		<div class="Line">
-							    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
-							    		</div>
+						    			<input id="add_repeat" type="hidden">
+							    		<!--
+								    		<div class="Line">
+								    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+								    		</div>
+							    		 -->
 							    		<div class="Line">
 							    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
 							    		</div>
- -->
+ 
+ <!-- 
 						    		<div class="Line">
 						    			<span class="bLine" style="width:50%; height:30px;"> 每周 <input type="button" id="add_repeat" class="lInput" value="1,2,3,4,5,6,7" style="color:#12AAEE;font-size:14px;"/> 重复  <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
 						    		    <div id="h1-c" class="hOptions">
-                                         <span class="pd" style="width:70px;"> <input type="checkbox" id="MONDAY" value="1" checked="checked" class="dayofweek" style="height:50px;"/><span class="check" style="width:50px;"> 一  </span> </span>
-                                         <span class="pd" style="width:70px;> <input type="checkbox" id="TUESDAY" value="2" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 二  </span> </span>
-                                          <span class="pd"> <input type="checkbox" id="WEDNESDAY" value="3" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 三  </span> </span>
-                                           <span class="pd"><input type="checkbox" id="THURSDAY" value="4" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 四  </span> </span>
-                                           <span class="pd"><input type="checkbox" id="FRIDAY" value="5" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 五  </span> </span>
-                                           <span class="pd"><input type="checkbox" id="SATURDAY" value="6" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 六  </span> </span>
-                                           <span class="pd"><input type="checkbox" id="SUNDAY" value="7" checked="checked" class="dayofweek" /> <span class="check" style="width:50px;">日  </span> </span>
+                                         <span class="pd" style="width:80px;"> <input type="checkbox" id="MONDAY" value="1" checked="checked" class="dayofweek" style="height:50px;"/><span class="check" style="width:50px;"> 一  </span> </span>
+                                         <span class="pd" style="width:80px;"> <input type="checkbox" id="TUESDAY" value="2" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 二  </span> </span>
+                                          <span class="pd"  style="width:80px;"> <input type="checkbox" id="WEDNESDAY" value="3" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 三  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="THURSDAY" value="4" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 四  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="FRIDAY" value="5" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 五  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="SATURDAY" value="6" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 六  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="SUNDAY" value="7" checked="checked" class="dayofweek" /> <span class="check" style="width:50px;">日  </span> </span>
                                         </div>
 						    		</div>
 						    		<div class="Line">
 						    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
 						    		</div>
+  -->						    		
 <!-- conflict end here -->
 						    		
 						    		<div class="bLine"></div>

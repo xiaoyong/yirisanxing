@@ -209,7 +209,8 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         return super.onKeyDown(keyCode, event);
     }
 
-    public void confirmExit() {
+
+    private void confirmExit() {
         // lock back when review from alarm clock
         if (mAction.equals(Action.REVIEW)) {
             return;
