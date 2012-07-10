@@ -27,7 +27,7 @@
 <script>
 	$(document).ready(function(){
 		openPage();  // call page open animation
-		
+		//var time = getQueryStringRegExp("time");
 		setCurrentItem();
 		
 		$("#curr-1").click(function(){
@@ -60,7 +60,7 @@ function callDelay(){
 
 	var id = getQueryStringRegExp("id"); // exception for wrong id.
 	var time = getQueryStringRegExp("time");
-	Android.delay(id, time);
+	//Android.delay(id, time);
 	Activity.closeActivity();
 }
 
@@ -68,7 +68,7 @@ function callDelay(){
  * Call native mute function.
  */
 function callMute(){
-	alert("Please mute");
+//	alert("Please mute");
 	
 	Android.mute();
 }

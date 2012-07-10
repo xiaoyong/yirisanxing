@@ -49,11 +49,19 @@
 
 <script>
 	var tClick = 0; //title click.
+	var aType = 1; //alert type.
 	
 	$(document).ready(function(){
-		openPage(); // call page open animation
-		
 		var action = getQueryStringRegExp("action");
+		if (action == "update") {
+			BotInterface.adjustFocus("0");
+		} else {
+			BotInterface.adjustFocus("2");
+		}
+		
+		openPage(); // call page open animation
+		alertTZ();// 通知 default.
+		
 		if(action=="update"){
 			var id = getQueryStringRegExp("id"); // exception for wrong id.
 			
@@ -116,28 +124,18 @@
 	        $('#select').scroller('show'); 
 	        return false;
 	    });
-
-/*
-		$("#add_repeat").click(function(){
-  			var curr =  $("#h1-c");
-  			curr.slideToggle();
-		});
-		
-		$(".dayofweek").click(function() {
-  			var daysofweek = new Array();
-  			$(".dayofweek").each(function() {
-    			if ($(this).attr("checked") == "checked") {
-      				daysofweek.push($(this).attr("value"));
-    			}
-  			})  
-  			$("#add_repeat").val(daysofweek.join(', '));
-		});
-		
-		$(".check").click(function(){
-			$(this).siblings(-1).click();
-		});
-	    */		
-
+	    
+	    bindDelWeekDay();
+	    
+	    //fire alert type
+	    $("#nz").click(function(){
+	    	alertNZ();
+	    });
+	    
+	    $("#tz").click(function(){
+	    	alertTZ();
+	    });
+	
 	}); //----jQuery END-----//
 	
 	//-------------- for mobiscroll--------------
@@ -179,7 +177,7 @@
 	        		v = 7;
 	        	}
 	        	
-	        	var s = '<div class="Line" oID="'+v+'"><span class="bLine delwday" >'+d+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
+	        	var s = '<div class="Line weekDay" oID="'+v+'"><span class="bLine delwday" >'+d+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
 	    		$("#wd").append(s);
 	    		
 	    		bindDelWeekDay();
@@ -254,10 +252,7 @@
 			q.hour = parseInt(t[0]);
 			q.minute = parseInt(t[1]);
 			
-			q.alertType = "2";
-			
-			//q.daysOfWeek = "1,2"
-			
+			q.alertType = aType;
 			
 			//alert(JSON.stringify(q));
 			if(q.id <=0 ){
@@ -281,6 +276,15 @@
 		//var result = '{"daysOfWeek":"1,7,6","id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 		var result = Android.processQuestion(id, "getItemByID");
 		var q = eval('('+result+')');
+		
+		//alert(q.alertType);
+		
+		if(q.alertType == 1){
+			alertTZ();
+		}else{
+			alertNZ();
+		}
+		
 		//alert(q.question);
 		$("#addItem").attr("dID",q.id);
 		$("#newItem1").val(q.question);
@@ -297,9 +301,6 @@
     		$("#wd").append(s);
 		}
 		
-		//$('#select').val(1).scroller('setValue', ['_1']);
-	      //  $('#select'+'_dummy').val('');
-	        //return false;
 		
 		//bindScroller();
 		bindDelWeekDay();
@@ -344,6 +345,25 @@
     	if(a == 7){
     		return '星期日';
     	}
+	}
+	
+	//alert type.
+	function alertNZ(){
+		//alert("NZ");
+		aType = 2;
+		$("#nz").empty();
+		$("#nz").append('<span id="nzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>闹钟提醒');
+		$("#tz").empty();
+		$("#tz").append('通知提醒');
+	}
+	
+	function alertTZ(){
+		//alert("TZ");
+		aType = 1;
+		$("#nz").empty();
+		$("#nz").append('闹钟提醒');
+		$("#tz").empty();
+		$("#tz").append('<span id="tzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>通知提醒');
 	}
 		
 </script>
@@ -394,11 +414,29 @@
 							    		
 							    		
 							    		<div id="wd">
-							    		<!--  
-							    			<div class="Line" oID="0">
+							    		
+							    			<div class="Line weekDay" oID="1">
 							    		   		<span class="bLine delwday" > 星期一 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
 							    			</div>
-							    		-->	
+							    			<div class="Line weekDay" oID="2">
+							    		   		<span class="bLine delwday" > 星期二 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							    			<div class="Line weekDay" oID="3">
+							    		   		<span class="bLine delwday" > 星期三 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							    			<div class="Line weekDay" oID="4">
+							    		   		<span class="bLine delwday" > 星期四 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							    			<div class="Line weekDay" oID="5">
+							    		   		<span class="bLine delwday" > 星期五 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							    			<div class="Line weekDay" oID="6">
+							    		   		<span class="bLine delwday" > 星期六 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							    			<div class="Line weekDay" oID="7">
+							    		   		<span class="bLine delwday" > 星期日 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							   
 							    		</div>
 							    	</div>	
 						    		
@@ -434,6 +472,8 @@
   -->						    		
 <!-- conflict end here -->
 						    		
+						    		 <span id="nz" class="bLine" style="width:50%; height:30px;"><span id="nzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>闹钟提醒</span>
+						    		 <span id="tz" class="bLine" style="width:50%; height:30px;margin-left:3em;"><span id="tzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>通知提醒</span>
 						    		<div class="bLine"></div>
 						    		<div>
 						    		  <span class="bLine" style="width:50%; height:30px;"><span class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>设置完成</span>

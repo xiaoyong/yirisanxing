@@ -124,7 +124,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         // Load a web page
 //        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
-        myWebView.loadUrl("file:///android_asset/historyList.html");
+        myWebView.loadUrl("file:///android_asset/welcomePage.html");
         //myWebView.loadUrl("file:///android_asset/charting.html?id=1");
         
         //////-----------For bottom panel-----------------------------/////////
@@ -139,6 +139,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         
         //bind top panel communication interface.
         bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "TopInterface");
+        myWebView.addJavascriptInterface(new TopPanelCommunicationInterface(handler, bPanel), "BotInterface");
         
         //////-----------bottom panel END-----------------------------/////////
     }
@@ -206,7 +207,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
             return true;
         } else if ((keyCode == KeyEvent.KEYCODE_BACK) && !myWebView.canGoBack()) {
             confirmExit();
-        } else if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+        } else if (keyCode == KeyEvent.KEYCODE_SEARCH && !myWebView.getUrl().equals("file:///android_asset/searchPanel.html")) {
             myWebView.loadUrl("file:///android_asset/searchPanel.html");
         }
         

@@ -29,6 +29,7 @@
 	var openCurr = null; //opened item. 
 
 	$(document).ready(function(){
+		BotInterface.adjustFocus("1");
 		openPage();  // call page open animation
 		
 		getList();
@@ -131,13 +132,11 @@
 			//alert(id);
 			id = id.substring(1,id.length-2);
 			//alert(id);
-			topLoad("addOrUpdateItem.html?action=update&id="+id);
-		});
-		
-		
+			//topLoad("addOrUpdateItem.html?action=update&id="+id);
+			topLoad("reviewList.html?id="+id);
+		});	
 	}
 	
-
 </script>
 </head>
 <body>
