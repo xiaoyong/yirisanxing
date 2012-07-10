@@ -203,7 +203,10 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
             return true;
         } else if ((keyCode == KeyEvent.KEYCODE_BACK) && !myWebView.canGoBack()) {
             confirmExit();
+        } else if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+            myWebView.loadUrl("file:///android_asset/searchPanel.html");
         }
+        
         // If it wasn't the Back key or there's no web page history, bubble up to the default
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
