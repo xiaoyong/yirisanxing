@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -378,7 +379,10 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     }
     
     public void pickTime() {
-        new TimePickerDialog(this, this, 22, 00, true).show();
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        new TimePickerDialog(this, this, hour, minute, true).show();
     }
 
     @Override
