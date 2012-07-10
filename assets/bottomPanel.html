@@ -21,24 +21,41 @@
 		
 		/*bottom control panel functions*/
 		$("#st-control-1-a").click(function(){
+          if (!$("#st-control-1").prop("checked")) {
 			$("#st-control-1").click();
 			TopInterface.topLoad("historyList.html");
+          }
 		});
 		$("#st-control-2-a").click(function(){
+          if (!$("#st-control-2").prop("checked")) {
 			$("#st-control-2").click();
 			TopInterface.topLoad("addOrUpdateItem.html");
+          }
 		});
 		$("#st-control-3-a").click(function(){
+          if (!$("#st-control-3").prop("checked")) {
 			$("#st-control-3").click();
 			//TopInterface.topLoad("activeItem.html?id=1&time=0"); // update item
 			TopInterface.topLoad("searchPanel.html");
+          }
 		});
 		$("#st-control-4-a").click(function(){
-			$("#st-control-4").click();
+          if (!$("#st-control-4").prop("checked")) {
+            $("#st-control-4").click();
 			TopInterface.topLoad("settings.html"); //set acive item.
+          }
 		});
 		
 	});
+
+    function adjustFocus(id) {
+      // id can only be 1, 2, 3 or 4
+      var idSelector = $("#st-control-" + id);
+      if (!idSelector.prop("checked")) {
+        //console.log("click");
+        idSelector.prop("checked", true);
+      }
+    }
 </script>
 </head>
 <body>

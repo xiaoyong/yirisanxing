@@ -42,4 +42,14 @@ public class TopPanelCommunicationInterface {
             }
         });
     }
+    
+    public void adjustFocus(final String id) {
+        // id can only be 1, 2, 3 or 4
+        handler.post(new Runnable() {    
+            @Override
+            public void run() {        
+                webView.loadUrl("javascript:adjustFocus(" + id + ");");
+            }
+        });
+    }
 }

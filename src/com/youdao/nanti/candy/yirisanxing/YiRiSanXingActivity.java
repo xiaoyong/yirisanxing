@@ -136,6 +136,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         
         //bind top panel communication interface.
         bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "TopInterface");
+        myWebView.addJavascriptInterface(new TopPanelCommunicationInterface(handler, bPanel), "BotInterface");
         
         //////-----------bottom panel END-----------------------------/////////
     }
