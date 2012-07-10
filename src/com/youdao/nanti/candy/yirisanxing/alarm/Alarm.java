@@ -10,8 +10,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class Alarm {
+    
+    public static final String TAG = "Alarm";
     
     public static final String[] columns = new String[] {
         "_id",
@@ -33,7 +36,7 @@ public class Alarm {
     public boolean enabled;
     public int repeat_type;
     public int interval;
-    public int days_of_week;
+    public String days_of_week;
     public int hour;
     public int minute;
     public int alert_type;
@@ -46,11 +49,21 @@ public class Alarm {
         enabled = cursor.getInt(2) != 0;
         repeat_type = cursor.getInt(3);
         interval = cursor.getInt(4);
-        days_of_week = cursor.getInt(5);
+        days_of_week = cursor.getString(5);
         hour = cursor.getInt(6);
         minute = cursor.getInt(7);
         alert_type = cursor.getInt(8);
 
+    }
+    
+    private DaysOfWeek parseDaysOfWeek(String daysofweek) {
+        String[] days = daysofweek.split(",");
+        DaysOfWeek dow = new DaysOfWeek(0);
+        for (int i = 0; i < days.length; i++) {
+            dow.set(Integer.valueOf(days[i]) - 1, true);
+        }
+        Log.v(TAG, String.valueOf(dow.getCoded()));
+        return dow;
     }
         
     public void testAlert(Context context) {
@@ -123,7 +136,8 @@ public class Alarm {
                 return settime + interval * 24 * 60 * 60 * 1000;
                 //return time + interval * 1000;
             case 2:
-                DaysOfWeek dow = new DaysOfWeek(days_of_week);
+                //DaysOfWeek dow = new DaysOfWeek(days_of_week);
+                DaysOfWeek dow = parseDaysOfWeek(days_of_week);
                 int days = dow.getNextAlarm(c);
                 return settime + days * 24 * 60 * 60 * 1000;
         }

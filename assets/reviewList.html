@@ -24,7 +24,6 @@
 	$(document).ready(function(){
 		openPage();  // call page open animation
 		
-<<<<<<< HEAD
 		var id = getQueryStringRegExp("id"); //question id.
 
 		  //get question
@@ -45,7 +44,7 @@
 	    	  var d = new Date(reviews[i].created);
 	    	 // var o = Android.processQuestion('{"id":"1"}',"getOptionByID");
 	    	  var s = '<div id="'+reviews[i].optionID+'" class="expan"><span class="bLine" style="margin-left: 0.5em;"> <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>'+
-				 '<span class="rTime"> '+[d.getFullYear(), d.getMonth(), d.getDate()].join("-")+' </span> <span class="rhbg">optionLabels</span> </span></div>'
+				 '<span class="rTime"> '+[d.getFullYear(), d.getMonth()+1, d.getDate()].join("-")+' </span> <span class="rhbg">optionLabels</span> </span></div>'
 	    	  
 			  $("#reviewList").append(s); //append option
 			  
@@ -53,10 +52,7 @@
 			  $("#reviewList").append(s) //append comment
 	      }
 	      
-	      
 	      bindOptions();
-=======
->>>>>>> branch 'master' of https://github.com/xiaoyong/yirisanxing.git
 	});
 	
 //	function topLoad(URL){

@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "is_enabled INTEGER, "
             + "repeat_type INTEGER, "
             + "interval INTEGER, "
-            + "days_of_week INTEGER, "
+            + "days_of_week TEXT, "
             + "alert_type INTEGER, "
             + "hour INTEGER, "
             + "minute INTEGER, "
@@ -55,9 +55,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         
         values.put("question", "今天按时吃早饭了吗？");
         values.put("is_enabled", 0);
-        values.put("repeat_type", 1);
+        values.put("repeat_type", 2);
         values.put("interval", 1);
-        values.put("days_of_week", 0);
+        values.put("days_of_week", "1,2,3,4,5,6,7");
         values.put("alert_type", 2);
         values.put("hour", 22);
         values.put("minute", 0);

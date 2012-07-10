@@ -10,7 +10,7 @@ class Question {
     private boolean isEnabled;
     private int repeatType;
     private int interval;
-    private int daysOfWeek;
+    private String daysOfWeek;
     private int alertType;
     private int hour;
     private int minute;
@@ -24,7 +24,7 @@ class Question {
         isEnabled = (cursor.getInt(2) == 1);
         repeatType = cursor.getInt(3);
         interval = cursor.getInt(4);
-        daysOfWeek = cursor.getInt(5);
+        daysOfWeek = cursor.getString(5);
         alertType = cursor.getInt(6);
         hour = cursor.getInt(7);
         minute = cursor.getInt(8);
@@ -68,10 +68,10 @@ class Question {
     public void setInterval(int interval) {
         this.interval = interval;
     }
-    public int getDaysOfWeek() {
+    public String getDaysOfWeek() {
         return daysOfWeek;
     }
-    public void setDaysOfWeek(int daysOfWeek) {
+    public void setDaysOfWeek(String daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
     public int getAlertType() {
