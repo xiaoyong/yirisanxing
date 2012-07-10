@@ -21,7 +21,7 @@
       result = Android.processQuestion(id, "viewReviewListByID");
       var reviews = JSON.parse(result);
       if (reviews.length < 1) {
-        $('body').append('<h1>等待记录生成中……</h1>');
+        $('body').append('<h1>当前还没有记录！</h1>');
         return;
       }
 
