@@ -135,30 +135,7 @@
 	    $("#tz").click(function(){
 	    	alertTZ();
 	    });
-	    
-	 
-
-/*
-		$("#add_repeat").click(function(){
-  			var curr =  $("#h1-c");
-  			curr.slideToggle();
-		});
-		
-		$(".dayofweek").click(function() {
-  			var daysofweek = new Array();
-  			$(".dayofweek").each(function() {
-    			if ($(this).attr("checked") == "checked") {
-      				daysofweek.push($(this).attr("value"));
-    			}
-  			})  
-  			$("#add_repeat").val(daysofweek.join(', '));
-		});
-		
-		$(".check").click(function(){
-			$(this).siblings(-1).click();
-		});
-	    */		
-
+	
 	}); //----jQuery END-----//
 	
 	//-------------- for mobiscroll--------------
@@ -277,12 +254,6 @@
 			
 			q.alertType = aType;
 			
-			//alert(q.alertType);
-			//return;
-			
-			//q.daysOfWeek = "1,2"
-			
-			
 			//alert(JSON.stringify(q));
 			if(q.id <=0 ){
 				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
@@ -330,9 +301,6 @@
     		$("#wd").append(s);
 		}
 		
-		//$('#select').val(1).scroller('setValue', ['_1']);
-	      //  $('#select'+'_dummy').val('');
-	        //return false;
 		
 		//bindScroller();
 		bindDelWeekDay();
