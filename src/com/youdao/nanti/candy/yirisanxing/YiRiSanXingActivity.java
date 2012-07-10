@@ -205,7 +205,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
             return true;
         } else if ((keyCode == KeyEvent.KEYCODE_BACK) && !myWebView.canGoBack()) {
             confirmExit();
-        } else if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+        } else if (keyCode == KeyEvent.KEYCODE_SEARCH && !myWebView.getUrl().equals("file:///android_asset/searchPanel.html")) {
             myWebView.loadUrl("file:///android_asset/searchPanel.html");
         }
         
