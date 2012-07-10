@@ -253,6 +253,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     // called at webview
     public void nextReview() {
         if (!reviewQueue.isEmpty()) {
+            Toast.makeText(this, "queue", Toast.LENGTH_LONG).show();
             ReviewHint reviewHint = reviewQueue.remove();
             String sId = String.valueOf(reviewHint.id);
             String sTime = String.valueOf(reviewHint.time);

@@ -61,12 +61,13 @@ public class Alarm {
     }
     
     private DaysOfWeek parseDaysOfWeek(String daysofweek) {
+        Log.v(TAG, "daysofweek: " + daysofweek);
         String[] days = daysofweek.split(",");
         DaysOfWeek dow = new DaysOfWeek(0);
         for (int i = 0; i < days.length; i++) {
             dow.set(Integer.valueOf(days[i]) - 1, true);
         }
-        Log.v(TAG, String.valueOf(dow.getCoded()));
+        Log.v(TAG, "daysofweek: " + String.valueOf(dow.getCoded()));
         return dow;
     }
         
@@ -125,8 +126,10 @@ public class Alarm {
         long nextTime;
         if (now.before(set)) {
             nextTime = set.getTime();
+            Log.v(TAG, "next time is in today");
         } else {
             nextTime = nextSetTime(set.getTime());
+            Log.v(TAG, "next time is not in today");
         }
         return nextTime;
     }
@@ -135,6 +138,7 @@ public class Alarm {
         
         Calendar c =  Calendar.getInstance();
         c.setTimeInMillis(settime);
+        Log.v(TAG, "today is " + String.valueOf(c.get(Calendar.DAY_OF_WEEK)));
         switch (repeat_type) {
             case 1:
                 return settime + interval * 24 * 60 * 60 * 1000;
@@ -143,6 +147,12 @@ public class Alarm {
                 //DaysOfWeek dow = new DaysOfWeek(days_of_week);
                 DaysOfWeek dow = parseDaysOfWeek(days_of_week);
                 int days = dow.getNextAlarm(c);
+                if (days == 0) {
+                    days = 7;
+                }
+                Log.v(TAG, "next day is " + String.valueOf(days) + " day after");
+                Log.v(TAG, "daysofweek is: " + String.valueOf(dow.getCoded()));
+                Log.v(TAG, "is thusdayset: " + String.valueOf(dow.isSet(1)));
                 return settime + days * 24 * 60 * 60 * 1000;
         }
         return settime;
