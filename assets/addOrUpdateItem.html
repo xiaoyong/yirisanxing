@@ -9,12 +9,16 @@
 <style>
 	@font-face{
 		font-family: "RaphaelIcons";
-		src: url('css/fonts/raphaelicons-webfont.ttf');
+		src: url('css/fonts/raphaelicons-webfont.ttf');  
 	}
+
 	
 	#select_dummy{
 		display:none;
 	}
+
+  
+    #h1-c {font-size: 18pt;};
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/newStyle.css" />
@@ -104,6 +108,7 @@
   			Activity.pickTime();
 		});
 		
+/*
 		//for mobiscroll
 		$('#select').scroller({
 	        preset: 'select',
@@ -128,15 +133,36 @@
 	        return false;
 	    });
 		
+*/
+		$("#add_repeat").click(function(){
+  			var curr =  $("#h1-c");
+  			curr.slideToggle();
+		});
+		
+		$(".dayofweek").click(function() {
+  			var daysofweek = new Array();
+  			$(".dayofweek").each(function() {
+    			if ($(this).attr("checked") == "checked") {
+      				daysofweek.push($(this).attr("value"));
+    			}
+  			})  
+  			$("#add_repeat").val(daysofweek.join(', '));
+		});
+		
+		$(".check").click(function(){
+			$(this).siblings(-1).click();
+		});
+
 	}); //----jQuery END-----//
 	
 	//-------------- for mobiscroll--------------
+	/*
 	function bindDelWeekDay(){
 		$(".delwday").click(function(){
 			$(this).parent().remove();
 		});
 	}
-	
+	*/
 	//-------------- end mobiscroll--------------
 	
 	function setTime(hour, minute) {
@@ -202,8 +228,8 @@
 			}
 			
 			//go to question list.
-			topLoad("historyList.html");
-	}
+			topLoad("historyList.html");	
+    }
 	
 	function getItemByID(id){ //get question by ID.
 		//var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
@@ -258,6 +284,7 @@
 						    	</div>
 						    	
 						    		<div class="bLine"></div>
+<!-- 
 						    		
 							    	<div id="week">	
 							    		<input id="week_repeat" class="button-red" value="按星期重复" type="button"/>
@@ -289,6 +316,23 @@
 							    		<div class="Line">
 							    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
 							    		</div>
+ -->
+						    		<div class="Line">
+						    			<span class="bLine" style="width:50%; height:30px;"> 每周 <input type="button" id="add_repeat" class="lInput" value="1,2,3,4,5,6,7" style="color:#12AAEE;font-size:14px;"/> 重复  <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+						    		    <div id="h1-c" class="hOptions">
+                                         <span class="pd" style="width:70px;"> <input type="checkbox" id="MONDAY" value="1" checked="checked" class="dayofweek" style="height:50px;"/><span class="check" style="width:50px;"> 一  </span> </span>
+                                         <span class="pd" style="width:70px;> <input type="checkbox" id="TUESDAY" value="2" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 二  </span> </span>
+                                          <span class="pd"> <input type="checkbox" id="WEDNESDAY" value="3" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 三  </span> </span>
+                                           <span class="pd"><input type="checkbox" id="THURSDAY" value="4" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 四  </span> </span>
+                                           <span class="pd"><input type="checkbox" id="FRIDAY" value="5" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 五  </span> </span>
+                                           <span class="pd"><input type="checkbox" id="SATURDAY" value="6" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 六  </span> </span>
+                                           <span class="pd"><input type="checkbox" id="SUNDAY" value="7" checked="checked" class="dayofweek" /> <span class="check" style="width:50px;">日  </span> </span>
+                                        </div>
+						    		</div>
+						    		<div class="Line">
+						    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
+						    		</div>
+<!-- conflict end here -->
 						    		
 						    		<div class="bLine"></div>
 						    		<div>
