@@ -11,6 +11,10 @@
 		font-family: "RaphaelIcons";
 		src: url('css/fonts/raphaelicons-webfont.ttf');
 	}
+	
+	#select_dummy{
+		display:none;
+	}
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/newStyle.css" />
@@ -22,6 +26,23 @@
  <!-- Load jQuery Block UI -->
  <script language="JavaScript" src="js/jquery.blockUI.js"></script>
  <!-- End load jQuery block ui -->
+ 
+ <!-- load mobiscroll -->
+
+  <script language="JavaScript" src="js/mobiscroll-2.0/js/mobiscroll-2.0.custom.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/mobiscroll-2.0/css/mobiscroll-2.0.custom.min.css" />
+
+ <!-- END mobiscroll  -->
+  
+ <!-- load multiselect -->
+  <!-- 
+ 	  <script language="JavaScript" src="js/multiSelect/jquery-ui.min.js"></script>
+	  <script language="JavaScript" src="js/multiSelect/jquery.multiselect.min.js"></script>
+	  
+	  <link rel="stylesheet" type="text/css" href="js/multiSelect/jquery.multiselect.css" />
+	  <link rel="stylesheet" type="text/css" href="js/multiSelect/jquery-ui.css" />
+	  -->
+ <!-- end multiselect -->
 
 <script>
 	var tClick = 0; //title click.
@@ -83,7 +104,40 @@
   			Activity.pickTime();
 		});
 		
+		//for mobiscroll
+		$('#select').scroller({
+	        preset: 'select',
+	        theme: 'android-ics light',
+	        display: 'modal',
+	        mode: 'mixed',
+	        inputClass: 'i-txt',
+	        onSelect: function(d){
+	        	var v = -1;
+	        	if(d == '星期一'){
+	        		v = 0;
+	        	}
+	        	var s = '<div class="Line" oID="'+v+'"><span class="bLine delwday" >'+d+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
+	    		$("#wd").append(s);
+	    		
+	    		bindDelWeekDay();
+	        }
+	    });
+
+	    $('#week_repeat').click(function () {
+	        $('#select').scroller('show'); 
+	        return false;
+	    });
+		
 	}); //----jQuery END-----//
+	
+	//-------------- for mobiscroll--------------
+	function bindDelWeekDay(){
+		$(".delwday").click(function(){
+			$(this).parent().remove();
+		});
+	}
+	
+	//-------------- end mobiscroll--------------
 	
 	function setTime(hour, minute) {
   		$("#add_time").val(fillString(hour, 2) + ":" + fillString(minute, 2));
@@ -204,12 +258,37 @@
 						    	</div>
 						    	
 						    		<div class="bLine"></div>
-						    		<div class="Line">
-						    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
-						    		</div>
-						    		<div class="Line">
-						    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
-						    		</div>
+						    		
+							    	<div id="week">	
+							    		<input id="week_repeat" class="button-red" value="按星期重复" type="button"/>
+							    		
+							    		<select name=weekday id="select" >
+										    <option value="1">星期一</option>
+										    <option value="2">星期二</option>
+										    <option value="3">星期三</option>
+										    <option value="4">星期四</option>
+										    <option value="5">星期五</option>
+										    <option value="6">星期六</option>
+										    <option value="7">星期日</option>
+										</select>
+							    		
+							    		
+							    		<div id="wd">
+							    			<div class="Line" oID="0">
+							    		   		<span class="bLine delwday" > 星期一 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							    		</div>
+							    	</div>	
+						    		
+						    		
+						    		<div class="bLine"></div>
+						    		
+							    		<div class="Line">
+							    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+							    		</div>
+							    		<div class="Line">
+							    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
+							    		</div>
 						    		
 						    		<div class="bLine"></div>
 						    		<div>
