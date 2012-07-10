@@ -149,7 +149,13 @@
 	    	para.id = $("#addItem").attr("dID"); ;
 	    	para.isEnabled = is;
 	    	
-	    	alert(JSON.stringify(para));
+	    	//alert(JSON.stringify(para));
+	    	Android.processQuestion(JSON.stringify(para), "DISABLEORENABLEITEMBYID");
+	    	blockUINoOverlay("设置成功！");
+			unBlockUI(oTime);
+	    	//go to question list.
+			topLoad("historyList.html");
+	    	
 	    });
 	
 	}); //----jQuery END-----//
@@ -269,6 +275,8 @@
 			q.minute = parseInt(t[1]);
 			
 			q.alertType = aType;
+			
+			q.isEnabled = true;
 			
 			//alert(JSON.stringify(q));
 			if(q.id <=0 ){
