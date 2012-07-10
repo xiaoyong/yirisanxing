@@ -31,6 +31,7 @@
 
 		  //get question
 		 var result = Android.processQuestion(id, "GETFULLITEMBYID");
+		//alert(result);
 		//  var result = '{"id":"1","question":"1212-q","options":[{"option":"是1 ","id":"1"},{"option":"否2 ","id":"2"},{"option":"13 ","id":"-1"},{"option":"123233 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}'
 	     var q = JSON.parse(result);
 	    //  alert(q.question);
@@ -41,9 +42,12 @@
 	    	ops[q.options[i].id] = q.options[i].option;
 	    };
 	    
+	    //alert(JSON.stringify(ops));
+	    
 	    $("#question").text(q.question);
 	      
 	      result = Android.processQuestion(id, "VIEWREVIEWLISTBYID");
+	     // alert(result);
 	    //  result = '[{"comment":"comment1","optionID":1,"created":1341770308659},{"comment":"comment2","optionID":2,"created":1341770318659}]'
 	      var reviews = JSON.parse(result);
 		
@@ -52,6 +56,7 @@
 		  var reviews_len = reviews.length;
 	      for (var i = 0; i < reviews_len; ++i) {
 	    	  var d = new Date(reviews[i].created);
+	    	 // alert(reviews[i].optionId);
 	    	 // var o = Android.processQuestion('{"id":"1"}',"getOptionByID");
 	    	  var s = '<div id="'+reviews[i].created+'" class="expan"><span class="bLine" style="margin-left: 0.5em;"> <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>'+
 				 '<span class="rTime"> '+[d.getFullYear(), d.getMonth()+1, d.getDate()].join("-")+' </span> <span class="rhbg">'+ops[reviews[i].optionId]+'</span> </span></div>'
