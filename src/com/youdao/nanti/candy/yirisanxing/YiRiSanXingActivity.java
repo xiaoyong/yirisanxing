@@ -154,7 +154,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         
         //hidden scroll bar.
         myWebView.setHorizontalScrollBarEnabled(false);
-        myWebView.setVerticalScrollBarEnabled(true);
+        myWebView.setVerticalScrollBarEnabled(false);
         
         //add key board.
         myWebView.requestFocusFromTouch();
@@ -258,9 +258,10 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     public void nextReview() {
         if (!reviewQueue.isEmpty()) {
             ReviewHint reviewHint = reviewQueue.remove();
-            String sId = String.valueOf(reviewHint.id);
-            String sTime = String.valueOf(reviewHint.time);
-            myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
+            //String sId = String.valueOf(reviewHint.id);
+            //String sTime = String.valueOf(reviewHint.time);
+            //myWebView.loadUrl("file://android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
+            loadReview(reviewHint.id, reviewHint.time);
         } else {
             // TODO: gets weird exit when you review mannually
             this.stopService(new Intent(Action.BEEP));
