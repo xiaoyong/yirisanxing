@@ -49,9 +49,11 @@
 
 <script>
 	var tClick = 0; //title click.
+	var aType = 1; //alert type.
 	
 	$(document).ready(function(){
 		openPage(); // call page open animation
+		alertTZ();// 通知 default.
 		
 		var action = getQueryStringRegExp("action");
 		if(action=="update"){
@@ -116,6 +118,18 @@
 	        $('#select').scroller('show'); 
 	        return false;
 	    });
+	    
+	    
+	    //fire alert type
+	    $("#nz").click(function(){
+	    	alertNZ();
+	    });
+	    
+	    $("#tz").click(function(){
+	    	alertTZ();
+	    });
+	    
+	 
 
 /*
 		$("#add_repeat").click(function(){
@@ -254,7 +268,10 @@
 			q.hour = parseInt(t[0]);
 			q.minute = parseInt(t[1]);
 			
-			q.alertType = "2";
+			q.alertType = aType;
+			
+			//alert(q.alertType);
+			//return;
 			
 			//q.daysOfWeek = "1,2"
 			
@@ -281,6 +298,15 @@
 		//var result = '{"daysOfWeek":"1,7,6","id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 		var result = Android.processQuestion(id, "getItemByID");
 		var q = eval('('+result+')');
+		
+		//alert(q.alertType);
+		
+		if(q.alertType == 1){
+			alertTZ();
+		}else{
+			alertNZ();
+		}
+		
 		//alert(q.question);
 		$("#addItem").attr("dID",q.id);
 		$("#newItem1").val(q.question);
@@ -344,6 +370,25 @@
     	if(a == 7){
     		return '星期日';
     	}
+	}
+	
+	//alert type.
+	function alertNZ(){
+		//alert("NZ");
+		aType = 2;
+		$("#nz").empty();
+		$("#nz").append('<span id="nzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>闹钟提醒');
+		$("#tz").empty();
+		$("#tz").append('通知提醒');
+	}
+	
+	function alertTZ(){
+		//alert("TZ");
+		aType = 1;
+		$("#nz").empty();
+		$("#nz").append('闹钟提醒');
+		$("#tz").empty();
+		$("#tz").append('<span id="tzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>通知提醒');
 	}
 		
 </script>
@@ -434,6 +479,8 @@
   -->						    		
 <!-- conflict end here -->
 						    		
+						    		 <span id="nz" class="bLine" style="width:50%; height:30px;"><span id="nzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>闹钟提醒</span>
+						    		 <span id="tz" class="bLine" style="width:50%; height:30px;margin-left:3em;"><span id="tzm" class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>通知提醒</span>
 						    		<div class="bLine"></div>
 						    		<div>
 						    		  <span class="bLine" style="width:50%; height:30px;"><span class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>设置完成</span>
