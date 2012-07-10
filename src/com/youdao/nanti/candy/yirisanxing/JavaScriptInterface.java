@@ -131,7 +131,7 @@ public class JavaScriptInterface {
         else {
             values.put("is_enabled", 0);
         }
-        return database.update("options", values, "_id = " + question.getId(), null);
+        return database.update("questions", values, "_id = " + question.getId(), null);
     }
 
     private List<Question> searchQuestions(String questionString) {
