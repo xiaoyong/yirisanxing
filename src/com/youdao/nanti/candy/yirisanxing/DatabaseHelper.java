@@ -9,7 +9,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "yirisanxing.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String QUESTIONS_TABLE_CREATE = "CREATE TABLE questions ("
             + "_id INTEGER PRIMARY KEY, "
             + "question TEXT, "
@@ -53,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Add a demo question
         ContentValues values = new ContentValues();
         
-        values.put("question", "今天按时吃早饭了吗？");
+        values.put("question", "今天读了些什么书？");
         values.put("is_enabled", 0);
         values.put("repeat_type", 2);
         values.put("interval", 1);
@@ -69,15 +69,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Add demo options
         values.clear();
         values.put("question_id", questionId);
-        values.put("option", "有");
+        values.put("option", "程序设计");
+        values.put("value", 0);
+        values.put("is_enabled", 1);
+        db.insert("options", null, values);
+        
+        values.clear();
+        values.put("question_id", questionId);
+        values.put("option", "外语学习");
         values.put("value", 1);
         values.put("is_enabled", 1);
         db.insert("options", null, values);
         
         values.clear();
         values.put("question_id", questionId);
-        values.put("option", "没有");
-        values.put("value", 0);
+        values.put("option", "网络小说");
+        values.put("value", 2);
         values.put("is_enabled", 1);
         db.insert("options", null, values);
     }
