@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0 ,user-scalable=no,target-densitydpi=device-dpi"> 
 
-<title>ReviewList</title>
+<title>Top Panel Test</title>
 
 <style>
 	@font-face{
@@ -21,61 +21,20 @@
  <script language="JavaScript" src="js/wavefancy.comm.js"></script>
 
 <script>
-	var openCurr = null;
-
 	$(document).ready(function(){
 		openPage();  // call page open animation
 		
-		var id = getQueryStringRegExp("id"); //question id.
-
-		  //get question
-		 // var result = Android.processQuestion(id, "getItemByID");
-		  var result = '{"id":"1","question":"1212-q","options":[{"option":"是 ","id":"-1"},{"option":"否 ","id":"-1"},{"option":"13 ","id":"-1"},{"option":"123233 ","id":"-1"}],"repeatType":"1","interval":"2","hour":"13","minute":"15","alertType":"2"}'
-	      var q = JSON.parse(result);
-	    //  alert(q.question);
-	      
-	     // result = Android.processQuestion(id, "viewReviewListByID");
-	      result = '[{"comment":"comment1","optionID":1,"created":1341770308659},{"comment":"comment2","optionID":2,"created":1341770318659}]'
-	      var reviews = JSON.parse(result);
-		
-		  //alert(reviewList);
-		  $("#reviewList").empty();
-		  
-		  var reviews_len = reviews.length;
-	      for (var i = 0; i < reviews_len; ++i) {
-	    	  var d = new Date(reviews[i].created);
-	    	 // var o = Android.processQuestion('{"id":"1"}',"getOptionByID");
-	    	  var s = '<div id="'+reviews[i].optionID+'" class="expan"><span class="bLine" style="margin-left: 0.5em;"> <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>'+
-				 '<span class="rTime"> '+[d.getFullYear(), d.getMonth(), d.getDate()].join("-")+' </span> <span class="rhbg">optionLabels</span> </span></div>'
-	    	  
-			  $("#reviewList").append(s); //append option
-			  
-			  s = '<div id="h'+reviews[i].optionID+'" class="vComment">'+reviews[i].comment+'</div>';
-			  $("#reviewList").append(s) //append comment
-	      }
-	      
-	      
-	      bindOptions()
 	});
 	
-	//bind option for comment view
-	function bindOptions(){
-		//animate for item questions.
-		$(".expan").click(function(){
-			var id = $(this).attr("id");
-			var curr =  $("#h"+id);
-			
-			if(openCurr != null){
-				openCurr.slideToggle();
-			}
-
-			curr.slideToggle();
-			openCurr = curr;
-			
-		});
+//	function topLoad(URL){
+//		alert(URL);
+//		this.location.href=URL;
+//	}
+/*	
+	function testJavaCall(m){
+		alert(m);
 	}
-	
-	
+*/	
 </script>
 </head>
 <body>
@@ -87,32 +46,7 @@
 	 -->
 	</div>
 	<div id="move"></div>
-	
-	<section class="st-panel" id="st-panel-3">
-			<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">y<span class="textOrange" style="margin-left:10px;">回答列表</span></span></h3>
-			<div class="bLine"  style="border-left:solid 0.5em #8FB12A;"> <span style="margin-left: 0.25em;"> 问题  </span></div>
-		
-			<div id="reviewList">
-					<div id="1" class="expan">	
-					     <span class="bLine" style="margin-left: 0.5em;">
-						 <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>
-						 <span class="rTime"> 2012-05-30</span> 
-						 <span class="rhbg">测试数据</span> </span>
-					 </div>
-					 <div id="h1" class="vComment">
-					    当新学年开学的铃声敲响的时候，才发现我已经在徐州北大青鸟中博校区学习快一个月了。
-					 </div>
-					 <div id="2" class="expan">
-						 <span class="bLine" style="margin-left: 0.5em;">
-						 <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>
-						 <span class="rTime"> 2012-35-30</span> 
-						 <span class="rhbg">测试数据</span> </span>
-					 </div>
-					  <div id="h2" class="vComment">
-					    2. 当新学年开学的铃声敲响的时候，才发现我已经在徐州北大青鸟中博校区学习快一个月了。
-					  </div>
-			</div>		
-	</section>
+	<input type="button" value="BTN-BTN" id="BTN">
 </div>
 </body>
 </html>

@@ -9,8 +9,11 @@
 <style>
 	@font-face{
 		font-family: "RaphaelIcons";
-		src: url('css/fonts/raphaelicons-webfont.ttf');
+		src: url('css/fonts/raphaelicons-webfont.ttf');  
 	}
+  
+    #h1-c {font-size: 18pt;};
+    .dayofweek {width: 100px; height: 100px};
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/newStyle.css" />
@@ -83,6 +86,21 @@
   			Activity.pickTime();
 		});
 		
+		$("#add_repeat").click(function(){
+  			var curr =  $("#h1-c");
+  			curr.slideToggle();
+		});
+		
+		$(".dayofweek").click(function() {
+  			var daysofweek = new Array();
+  			$(".dayofweek").each(function() {
+    			if ($(this).attr("checked") == "checked") {
+      				daysofweek.push($(this).attr("value"));
+    			}
+  			})  
+  			$("#add_repeat").val(daysofweek.join(', '));
+		});
+
 	}); //----jQuery END-----//
 	
 	function setTime(hour, minute) {
@@ -148,8 +166,8 @@
 			}
 			
 			//go to question list.
-			topLoad("historyList.html");
-	}
+			topLoad("historyList.html");	
+    }
 	
 	function getItemByID(id){ //get question by ID.
 		//var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
@@ -205,7 +223,16 @@
 						    	
 						    		<div class="bLine"></div>
 						    		<div class="Line">
-						    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+						    			<span class="bLine" style="width:50%; height:30px;"> 每周 <input type="button" id="add_repeat" class="lInput" value="1,2,3,4,5,6,7" style="color:#12AAEE;font-size:14px;"/> 重复  <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+						    		    <div id="h1-c" class="hOptions">
+                                          <input type="checkbox" id="MONDAY" value="1" checked="checked" class="dayofweek" />一  
+                                          <input type="checkbox" id="TUESDAY" value="2" checked="checked" class="dayofweek" />二  
+                                          <input type="checkbox" id="WEDNESDAY" value="3" checked="checked" class="dayofweek" />三  
+                                          <input type="checkbox" id="THURSDAY" value="4" checked="checked" class="dayofweek" />四  
+                                          <input type="checkbox" id="FRIDAY" value="5" checked="checked" class="dayofweek" />五  
+                                          <input type="checkbox" id="SATURDAY" value="6" checked="checked" class="dayofweek" />六  
+                                          <input type="checkbox" id="SUNDAY" value="7" checked="checked" class="dayofweek" />日  
+                                        </div>
 						    		</div>
 						    		<div class="Line">
 						    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>

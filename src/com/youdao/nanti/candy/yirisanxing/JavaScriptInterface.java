@@ -32,7 +32,6 @@ public class JavaScriptInterface {
         UPDATE,
         GETALLLIST,
         GETITEMBYID,
-        GETFULLITEMBYID,
         DELITEMBYID,
         VIEWREVIEWLISTBYID,
         INSERTREVIEW
@@ -72,6 +71,7 @@ public class JavaScriptInterface {
         switch (action) {
         case CREATE:
             question = gs.fromJson(questionString, Question.class);
+            Log.v(TAG, gs.toJson(question));
             if (createQuestion(question) > 0) {
                 return "0";
             } else {
@@ -79,6 +79,7 @@ public class JavaScriptInterface {
             }
         case UPDATE:
             question = gs.fromJson(questionString, Question.class);
+            Log.v(TAG, gs.toJson(question));
             if (updateQuestion(question) > 0) {
                 return "0";
             } else {
@@ -87,9 +88,7 @@ public class JavaScriptInterface {
         case GETALLLIST:
             return gs.toJson(getAllQuestions());
         case GETITEMBYID:
-            return gs.toJson(getQuestionByID(Long.parseLong(questionString), true));
-        case GETFULLITEMBYID:
-            return gs.toJson(getQuestionByID(Long.parseLong(questionString), false));
+            return gs.toJson(getQuestionByID(Long.parseLong(questionString)));
         case DELITEMBYID:
             if (deleteQuestion(Long.parseLong(questionString)) > 0) {
                 return "0";
@@ -112,7 +111,7 @@ public class JavaScriptInterface {
         return "0";
         
     }
-    private Question getQuestionByID(long questionId, boolean isEnabledOptionsOnly) {
+    private Question getQuestionByID(long questionId) {
         Cursor cursor = database.query("questions", null, "_id = " + questionId, null, null, null, null);
 
         if (cursor != null) {
@@ -120,15 +119,13 @@ public class JavaScriptInterface {
         }
         
         Question question = new Question(cursor);
-        if (isEnabledOptionsOnly)
-            question.setOptions(getAllOptions(question.getId(), true));
-        else
-            question.setOptions(getAllOptions(question.getId(), false));
-
+        question.setOptions(getAllOptions(question.getId()));
+        
         // Make sure to close the cursor
         cursor.close();
         return question;
     }
+    
     private List<Question> getAllQuestions() {
         List<Question> questions = new ArrayList<Question>();
 
@@ -137,7 +134,7 @@ public class JavaScriptInterface {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Question question = new Question(cursor);
-            question.setOptions(getAllOptions(question.getId(), true));
+            question.setOptions(getAllOptions(question.getId()));
             questions.add(question);
             cursor.moveToNext();
         }
@@ -145,19 +142,17 @@ public class JavaScriptInterface {
         cursor.close();
         return questions;
     }
-
-    private List<Option> getAllOptions(long questionId, boolean isEnabledOnly) {
+    
+    private List<Option> getAllOptions(long questionId) {
         List<Option> options = new ArrayList<Option>();
-        Cursor cursor;
-        if (isEnabledOnly)
-            cursor = database.query("options", null, "question_id = " + questionId + " AND is_enabled = 1", null, null, null, null);
-        else
-            cursor = database.query("options", null, "question_id = " + questionId, null, null, null, null);
+
+        Cursor cursor = database.query("options", null, "question_id = " + questionId, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Option option = new Option(cursor);
-            options.add(option);
+            if (option.getIsEnabled())
+                options.add(option);
             cursor.moveToNext();
         }
         // Make sure to close the cursor
@@ -168,7 +163,7 @@ public class JavaScriptInterface {
     private List<Review> getAllReviews(long questionId) {
         List<Review> reviews = new ArrayList<Review>();
 
-        Cursor cursor = database.query("reviews", null, "question_id = " + questionId, null, null, null, "created ASC");
+        Cursor cursor = database.query("reviews", null, "question_id = " + questionId, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -232,7 +227,7 @@ public class JavaScriptInterface {
                 option.setValue(++v);
                 createOption(option);
             } else if (! option.getIsEnabled())
-                disableOption(option.getId());
+                updateOption(option);
         }
         
         setAlarm(questionId);
@@ -252,11 +247,6 @@ public class JavaScriptInterface {
     }
     private int deleteReview(long id) {
         return database.delete("reviews", "_id = " + id, null);
-    }
-    private int disableOption(long id) {
-        ContentValues values = new ContentValues();
-        values.put("is_enabled", 0);
-        return database.update("options", values, "_id = " + id, null);
     }
     
     private int getMaximalOptionValue(long questionId) {
@@ -348,7 +338,7 @@ public class JavaScriptInterface {
     }
     
     public void mute() {
-    	//System.out.println("MUTE");
+    	System.out.println("MUTE");
         mContext.stopService(new Intent(Action.BEEP));
     }
         

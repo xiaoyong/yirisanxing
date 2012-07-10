@@ -80,7 +80,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("value", 0);
         values.put("is_enabled", 1);
         db.insert("options", null, values);
-
     }
     
     @Override
