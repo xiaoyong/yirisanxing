@@ -115,7 +115,7 @@ function bindOptionToActiveItem(){
 function saveOptionChoose(optionID){
 	var para = new Object();
 	//para.id = $("#currItem").attr("dID");
-	para.id = "-1";
+	para.id = optionID;
 	para.questionId = getQueryStringRegExp("id");
 	para.optionId = optionID;
 	para.comment = $("#comment").val();
