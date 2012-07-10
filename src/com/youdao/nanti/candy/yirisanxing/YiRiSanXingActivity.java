@@ -189,11 +189,11 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         if (intent.getAction().equals(Action.REVIEW)) {
             long id = Long.valueOf(intent.getData().getSchemeSpecificPart());
             long time = intent.getLongExtra(Alarm.ALERT_TIME, System.currentTimeMillis());
-            if (mAction.equals(Action.MAIN)) {
-                loadReview(id, time);
-            } else if (mAction.equals(Action.REVIEW)) {
+            if (mAction.equals(Action.REVIEW)) {
                 //jsInterface.queueReview()
                 queueReview(id, time);
+            } else {
+                loadReview(id, time);
             }
         }
         mAction = intent.getAction();

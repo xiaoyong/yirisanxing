@@ -90,10 +90,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent notify = new Intent(Action.REVIEW, Uri.parse("question:" + String.valueOf(questionId)));
+        notify.putExtra(Alarm.ALERT_TIME, time);
         PendingIntent pendingNotify = PendingIntent.getActivity(context, 0, notify, 0);
 
         String title = context.getResources().getString(R.string.app_name);
-        Notification notification = new Notification(R.drawable.ic_launcher, "", System.currentTimeMillis());
+        Notification notification = new Notification(R.drawable.ic_custom, "", System.currentTimeMillis());
         notification.setLatestEventInfo(context, title, question, pendingNotify);
         notification.flags |= Notification.FLAG_SHOW_LIGHTS
                 | Notification.FLAG_ONGOING_EVENT
