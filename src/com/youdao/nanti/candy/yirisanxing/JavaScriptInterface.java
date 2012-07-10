@@ -72,7 +72,6 @@ public class JavaScriptInterface {
         switch (action) {
         case CREATE:
             question = gs.fromJson(questionString, Question.class);
-            Log.v(TAG, gs.toJson(question));
             if (createQuestion(question) > 0) {
                 return "0";
             } else {
@@ -80,7 +79,6 @@ public class JavaScriptInterface {
             }
         case UPDATE:
             question = gs.fromJson(questionString, Question.class);
-            Log.v(TAG, gs.toJson(question));
             if (updateQuestion(question) > 0) {
                 return "0";
             } else {
@@ -91,7 +89,6 @@ public class JavaScriptInterface {
         case GETITEMBYID:
             return gs.toJson(getQuestionByID(Long.parseLong(questionString), true));
         case GETFULLITEMBYID:
-            Log.v(TAG, gs.toJson(getQuestionByID(Long.parseLong(questionString), false)));
             return gs.toJson(getQuestionByID(Long.parseLong(questionString), false));
         case DELITEMBYID:
             if (deleteQuestion(Long.parseLong(questionString)) > 0) {
@@ -149,7 +146,7 @@ public class JavaScriptInterface {
         return questions;
     }
 
-    public List<Option> getAllOptions(long questionId, boolean isEnabledOnly) {
+    private List<Option> getAllOptions(long questionId, boolean isEnabledOnly) {
         List<Option> options = new ArrayList<Option>();
         Cursor cursor;
         if (isEnabledOnly)
