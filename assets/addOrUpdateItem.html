@@ -54,9 +54,9 @@
 	$(document).ready(function(){
 		var action = getQueryStringRegExp("action");
 		if (action == "update") {
-			BotInterface.adjustFocus("0");
+			//BotInterface.adjustFocus("0");
 		} else {
-			BotInterface.adjustFocus("2");
+			//BotInterface.adjustFocus("2");
 		}
 		
 		openPage(); // call page open animation
@@ -134,6 +134,22 @@
 	    
 	    $("#tz").click(function(){
 	    	alertTZ();
+	    });
+	    
+	    //enable or disable a question
+	    //{"id":1,"isEnabled":"true/false"}
+	    $("#disableItem").click(function(){
+	    	var is = true;
+	    	//alert($("#isEnabled").val());
+	    	if( $("#isEnabled").val() == "true"){
+	    		is = false;
+	    	}
+	    	
+	    	var para = new Object();
+	    	para.id = $("#addItem").attr("dID"); ;
+	    	para.isEnabled = is;
+	    	
+	    	alert(JSON.stringify(para));
 	    });
 	
 	}); //----jQuery END-----//
@@ -277,13 +293,21 @@
 		var result = Android.processQuestion(id, "getItemByID");
 		var q = eval('('+result+')');
 		
-		//alert(q.alertType);
-		
+		//alert(q.alertType)
 		if(q.alertType == 1){
 			alertTZ();
 		}else{
 			alertNZ();
 		}
+		
+		//enable or disable
+		$("#disableItem").css({"display":"inline-block"});
+		//alert(q.isEnabled);
+		if(q.isEnabled != true){
+			$("#disableItem").val("启用该提醒");
+		};
+		
+		$("#isEnabled").val(q.isEnabled);
 		
 		//alert(q.question);
 		$("#addItem").attr("dID",q.id);
@@ -400,6 +424,8 @@
 
 						    		
 							    	<div id="week">	
+							    		<input id="isEnabled" value="true" type="hidden"/>
+							    		<input id="disableItem" class="button" value="禁用该提醒" type="button" style="margin-top:0.5em;float:left;display:none;"/>
 							    		<input id="week_repeat" class="button-red" value="添加重复日期" type="button" style="margin-top:0.5em;"/>
 							    		
 							    		<select name=weekday id="select" >
