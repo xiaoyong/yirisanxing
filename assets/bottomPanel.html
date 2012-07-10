@@ -50,10 +50,14 @@
 
     function adjustFocus(id) {
       // id can only be 1, 2, 3 or 4
-      var idSelector = $("#st-control-" + id);
-      if (!idSelector.prop("checked")) {
-        //console.log("click");
-        idSelector.prop("checked", true);
+      if (id == "0") { // Uncheck all
+        $("input:checked").prop("checked", false);
+      } else {
+        var idSelector = $("#st-control-" + id);
+        if (!idSelector.prop("checked")) {
+          //console.log("click");
+          idSelector.prop("checked", true);
+        }
       }
     }
 </script>
