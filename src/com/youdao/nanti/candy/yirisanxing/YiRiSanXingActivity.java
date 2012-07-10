@@ -23,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -193,9 +194,22 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         }
         mAction = intent.getAction();
     }
-        
+    
     @Override
-    public void onBackPressed() {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Check if the key event was the Back button and if there's history
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView.canGoBack()) {
+            myWebView.goBack();
+            return true;
+        } else if ((keyCode == KeyEvent.KEYCODE_BACK) && !myWebView.canGoBack()) {
+            confirmExit();
+        }
+        // If it wasn't the Back key or there's no web page history, bubble up to the default
+        // system behavior (probably exit the activity)
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void confirmExit() {
         // lock back when review from alarm clock
         if (mAction.equals(Action.REVIEW)) {
             return;
