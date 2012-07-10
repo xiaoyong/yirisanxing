@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -213,6 +214,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         return super.onKeyDown(keyCode, event);
     }
 
+
     private void confirmExit() {
         // lock back when review from alarm clock
         if (mAction.equals(Action.REVIEW)) {
@@ -305,11 +307,11 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
                 String dirPath = data.getStringExtra(ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.returnDirectoryParameter);
                 String toPath = dirPath + "/yirisanxing.db.backup";
                 if(copy(fromPath, toPath)) {
-                    Toast.makeText(this, "export success!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.export_success, Toast.LENGTH_LONG).show();
                 }
                 //myWebView.loadUrl("javascript:getPath('"+newDir+"')");
             } else {
-                Toast.makeText(this, "Received NO result from file browser", Toast.LENGTH_LONG).show(); 
+                Toast.makeText(this, R.string.unselected, Toast.LENGTH_LONG).show(); 
             }
         }
         
@@ -321,15 +323,15 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
                     SQLiteDatabase validateDb = SQLiteDatabase.openDatabase(filePath, null, 0);
                     validateDb.close();
                 } catch (SQLiteException e) {
-                    Toast.makeText(this, "Import database failed: selected file is not a proper database file!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.invalid_database, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(copy(filePath, toPath)) {
-                    Toast.makeText(this, "import success!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.import_success, Toast.LENGTH_LONG).show();
                 }
                 //myWebView.loadUrl("javascript:getPath('"+newFile+"')");
             } else {
-                Toast.makeText(this, "Received NO result from file browser", Toast.LENGTH_LONG).show(); 
+                Toast.makeText(this, R.string.unselected, Toast.LENGTH_LONG).show(); 
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -339,7 +341,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         File from = new File(fromPath);
         File to = new File(toPath);
         if (!from.exists()) {
-            Toast.makeText(this, "Failed: database file missing!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.file_missing, Toast.LENGTH_LONG).show();
             return false;
         }
         // TODO: use action to.
@@ -378,7 +380,10 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     }
     
     public void pickTime() {
-        new TimePickerDialog(this, this, 22, 00, true).show();
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        new TimePickerDialog(this, this, hour, minute, true).show();
     }
 
     @Override

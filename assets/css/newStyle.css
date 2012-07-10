@@ -218,13 +218,11 @@ h3{
 	width: 93%;
 	padding: 0 15px;
 	font-size: 1.5em;
-	color: #8E8E8E;
 }
 
 .lInput{
 	border: none;
 	background: transparent;
-	color: #8E8E8E;
 /*	border-bottom: 1px solid #12AAEE;*/
 }
 
@@ -335,7 +333,7 @@ h3{
 /*	width: 80%;*/
 }
 
-.hOptions span{
+.hOptions  span{
 	display: inline-table;
 	width: 24%; 
 	text-align: center;
@@ -357,29 +355,14 @@ textarea{
 	padding: 0.5em;
 }
 
-.rTime{
-	width: 5em;
-	color: #3E94F3;
+.dayofweek{
+	height: 50px;
 }
 
-.rReview{
-	border-left: solid 1px #949494;
-}
-
-.vComment{
-	margin: 0.1em 1em;
-	border-left:#F1AB19 0.2em solid;
-/*	height: 2em;*/
-	line-height: 1.5em;
-	box-shadow: 0px 1px 5px #06c;
-	display:none;
-	font-size: 1.25em;
-	padding: 0.2em;
-/*	width: 80%;*/
-}
-
-.rhbg:hover{
-	background: rgba(18,170,238,0.2);
+.pd{
+	height:2em;
+	line-height:2em;
+	width:50px;
 }
 /********************TOP Panel END*********************/
 

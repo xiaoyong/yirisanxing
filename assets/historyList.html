@@ -39,7 +39,6 @@
 
 		var result = Android.processQuestion("", "getAllList");
 		//alert(result);
-
 		//var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
 	
 		var h = $("#hList");
@@ -70,12 +69,20 @@
 			var curr =  $("#"+id + "-c");
 			
 			if(openCurr != null){
-				openCurr.slideToggle();
+				//if( openCurr.attr("id") == curr.attr("id")){
+				//	openCurr.slideToggle();
+				//	return;
+				//}else{
+					openCurr.slideToggle();
+				//}
 			}
 			
-
-			curr.slideToggle();
-			openCurr = curr;
+			//alert(curr.attr("id"));
+			//$("#"+id + "-c").slideToggle();
+		//	if( openCurr.attr("id") != curr.attr("id")){
+				curr.slideToggle();
+				openCurr = curr;
+		//	}
 			
 		});
 		
@@ -124,10 +131,10 @@
 			var id = $(this).parent().attr("id");
 			//alert(id);
 			id = id.substring(1,id.length-2);
-		//	alert(id);
-			//window.location.href="addOrUpdateItem.html?action=update&id="+id;
-			topLoad("reviewList.html?id="+id);
+			//alert(id);
+			topLoad("addOrUpdateItem.html?action=update&id="+id);
 		});
+		
 		
 	}
 	

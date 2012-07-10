@@ -9,8 +9,15 @@
 <style>
 	@font-face{
 		font-family: "RaphaelIcons";
-		src: url('css/fonts/raphaelicons-webfont.ttf');
+		src: url('css/fonts/raphaelicons-webfont.ttf');  
 	}
+
+	
+	#select_dummy{
+		display:none;
+	}
+
+    #h1-c {font-size: 18pt;};
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/newStyle.css" />
@@ -22,6 +29,23 @@
  <!-- Load jQuery Block UI -->
  <script language="JavaScript" src="js/jquery.blockUI.js"></script>
  <!-- End load jQuery block ui -->
+ 
+ <!-- load mobiscroll -->
+
+  <script language="JavaScript" src="js/mobiscroll-2.0/js/mobiscroll-2.0.custom.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/mobiscroll-2.0/css/mobiscroll-2.0.custom.min.css" />
+
+ <!-- END mobiscroll  -->
+  
+ <!-- load multiselect -->
+  <!-- 
+ 	  <script language="JavaScript" src="js/multiSelect/jquery-ui.min.js"></script>
+	  <script language="JavaScript" src="js/multiSelect/jquery.multiselect.min.js"></script>
+	  
+	  <link rel="stylesheet" type="text/css" href="js/multiSelect/jquery.multiselect.css" />
+	  <link rel="stylesheet" type="text/css" href="js/multiSelect/jquery-ui.css" />
+	  -->
+ <!-- end multiselect -->
 
 <script>
 	var tClick = 0; //title click.
@@ -39,6 +63,7 @@
 			
 			getItemByID(id);
 		}
+		
 		
        	//focus then close
 		$(".cl").focus(function(){
@@ -84,7 +109,86 @@
   			Activity.pickTime();
 		});
 		
+
+		
+		//for mobiscroll
+		bindScroller();
+	    $('#week_repeat').click(function () {
+	        $('#select').scroller('show'); 
+	        return false;
+	    });
+
+/*
+		$("#add_repeat").click(function(){
+  			var curr =  $("#h1-c");
+  			curr.slideToggle();
+		});
+		
+		$(".dayofweek").click(function() {
+  			var daysofweek = new Array();
+  			$(".dayofweek").each(function() {
+    			if ($(this).attr("checked") == "checked") {
+      				daysofweek.push($(this).attr("value"));
+    			}
+  			})  
+  			$("#add_repeat").val(daysofweek.join(', '));
+		});
+		
+		$(".check").click(function(){
+			$(this).siblings(-1).click();
+		});
+	    */		
+
 	}); //----jQuery END-----//
+	
+	//-------------- for mobiscroll--------------
+	
+	function bindDelWeekDay(){
+		$(".delwday").click(function(){
+			$(this).parent().remove();
+		});
+	}
+	
+	function bindScroller(){
+		$('#select').scroller({
+	        preset: 'select',
+	        theme: 'android-ics light',
+	        display: 'modal',
+	        mode: 'mixed',
+	        inputClass: 'i-txt',
+	        onSelect: function(d){
+	        	var v = -1;
+	        	if(d == '星期一'){
+	        		v = 1;
+	        	}
+	        	if(d == '星期二'){
+	        		v = 2;
+	        	}
+	        	if(d == '星期三'){
+	        		v = 3;
+	        	}
+	        	if(d == '星期四'){
+	        		v = 4;
+	        	}
+	        	if(d == '星期五'){
+	        		v = 5;
+	        	}
+	        	if(d == '星期六'){
+	        		v = 6;
+	        	}
+	        	if(d == '星期日'){
+	        		v = 7;
+	        	}
+	        	
+	        	var s = '<div class="Line" oID="'+v+'"><span class="bLine delwday" >'+d+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
+	    		$("#wd").append(s);
+	    		
+	    		bindDelWeekDay();
+	        }
+	    });
+	}
+	
+	//-------------- end mobiscroll--------------
 	
 	function setTime(hour, minute) {
   		$("#add_time").val(fillString(hour, 2) + ":" + fillString(minute, 2));
@@ -108,6 +212,23 @@
 	}
 	
 	function addOrUpdateItem(){ //add or update.
+			var rp = [];
+			//var dayow = $("#wd").children("div");
+			$("#wd").children("div").each(function(){
+				var d = parseInt($(this).attr("oID"));
+				if(!contains(d,rp)){
+					rp.push($(this).attr("oID"));
+				}
+			});
+			
+			//alert(rp.length);
+			if(rp.length <= 0){
+				alert("请选择重复日期!");
+				return;
+			}
+			
+			//alert(rp.join(","));
+			$("#add_repeat").val(rp.join(","));
 		//	alert("here!");
 			var q = new Object();
 			q.id = $("#addItem").attr("dID"); //add negative add, alter positive id.
@@ -127,15 +248,19 @@
 			});	
 		
 			q.repeatType = "2";
-			q.interval = $("#add_repeat").val();
+			q.interval = "1";
+			q.daysOfWeek = $("#add_repeat").val();
+
 			var t = $("#add_time").val().split(":");
 			q.hour = parseInt(t[0]);
 			q.minute = parseInt(t[1]);
+			
 			q.alertType = "2";
-			q.daysOfWeek = "1,2"
+			
+			//q.daysOfWeek = "1,2"
 			
 			
-			alert(JSON.stringify(q));
+			//alert(JSON.stringify(q));
 			if(q.id <=0 ){
 				if (Android.processQuestion(JSON.stringify(q), "create") == 0) {
 					blockUINoOverlay("添加提醒成功！");
@@ -150,17 +275,37 @@
 			}
 			
 			//go to question list.
-			topLoad("historyList.html");
-	}
+			topLoad("historyList.html");	
+    }
 	
 	function getItemByID(id){ //get question by ID.
-		//var result = '{"id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
+		//var result = '{"daysOfWeek":"1,7,6","id":"1","question":"请添加提醒问题","options":[{"option":"是12 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}';
 		var result = Android.processQuestion(id, "getItemByID");
 		var q = eval('('+result+')');
 		//alert(q.question);
 		$("#addItem").attr("dID",q.id);
 		$("#newItem1").val(q.question);
-		$("#add_repeat").val(q.repeatType);
+		$("#add_repeat").val(q.daysOfWeek);
+		
+		//alert(q.daysOfWeek);
+		var dow = q.daysOfWeek.split(",");
+		
+		$("#wd").empty();
+		for(var i in dow){
+			var a = dow[i];
+		//	alert(a);
+			var s = '<div class="Line" oID="'+a+'"><span class="bLine delwday" >'+convertIntToDay(a)+' <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span></div>';
+    		$("#wd").append(s);
+		}
+		
+		//$('#select').val(1).scroller('setValue', ['_1']);
+	      //  $('#select'+'_dummy').val('');
+	        //return false;
+		
+		//bindScroller();
+		bindDelWeekDay();
+		
+		
 		$("#add_time").val(fillString(q.hour + '', 2) + ':' + fillString(q.minute + '', 2));
 		//$("#add_time").val(q.hour + ":" + q.minute);
 		
@@ -171,11 +316,36 @@
 			$("#aList").append(e);
 		}
 		
-		alert(q.daysOfWeek);
+		//alert(q.daysOfWeek);
 		
 		//don't remove the title content when focus on.
 		tClick = 1;
+		
 	};
+	
+	function convertIntToDay(a){
+		if(a == 1){
+    		return '星期一';
+    	}
+    	if(a == 2){
+    		return '星期二';
+    	}
+    	if(a == 3){
+    		return '星期三';
+    	}
+    	if(a == 4){
+    		return '星期四';
+    	}
+    	if(a == 5){
+    		return '星期五';
+    	}
+    	if(a == 6){
+    		return '星期六';
+    	}
+    	if(a == 7){
+    		return '星期日';
+    	}
+	}
 		
 </script>
 </head>
@@ -208,12 +378,62 @@
 						    	</div>
 						    	
 						    		<div class="bLine"></div>
+
+						    		
+							    	<div id="week">	
+							    		<input id="week_repeat" class="button-red" value="添加重复日期" type="button" style="margin-top:0.5em;"/>
+							    		
+							    		<select name=weekday id="select" >
+										    <option value="1">星期一</option>
+										    <option value="2">星期二</option>
+										    <option value="3">星期三</option>
+										    <option value="4">星期四</option>
+										    <option value="5">星期五</option>
+										    <option value="6">星期六</option>
+										    <option value="7">星期日</option>
+										</select>
+							    		
+							    		
+							    		<div id="wd">
+							    		<!--  
+							    			<div class="Line" oID="0">
+							    		   		<span class="bLine delwday" > 星期一 <span class="RaphaelIcons textGray" style="display: inline-table;">Â</span></span>
+							    			</div>
+							    		-->	
+							    		</div>
+							    	</div>	
+						    		
+						    		
+						    		<div class="bLine"></div>
+						    		
+						    			<input id="add_repeat" type="hidden">
+							    		<!--
+								    		<div class="Line">
+								    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+								    		</div>
+							    		 -->
+							    		<div class="Line">
+							    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
+							    		</div>
+ 
+ <!-- 
 						    		<div class="Line">
-						    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+						    			<span class="bLine" style="width:50%; height:30px;"> 每周 <input type="button" id="add_repeat" class="lInput" value="1,2,3,4,5,6,7" style="color:#12AAEE;font-size:14px;"/> 重复  <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
+						    		    <div id="h1-c" class="hOptions">
+                                         <span class="pd" style="width:80px;"> <input type="checkbox" id="MONDAY" value="1" checked="checked" class="dayofweek" style="height:50px;"/><span class="check" style="width:50px;"> 一  </span> </span>
+                                         <span class="pd" style="width:80px;"> <input type="checkbox" id="TUESDAY" value="2" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 二  </span> </span>
+                                          <span class="pd"  style="width:80px;"> <input type="checkbox" id="WEDNESDAY" value="3" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 三  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="THURSDAY" value="4" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 四  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="FRIDAY" value="5" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 五  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="SATURDAY" value="6" checked="checked" class="dayofweek" /><span class="check" style="width:50px;"> 六  </span> </span>
+                                           <span class="pd"  style="width:80px;"><input type="checkbox" id="SUNDAY" value="7" checked="checked" class="dayofweek" /> <span class="check" style="width:50px;">日  </span> </span>
+                                        </div>
 						    		</div>
 						    		<div class="Line">
 						    			<span class="bLine" style="width:50%; height:30px;"> 提醒时间 <input id ="add_time" type="button" class="lInput" value="13:36" style="width:50px;color:#12AAEE;font-size:14px;"/><span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
 						    		</div>
+  -->						    		
+<!-- conflict end here -->
 						    		
 						    		<div class="bLine"></div>
 						    		<div>

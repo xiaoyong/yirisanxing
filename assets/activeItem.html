@@ -30,11 +30,11 @@
 		
 		setCurrentItem();
 		
-		//answer active item.
-		$("#currList").click(function(){
-			
-			saveOptionChoose($(this).attr("oID"));
-       	   
+		$("#curr-1").click(function(){
+       	    	   //alert("here");
+       	    	   
+    		blockUI("设置成功!");
+    		unBlockUI(600);
        	});
        	
        	//call delay function.
@@ -122,17 +122,10 @@ function saveOptionChoose(optionID){
 	para.created = getQueryStringRegExp("time");
 	
 	alert(JSON.stringify(para));
-
-	var output = Android.processQuestion(JSON.stringify(para),"insertReview");
-	if(output == 0){
+	if (Android.processQuestion(JSON.stringify(para), "insertReview") == 0) {
 		blockUINoOverlay("设置成功!");
-		unBlockUI(oTime);
-	}else{
-		blockUINoOverlay("Internal Error!");
-		unBlockUI(oTime);
-		return;
+	    unBlockUI(600);
 	}
-
 	Activity.nextReview();
 }
 

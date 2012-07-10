@@ -38,6 +38,18 @@ function getQueryStringRegExp(name)
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return ""; 
 };
 
+/*
+ * Check is the value in array.
+ */
+function contains(v,array){
+	for(var i=0;i<array.length;i++){
+		if(v == array[i]){
+			return true;
+		}
+	}
+	
+	return false;
+}
 
 
 //--------------------Functions for Block UI---------------------------//
