@@ -122,7 +122,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         // Load a web page
 //        myWebView.loadUrl("file:///android_asset/index.html?id=2");
         //myWebView.loadUrl("file:///android_asset/test_xiaoyong.html");
-        myWebView.loadUrl("file:///android_asset/historyList.html");
+        myWebView.loadUrl("file:///android_asset/welcomePage.html");
         //myWebView.loadUrl("file:///android_asset/charting.html?id=1");
         
         //////-----------For bottom panel-----------------------------/////////
