@@ -14,7 +14,6 @@ public class BootReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Toast.makeText(context, "Boot received", Toast.LENGTH_LONG).show();
         Log.v(TAG, "Boot received");
                  
     	Scheduler.setAlarms(context);

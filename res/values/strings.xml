@@ -4,4 +4,12 @@
     <string name="app_name">一日三省</string>
     <string name="exit_message">确定退出一日三省？</string>
     
+    <string name="export_success">导出成功！</string>
+    <string name="unselected">没有选择</string>
+    <string name="import_success">导入成功！</string>
+    <string name="invalid_database">数据库导入出错： 不是合法的数据库文件！</string>
+    <string name="file_missing">文件丢失！</string>
+    
+    
+    
 </resources>
