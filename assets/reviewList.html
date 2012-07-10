@@ -54,7 +54,7 @@
 	    	  var d = new Date(reviews[i].created);
 	    	 // var o = Android.processQuestion('{"id":"1"}',"getOptionByID");
 	    	  var s = '<div id="'+reviews[i].created+'" class="expan"><span class="bLine" style="margin-left: 0.5em;"> <span class="RaphaelIcons textGreen" style="display: inline-table;">É</span>'+
-				 '<span class="rTime"> '+[d.getFullYear(), d.getMonth()+1, d.getDate()].join("-")+' </span> <span class="rhbg">'+ops[reviews[i].optionID]+'</span> </span></div>'
+				 '<span class="rTime"> '+[d.getFullYear(), d.getMonth()+1, d.getDate()].join("-")+' </span> <span class="rhbg">'+ops[reviews[i].optionId]+'</span> </span></div>'
 	    	  
 			  $("#reviewList").append(s); //append option
 			  

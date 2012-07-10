@@ -26,6 +26,7 @@
 
 <script>
 	$(document).ready(function(){
+		//generateDemoReviews();
 		openPage();  // call page open animation
 		//var time = getQueryStringRegExp("time");
 		setCurrentItem();
@@ -77,6 +78,7 @@ function callMute(){
  * Initiate the content of current item.
  */
 function setCurrentItem(){
+	
   	var id = getQueryStringRegExp("id"); // exception for wrong id.
   	var time = getQueryStringRegExp("time");
   	var result = Android.processQuestion(id, "GETITEMBYID");
@@ -129,6 +131,24 @@ function saveOptionChoose(optionID){
 	Activity.nextReview();
 }
 
+function generateDemoReviews() {
+	var para = {};
+	for (var i=1; i<10; i++) {
+		para.id = "-1";
+		para.questionId = getQueryStringRegExp("id");
+		para.optionId = Math.floor((Math.random()*3)+1);; // rand([1,2,3])
+		para.comment = "";
+		var date = new Date();
+		date.setDate(i);
+		para.created = date.getTime();
+		
+		alert(JSON.stringify(para));
+		if (Android.processQuestion(JSON.stringify(para), "insertReview") == 0) {
+			blockUINoOverlay("设置成功!");
+		    unBlockUI(600);
+		}
+	}
+}
 
 
 </script>
