@@ -20,6 +20,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 import com.youdao.nanti.candy.yirisanxing.alarm.Action;
 import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
+import com.youdao.nanti.candy.yirisanxing.alarm.Settings;
 
 public class YiRiSanXingActivity extends Activity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     
@@ -261,6 +263,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
             myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
         } else {
             // TODO: gets weird exit when you review mannually
+            this.stopService(new Intent(Action.BEEP));
             finish();
         }
     }
@@ -415,6 +418,24 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     public void  onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         
     }
-
     
+    public void updateSettings(String delayInterval, String timeout) {
+        SharedPreferences settings = getSharedPreferences(Settings.PATH, 0);   
+        SharedPreferences.Editor editor = settings.edit();   
+        editor.putLong(Settings.DELAY_INTERVAL, Long.valueOf(delayInterval));
+        editor.putInt(Settings.BEEP_TIMEOUT, Integer.valueOf(timeout));
+        editor.commit();
+    }
+    
+    public String getSettings(String key) {
+        SharedPreferences preferences = getSharedPreferences(Settings.PATH, 0);
+        if (Settings.DELAY_INTERVAL.equals(key)) {
+            return String.valueOf(preferences.getLong(Settings.DELAY_INTERVAL, Settings.DELAY_INTERVAL_DEFAULT));
+        } else if (Settings.BEEP_TIMEOUT.equals(key)) {
+            return String.valueOf(preferences.getInt(Settings.BEEP_TIMEOUT, Settings.BEEP_TIMEOUT_DEFAULT));
+        }
+        return "";
+    
+    }
+
 }
