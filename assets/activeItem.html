@@ -121,7 +121,7 @@ function saveOptionChoose(optionID){
 	para.comment = $("#comment").val();
 	para.created = getQueryStringRegExp("time");
 	
-	alert(JSON.stringify(para));
+	//alert(JSON.stringify(para));
 	if (Android.processQuestion(JSON.stringify(para), "insertReview") == 0) {
 		blockUINoOverlay("设置成功!");
 	    unBlockUI(600);
