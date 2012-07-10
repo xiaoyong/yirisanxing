@@ -370,5 +370,31 @@ textarea{
 	padding: 1em 1em;
 	line-height: 1.7em;
 }
+
+.rTime{
+	width: 5em;
+	color: #3E94F3;
+}
+
+.rReview{
+	border-left: solid 1px #949494;
+}
+
+.vComment{
+	margin: 0.1em 1em;
+	border-left:#F1AB19 0.2em solid;
+/*	height: 2em;*/
+	line-height: 1.5em;
+	box-shadow: 0px 1px 5px #06c;
+	display:none;
+	font-size: 1.25em;
+	padding: 0.2em;
+/*	width: 80%;*/
+}
+
+.rhbg:hover{
+	background: rgba(18,170,238,0.2);
+}
+
 /********************TOP Panel END*********************/
 
