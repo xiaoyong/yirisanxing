@@ -146,7 +146,9 @@
 					unBlockUI(oTime);
 				}
 			}
-			 
+			
+			//go to question list.
+			topLoad("historyList.html");
 	}
 	
 	function getItemByID(id){ //get question by ID.
@@ -201,6 +203,7 @@
 						    		</div>
 						    	</div>
 						    	
+						    		<div class="bLine"></div>
 						    		<div class="Line">
 						    			<span class="bLine" style="width:50%; height:30px;"> 重复周期 <input id="add_repeat" class="lInput" value="2" style="width:20px;color:#12AAEE;font-size:14px;"/> 天 <span class="RaphaelIcons textGreen" style="display: inline-table;">4</span></span>
 						    		</div>
@@ -211,7 +214,7 @@
 						    		<div class="bLine"></div>
 						    		<div>
 						    		  <span class="bLine" style="width:50%; height:30px;"><span class="RaphaelIcons textGreen" style="display: inline-table;">Ã</span>设置完成</span>
-								      <input id="addItemBTN" class="button" type="button" value="确认添加提醒"/>
+								      <input id="addItemBTN" class="button" type="button" value="确认添加提醒" style="margin-bottom:3em;"/>
 								    </div>
 						    	</div>
 						    

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0 ,user-scalable=no,target-densitydpi=device-dpi"> 
 
-<title>History List</title>
+<title>search</title>
 
 <style>
 	@font-face{
@@ -19,33 +19,40 @@
  <script language="JavaScript" src="js/jquery-1.7.2.min.js"></script>
  <!--jQuery END-->
  <script language="JavaScript" src="js/wavefancy.comm.js"></script>
- 
- <!-- Load jQuery Block UI -->
- <script language="JavaScript" src="js/jquery.blockUI.js"></script>
- <!-- End load jQuery block ui -->
 
 <script>
-	//temp object in this page.
-	var openCurr = null; //opened item. 
-
+	var tClick = 0;
+	var openCurr = null;
+	
 	$(document).ready(function(){
 		openPage();  // call page open animation
 		
-		getList();
+		$("#hList").empty();
+		//hide remind words.
+		$("#key").click(function(){
+			if(tClick <=0){
+				$(this).val("");
+				tClick ++;
+			}
+		});
+		
+		//automatically search when user input complete.
+		$("#key").blur(function(){
+			doSearch();
+		});
+		
 	});
 	
-	function getList(){
-
-		var result = Android.processQuestion("", "getAllList");
-		//alert(result);
-
-		//var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
-	
+	function doSearch(){
+		//processQuestion('{"keyWord":"key"}',"searchItems");
+		
+		var result = '[{"id":"1","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"},{"id":"2","question":"请添加提醒问题","options":[{"option":"是1 ","id":"1"},{"option":"否 ","id":"2"}],"repeat_type":"2","hour":"13","minute":"15"}]';
+		
 		var h = $("#hList");
 		h.empty();
 		
 		if(result == "[]"){
-			blockUINoOverlay("当前没有提醒！");
+			blockUINoOverlay("没有搜索结果！");
 			unBlockUI(oTime);
 			return;
 		}
@@ -71,8 +78,7 @@
 			if(openCurr != null){
 				openCurr.slideToggle();
 			}
-			
-
+		
 			curr.slideToggle();
 			openCurr = curr;
 			
@@ -104,7 +110,8 @@
 			}
 			
 			//refresh list.
-			getList();
+			doSearch();
+			//getList();
 		});
 		
 		//view history graph
@@ -130,40 +137,38 @@
 		
 	}
 	
-
+	
 </script>
 </head>
 <body>
 <div id="topPanel">
 
 	<div id="topLine">
-	<!-- 
-		<div id="tl1"></div> <div id="tl2"></div> <div id="tl3"></div> <div id="tl4"></div> <div id="tl5"></div>
-	 -->
 	</div>
 	<div id="move"></div>
-					<!--History List -->		
-					<section class="st-panel st-color" id="st-panel-2">
-						<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">Û<span class="textOrange" style="margin-left:10px;">提醒列表</span></span></h3>
-						<div id="hList">
-							<div id="h1" class="bLine iList1 hl">
-								1. 123
-							 	<!--	
-									<span class="RaphaelIcons textGreen" style="display: inline-table;float:right;">:</span> 
-									<span class="RaphaelIcons textGreen" style="display: inline-table;float:right; width:30px;">?</span>
-								-->	
-							</div>
-							<div id="h1-c" class="hOptions">
-									<span class="RaphaelIcons textGreen edit">?</span>
-									<span class="RaphaelIcons textGreen del">Â</span> 
-									<span class="RaphaelIcons textGreen hDetail">Ì</span> 
-									<span class="RaphaelIcons textGreen viewh">:</span> 
-							</div>
-							
-							
-						</div>
-					</section>
-				<!--History List END -->		
+	<section class="st-panel" id="st-panel-1">						
+		<h3><span class="RaphaelIcons textGreen" style="display: inline-table;">Á<span id="title" class="textOrange" style="margin-left:10px;">搜索</span></span></h3>
+		<input id="key" class="cInput" value="请添加搜索关键词"/>
+		
+		<div id="hList">
+			<div id="h1" class="bLine iList1 hl">
+				1. 123
+			 	<!--	
+					<span class="RaphaelIcons textGreen" style="display: inline-table;float:right;">:</span> 
+					<span class="RaphaelIcons textGreen" style="display: inline-table;float:right; width:30px;">?</span>
+				-->	
+			</div>
+			<div id="h1-c" class="hOptions">
+					<span class="RaphaelIcons textGreen edit">?</span>
+					<span class="RaphaelIcons textGreen del">Â</span> 
+					<span class="RaphaelIcons textGreen hDetail">Ì</span> 
+					<span class="RaphaelIcons textGreen viewh">:</span> 
+			</div>
+			
+			
+		</div>
+		
+	</section>
 </div>
 </body>
 </html>

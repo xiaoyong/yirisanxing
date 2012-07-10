@@ -60,4 +60,20 @@ TO wang:
 
 11. return to list page after update or create a question
 
+To Xiaoyong:
+
+请添加处理函数：
+getOptionByID
+INPUT: {"id":"1"}
+processQuestion('{"id":"1"}',"getOptionByID");
+OUTPUT: {"option":"是 ","id":"-1"} or JOSN string of option;
+
+searchItems
+processQuestion('{"keyWord":"key"}',"searchItems");
+OUTPUT: same as getAllList.
+
+
+
+
+
 

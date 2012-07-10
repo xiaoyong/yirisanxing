@@ -348,7 +348,7 @@ public class JavaScriptInterface {
     }
     
     public void mute() {
-    	System.out.println("MUTE");
+    	//System.out.println("MUTE");
         mContext.stopService(new Intent(Action.BEEP));
     }
         
