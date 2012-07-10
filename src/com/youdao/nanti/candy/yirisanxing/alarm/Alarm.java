@@ -107,6 +107,7 @@ public class Alarm {
         
         SharedPreferences preferences = context.getSharedPreferences(Settings.PATH, 0);
         long delayInterval = preferences.getLong(Settings.DELAY_INTERVAL, Settings.DELAY_INTERVAL_DEFAULT) * 1000 * 60;
+        Log.v(TAG, String.valueOf(delayInterval));
 
         long delayTime = System.currentTimeMillis() + delayInterval;
         
