@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 public class Alarm {
     
@@ -119,45 +118,37 @@ public class Alarm {
         am.set(AlarmManager.RTC_WAKEUP, delayTime, sender);
     }
     
-    // accept a input so that this can be used when filling missed reviews
     public long computeNextTime(long time) {
+        Calendar c =  Calendar.getInstance();
+        c.setTimeInMillis(time);
+        
         Date now = new Date(time);
         Date set = new Date(now.getYear(), now.getMonth(), now.getDate(), hour, minute);
-        long nextTime;
-        if (now.before(set)) {
-            nextTime = set.getTime();
-            Log.v(TAG, "next time is in today");
-        } else {
-            nextTime = nextSetTime(set.getTime());
-            Log.v(TAG, "next time is not in today");
-        }
-        return nextTime;
-    }
-
-    protected long nextSetTime(long settime) {
-        
-        Calendar c =  Calendar.getInstance();
-        c.setTimeInMillis(settime);
-        Log.v(TAG, "today is " + String.valueOf(c.get(Calendar.DAY_OF_WEEK)));
+        long settime = set.getTime();
+                
         switch (repeat_type) {
-            case 1:
-                return settime + interval * 24 * 60 * 60 * 1000;
-                //return time + interval * 1000;
-            case 2:
-                //DaysOfWeek dow = new DaysOfWeek(days_of_week);
-                DaysOfWeek dow = parseDaysOfWeek(days_of_week);
-                int days = dow.getNextAlarm(c);
-                if (days == 0) {
+        case 1:
+            return settime + interval * 24 * 60 * 60 * 1000;
+            //return time + interval * 1000;
+        case 2:
+            //DaysOfWeek dow = new DaysOfWeek(days_of_week);
+            DaysOfWeek dow = parseDaysOfWeek(days_of_week);
+            int days = dow.getNextAlarm(c);
+            if (days == 0) {
+                if (now.before(set)) {
+                    return settime;
+                } else {
                     days = 7;
                 }
-                Log.v(TAG, "next day is " + String.valueOf(days) + " day after");
-                Log.v(TAG, "daysofweek is: " + String.valueOf(dow.getCoded()));
-                Log.v(TAG, "is thusdayset: " + String.valueOf(dow.isSet(1)));
-                return settime + days * 24 * 60 * 60 * 1000;
+            }
+            Log.v(TAG, "next day is " + String.valueOf(days) + " day after");
+            Log.v(TAG, "daysofweek is: " + String.valueOf(dow.getCoded()));
+            Log.v(TAG, "is thusdayset: " + String.valueOf(dow.isSet(1)));
+            return settime + days * 24 * 60 * 60 * 1000;
         }
         return settime;
     }
-        
+            
     public void saveAlarm() {
         
     }
