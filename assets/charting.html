@@ -13,20 +13,34 @@
   <script>
     $(document).ready(function(){
       var id = getQueryStringRegExp("id");
-      var result = Android.processQuestion(id, "getItemByID");
+      var result = Android.processQuestion(id, "GETFULLITEMBYID");
       var q = JSON.parse(result);
       result = Android.processQuestion(id, "viewReviewListByID");
       var reviews = JSON.parse(result);
+      if (reviews.length < 1) {
+        $('body').append('<h1>等待记录生成中……</h1>');
+        return;
+      }
 
       //var $wrap = $('<div>').attr('id', 'tableWrap');
       //$wrap.css({"width": "100%", "margin": "auto", "border":"1px solid gray"});
       var $tbl = $('<table>').attr('id', 'basicTable');
       $tbl.css({"width": "80%", "margin-left":"auto", "margin-right":"auto"});
-      //console.log("window width: " + window.innerWidth);
+      //console.log("window width: " + window.screen.width);
       //console.log("table width: " + $tbl.css("width"));
 
       // Set caption
       $tbl.append($('<caption>').text(q.question));
+
+      // set ylabels
+      var optionLabels = [];
+      var values = {};
+      var options_len = q.options.length;
+      for (var i = 0; i < options_len; i++) {
+        optionLabels[q.options[i].value] = q.options[i].option;
+        values["" + q.options[i].id] = q.options[i].value;
+      }
+      //console.log(JSON.stringify(values));
 
       // Set head (time points)
       var tr = $('<tr>');
@@ -34,19 +48,10 @@
       var reviews_len = reviews.length;
       for (var i = 0; i < reviews_len; ++i) {
         var d = new Date(reviews[i].created);
-        tr.append($('<th>').attr("scope", "col").text([d.getFullYear(), d.getMonth(), d.getDate()].join("-") + " " + [d.getHours(), d.getMinutes()].join(":")));
+        tr.append($('<th>').attr("scope", "col").text([d.getFullYear(), d.getMonth()+1, d.getDate()].join("-")));
       }
 
       $tbl.append($('<thead>').append(tr));
-
-      // set ylabels
-      var optionLabels = [];
-      var values = [];
-      var options_len = q.options.length;
-      for (var i = 0; i < options_len; i++) {
-        optionLabels[q.options[i].value] = q.options[i].option;
-        values[q.options[i].id] = q.options[i].value;
-      }
 
       // Set contents
       tbl_body = $('<tbody>');
@@ -66,29 +71,23 @@
 
       tr = $('<tr>')
         .append($('<th>').attr("scope", "row").text("Value"));
+      var max_value = 0;
       for (var i = 0; i < reviews_len; ++i) {
-        tr.append($('<td>').text(values[reviews[i].optionId]));
+        var vl = values["" + reviews[i].optionId];
+        tr.append($('<td>').text(vl));
+        if (max_value < vl) {
+          max_value = vl;
+        }
       }
       tbl_body.append(tr);
       $tbl.append(tbl_body);
 
-        /*$tbl.append($('<tbody>')
-          .append($('<tr>')
-            .append($('<th>').attr("scope", "row").text("有"),
-              $('<td>').text(0),
-              $('<td>').text(1))
-                )
-          .append($('<tr>')
-            .append($('<th>').attr("scope", "row").text("没有"),
-              $('<td>').text(1),
-              $('<td>').text(0))
-                )
-          .append($('<tr>')
-            .append($('<th>').attr("scope", "row").text("Value"),
-              $('<td>').text(3),
-              $('<td>').text(2))
-                )
-          );*/
+      var screenWidth = window.screen.width;
+      var setWidth = screenWidth - 100;
+      var setHeight = setWidth * 0.625;
+      var oldestDate = new Date(reviews[0].created);
+      var newestDate = new Date(reviews[reviews_len-1].created);
+      var setTitle = q.question + "<br />(" + [oldestDate.getFullYear(), oldestDate.getMonth()+1, oldestDate.getDate()].join(".") + " -- " + [newestDate.getFullYear(), newestDate.getMonth()+1, newestDate.getDate()].join(".") + ")";
 
       //$wrap.append($tbl);
       //$('body').append($wrap);
@@ -107,8 +106,8 @@
       });
 
       function charting() {
-        $('table').visualize({type: "line", appendKey: false, rowFilter:':last', customYLabels:optionLabels});
-        $('table').visualize({type: "pie", rowFilter:':not(:last)'});
+        $('table').visualize({type: "line", title:setTitle, appendKey: false, rowFilter:':last', customYLabels:optionLabels.slice(0, max_value+1), width:setWidth, height:setHeight});
+        $('table').visualize({type: "pie", title:setTitle, rowFilter:':not(:last)', width:setWidth, height:setHeight});
         $('.visualize').css({"margin-left":"auto", "margin-right":"auto"});
       }
     });
