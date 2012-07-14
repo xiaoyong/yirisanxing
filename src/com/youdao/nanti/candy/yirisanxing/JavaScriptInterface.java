@@ -263,7 +263,10 @@ public class JavaScriptInterface {
     }
     private int updateQuestion(Question question) {
         question.setUpdated(System.currentTimeMillis());
-        int arows = database.update("questions", questionToContentValues(question), "_id = " + question.getId(), null);
+        ContentValues values = questionToContentValues(question);
+        values.remove("created"); // Keep "created" timestamp untouched
+        
+        int arows = database.update("questions", values, "_id = " + question.getId(), null);
         long questionId = question.getId();
         
         int v = getMaximalOptionValue(questionId);

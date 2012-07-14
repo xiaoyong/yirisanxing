@@ -55,9 +55,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
         
-        myWebView = (WebView) findViewById(R.id.webview);
         
         Intent intent = getIntent();
         mAction = intent.getAction();
@@ -72,13 +70,19 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     }
     
     private void loadMain() {
+        setContentView(R.layout.main);
+        myWebView = (WebView) findViewById(R.id.webview);
+        
         // Enable JavaScript
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         
         //hidden scroll bar.
-        myWebView.setHorizontalScrollBarEnabled(false);
-        myWebView.setVerticalScrollBarEnabled(false);
+        //myWebView.setHorizontalScrollBarEnabled(false);
+        //myWebView.setVerticalScrollBarEnabled(false);
+        // Overlay scroll bar
+        myWebView.setScrollbarFadingEnabled(true);
+        myWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         
         //add key board.
         myWebView.requestFocusFromTouch();
@@ -137,6 +141,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         bPanel.setHorizontalScrollBarEnabled(false);
         bPanel.setVerticalScrollBarEnabled(false);
         
+        
         //bind top panel communication interface.
         bPanel.addJavascriptInterface(new TopPanelCommunicationInterface(handler, myWebView), "TopInterface");
         myWebView.addJavascriptInterface(new TopPanelCommunicationInterface(handler, bPanel), "BotInterface");
@@ -146,15 +151,21 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     
     private void loadReview(long id, long time) {
         // full screen
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        setContentView(R.layout.review);
+        myWebView = (WebView) findViewById(R.id.webview);
         
         // Enable JavaScript
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         
         //hidden scroll bar.
-        myWebView.setHorizontalScrollBarEnabled(false);
-        myWebView.setVerticalScrollBarEnabled(false);
+        //myWebView.setHorizontalScrollBarEnabled(false);
+        //myWebView.setVerticalScrollBarEnabled(false);
+        // Overlay scroll bar
+        myWebView.setScrollbarFadingEnabled(true);
+        myWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         
         //add key board.
         myWebView.requestFocusFromTouch();
@@ -167,9 +178,6 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
         String sTime = String.valueOf(time);
         myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
         //myWebView.loadUrl("file:///android_asset/activeItem.html");
-        
-        bPanel = (WebView) findViewById(R.id.bPanel);
-        bPanel.setVisibility(View.INVISIBLE);
     }
 
     @Override

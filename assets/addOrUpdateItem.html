@@ -275,8 +275,12 @@
 			q.minute = parseInt(t[1]);
 			
 			q.alertType = aType;
-			
-			q.isEnabled = true;
+			if( $("#isEnabled").val() == "true"){
+				q.isEnabled = true;
+			} else {
+				q.isEnabled = false;
+			}
+
 			
 			//alert(JSON.stringify(q));
 			if(q.id <=0 ){
