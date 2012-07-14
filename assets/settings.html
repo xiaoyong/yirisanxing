@@ -51,6 +51,9 @@
         unBlockUI(oTime);
 
       });
+      $("#exit").click(function(){
+          Activity.finish();
+      });
   	});
   
   function getSettings() {
@@ -68,29 +71,25 @@
     <section class="st-panel st-color" id="st-panel-2">
     <h3><span class="RaphaelIcons textGreen" style="display: inline-table;">Ñ<span class="textOrange" style="margin-left:10px;">设置</span></span></h3>
     
-    <span class="bLine" style="width:50%; height:30px;"> 稍后提醒间隔： <input id ="delay_interval" class="lInput" value="15" style="width:50px;color:#12AAEE;font-size:14px;"/> 分钟 <span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">4</span></span>
+    <fieldset style="margin-top:3em;border:solid 2px #12AAEE">
+    <legend style="color:gray">时间设置</legend>
+    <span class="bLine" style="width:50%; height:30px;"> 稍后提醒间隔：<input id ="delay_interval" class="lInput" value="15" style="width:50px;color:#12AAEE;font-size:14px;"/>分钟 <span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">4</span></span>
     <br />
-    <span class="bLine" style="width:50%; height:30px;"> 响铃超时时间： <input id ="timeout" class="lInput" value="120" style="width:50px;color:#12AAEE;font-size:14px;"/> 秒钟 <span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
+    <span class="bLine" style="width:50%; height:30px;"> 响铃超时时间：<input id ="timeout" class="lInput" value="120" style="width:50px;color:#12AAEE;font-size:14px;"/>秒钟 <span class="RaphaelIcons textGreen mobiscroll" style="display: inline-table;">3</span></span>
     <br /> <br />
-    <input class="button" type="button" id="updateSettings" value="更新设置"/> <br /> <br />
-    
+    <div style="text-align:right"><input class="button" type="button" id="updateSettings" value="更新设置"/></div>
+    </fieldset>
     </section>
         
-    <h3><span class="RaphaelIcons textGreen" style="display: inline-table;">Ñ<span class="textOrange" style="margin-left:10px;">数据库备份</span></span></h3>
+    <fieldset style="margin-top:3em;border:solid 2px #12AAEE">
+    <legend style="color:gray">数据备份</legend>
+    <input class="button" type="button" id="importl" value="导入数据库文件" /><br /><br />
+    <input class="button" type="button" id="exportl" value="导出数据库文件" />
+    </fieldset>
     
-    <section class="st-panel st-color" id="st-panel-2">
-  
-    <input class="button" type="button" id="exportl" value="导出数据库文件"/> <br /> <br />
-    <input class="button" type="button" id="importl" value="导入数据库文件"/>
-    
+    <div style="text-align:center;margin-top:3em;margin-bottom:3em"><input class="button-red" type="button" id="exit" value="退出程序" style="background-color:red" /></div>
     </section>
-  
-  <!-- 
-    <form method="post" action="" enctype="multipart/form-data">
-      <input type="file" id="f2">
-      <input type="submit" name="submit">
-    </form>
-  -->
+
   </div>
 </body>
 </html>
