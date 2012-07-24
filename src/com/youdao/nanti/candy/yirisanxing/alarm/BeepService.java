@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -25,7 +26,7 @@ public class BeepService extends Service {
         
     private Vibrator mVibrator;
     private TelephonyManager mTelephonyManager;
-    //private PowerManager.WakeLock mWakeLock;
+    private PowerManager.WakeLock mWakeLock;
     SharedPreferences preferences;
     private MediaPlayer mMediaPlayer;
     
@@ -63,13 +64,13 @@ public class BeepService extends Service {
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
         // do not acquire wake lock, in case of misoperation
-        /*
+        
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
                 PowerManager.ACQUIRE_CAUSES_WAKEUP |
                 PowerManager.ON_AFTER_RELEASE, "wake lock");
         mWakeLock.acquire();
-        */
+        
         preferences = getSharedPreferences(Settings.PATH, 0);
         timeout = preferences.getInt(Settings.BEEP_TIMEOUT, Settings.BEEP_TIMEOUT_DEFAULT);
         ringtone = preferences.getInt(Settings.RINGTONE, Settings.RINGTONE_DEFAULT);
@@ -152,7 +153,7 @@ public class BeepService extends Service {
         stop();
         // Stop listening for callstate.
         mTelephonyManager.listen(mPhoneStateListener, 0);
-        //mWakeLock.release();
+        mWakeLock.release();
     }
     
     private void enableKiller() {

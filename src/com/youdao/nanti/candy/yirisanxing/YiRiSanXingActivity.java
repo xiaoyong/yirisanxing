@@ -25,6 +25,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -40,6 +41,8 @@ import com.youdao.nanti.candy.yirisanxing.alarm.Alarm;
 import com.youdao.nanti.candy.yirisanxing.alarm.Settings;
 
 public class YiRiSanXingActivity extends Activity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+    
+    private static final String TAG = "YiRiSanXingActivity";
     
     private WebView myWebView;
     private JavaScriptInterface jsInterface;
@@ -151,7 +154,7 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     
     private void loadReview(long id, long time) {
         // full screen
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         setContentView(R.layout.review);
         myWebView = (WebView) findViewById(R.id.webview);
@@ -209,6 +212,10 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // lock back when review from alarm clock
+        if (mAction.equals(Action.REVIEW)) {
+            return true;
+        }
         // Check if the key event was the Back button and if there's history
         if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView.canGoBack()) {
             myWebView.goBack();
@@ -226,10 +233,6 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
 
 
     private void confirmExit() {
-        // lock back when review from alarm clock
-        if (mAction.equals(Action.REVIEW)) {
-            return;
-        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.exit_message)
                .setCancelable(false)
@@ -265,11 +268,12 @@ public class YiRiSanXingActivity extends Activity implements TimePickerDialog.On
     // called at webview
     public void nextReview() {
         if (!reviewQueue.isEmpty()) {
+            Log.v(TAG, "more reviews exist");
             ReviewHint reviewHint = reviewQueue.remove();
-            //String sId = String.valueOf(reviewHint.id);
-            //String sTime = String.valueOf(reviewHint.time);
-            //myWebView.loadUrl("file://android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
-            loadReview(reviewHint.id, reviewHint.time);
+            String sId = String.valueOf(reviewHint.id);
+            String sTime = String.valueOf(reviewHint.time);
+            myWebView.loadUrl("file:///android_asset/activeItem.html?id=" + sId + "&time=" + sTime);
+            //loadReview(reviewHint.id, reviewHint.time);
         } else {
             // TODO: gets weird exit when you review mannually
             this.stopService(new Intent(Action.BEEP));

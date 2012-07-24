@@ -130,21 +130,19 @@ public class Alarm {
         switch (repeat_type) {
         case 1:
             return settime + interval * 24 * 60 * 60 * 1000;
-            //return time + interval * 1000;
         case 2:
             //DaysOfWeek dow = new DaysOfWeek(days_of_week);
             DaysOfWeek dow = parseDaysOfWeek(days_of_week);
             int days = dow.getNextAlarm(c);
-            if (days == 0) {
-                if (now.before(set)) {
-                    return settime;
-                } else {
-                    days = 7;
-                }
+            if (days == 0 && set.before(now)) {
+                int today = (c.get(Calendar.DAY_OF_WEEK) + 5) % 7;
+                dow.set(today, false);
+                days = dow.getNextAlarm(c);
             }
             Log.v(TAG, "next day is " + String.valueOf(days) + " day after");
             Log.v(TAG, "daysofweek is: " + String.valueOf(dow.getCoded()));
             Log.v(TAG, "is thusdayset: " + String.valueOf(dow.isSet(1)));
+            //return settime + days * 10 * 1000;
             return settime + days * 24 * 60 * 60 * 1000;
         }
         return settime;
